@@ -3,37 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SURF MASTER PRO - TIDE EXTENSION</title>
+    <title>SURF MASTER PRO - ULTIMATE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@700;900&family=Permanent+Marker&display=swap');
-        body { margin: 0; background: #0f172a; font-family: 'Noto Sans JP', sans-serif; color: #f8fafc; }
         
+        body { margin: 0; background: #1a202c; font-family: 'Noto Sans JP', sans-serif; color: #e2e8f0; }
+        
+        /* ヒーローセクション - 金髪サーファーの画像 */
         .hero-section {
-            height: 25vh;
-            background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 1)), 
-                        url('https://images.unsplash.com/photo-1502680399488-63449813253b?auto=format&fit=crop&q=80&w=1200');
+            height: 35vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1549503948-26210f81d188?auto=format&fit=crop&q=80&w=1200'); /* 金髪サーファー画像 */
             background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;
+            padding-top: 20px;
+        }
+        .hero-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 3rem; /* 大きめのフォント */
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.8);
+        }
+        .hero-subtitle {
+            font-size: 0.7rem; /* 小さめのフォント */
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #90cdf4; /* 明るいブルー */
+            opacity: 0.9;
+            margin-top: 0.5rem;
         }
 
+        /* ナビゲーションボタンセクション */
         .nav-section {
-            background: #0f172a; padding: 12px; border-bottom: 1px solid #334155;
+            background: #1a202c; /* ダークな背景 */
+            padding: 1rem 0;
+            border-bottom: 1px solid #2d3748; /* 暗いボーダー */
             position: sticky; top: 0; z-index: 100;
         }
+        .nav-button {
+            flex-none px-5 py-2 rounded-full text-xs font-black transition-all duration-200;
+            background-color: #2d3748; /* 暗いボタン背景 */
+            color: #a0aec0; /* 薄い文字色 */
+        }
+        .nav-button.active {
+            background-color: #4299e1; /* アクティブなボタンの背景色 */
+            color: white; /* アクティブなボタンの文字色 */
+            box-shadow: 0 4px 10px rgba(66, 153, 225, 0.4); /* アクティブなボタンの影 */
+        }
 
+        /* スポットカード */
         .spot-card {
-            background: #1e293b; border-radius: 24px; border: 1px solid #334155;
+            background: #2d3748; /* カードの背景色 */
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+            overflow: hidden;
+            border: 1px solid #4a5568; /* ボーダー */
+        }
+
+        /* 内部情報ボックス */
+        .info-box {
+            background: #4a5568; /* 情報ボックスの背景 */
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
             overflow: hidden;
         }
-
-        .tide-graph-container {
-            background: rgba(15, 23, 42, 0.5); border-radius: 16px; padding: 10px;
-            margin-top: 15px; position: relative;
+        .info-box-bg-icon {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem; /* アイコンの大きさ */
+            color: rgba(255,255,255,0.08); /* 薄いアイコン色 */
+            z-index: 0;
         }
 
-        canvas { width: 100% !important; height: 80px !important; }
+        /* 潮位グラフ */
+        .tide-graph-container {
+            background: #4a5568; /* 潮位グラフ背景 */
+            border-radius: 12px;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .tide-graph-bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1542281286-9e0a16fb7b4f?auto=format&fit=crop&q=80&w=600'); /* 穏やかな海の画像 */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1; /* 薄く表示 */
+            z-index: 0;
+        }
+        canvas {
+            position: relative; /* グラフを画像の上に */
+            z-index: 1;
+        }
+        .tide-legend {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            color: #a0aec0;
+            margin-top: 0.5rem;
+        }
+
+
+        /* 下部ナビゲーション */
+        .bottom-nav {
+            background: #1a202c; /* ダークな背景 */
+            border-top: 1px solid #2d3748;
+            border-radius: 2.5rem 2.5rem 0 0; /* 上部を丸く */
+            box-shadow: 0 -8px 20px rgba(0,0,0,0.5);
+        }
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #a0aec0; /* 薄い文字色 */
+            font-size: 0.7rem;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+        .bottom-nav-item i { font-size: 1.25rem; margin-bottom: 0.25rem; }
+        .bottom-nav-item.active { color: #4299e1; } /* アクティブなアイテム */
 
         .logo-font { font-family: 'Permanent Marker', cursive; }
         .accent-font { font-family: 'Montserrat', sans-serif; }
@@ -42,134 +144,203 @@
 </head>
 <body class="pb-36">
 
-    <div class="hero-section text-center">
-        <h1 class="text-3xl font-bold logo-font italic tracking-tighter">SURF MASTER PRO</h1>
-        <p class="text-[9px] font-black tracking-[0.4em] mt-1 uppercase text-blue-400">Advanced Tide & Wave</p>
+    <div class="hero-section">
+        <h1 class="hero-title">SURF MASTER PRO</h1>
+        <p class="hero-subtitle">Ultimate Kinki & Mie</p>
     </div>
 
     <div class="nav-section">
-        <div class="flex gap-2 overflow-x-auto justify-start no-scrollbar px-2">
-            <button onclick="filterArea('wakayama')" id="btn-wakayama" class="flex-none px-5 py-2 bg-blue-600 text-white rounded-full text-xs font-black shadow-lg">和歌山</button>
-            <button onclick="filterArea('mie')" id="btn-mie" class="flex-none px-5 py-2 bg-slate-800 text-slate-400 rounded-full text-xs font-black">三重</button>
-            <button onclick="filterArea('kyoto')" id="btn-kyoto" class="flex-none px-5 py-2 bg-slate-800 text-slate-400 rounded-full text-xs font-black">京都</button>
-            <button onclick="filterArea('osaka')" id="btn-osaka" class="flex-none px-5 py-2 bg-slate-800 text-slate-400 rounded-full text-xs font-black">大阪</button>
+        <div class="flex gap-2 overflow-x-auto justify-start no-scrollbar px-5">
+            <button onclick="filterArea('wakayama')" id="btn-wakayama" class="nav-button active">和歌山</button>
+            <button onclick="filterArea('mie')" id="btn-mie" class="nav-button">三重</button>
+            <button onclick="filterArea('kyoto')" id="btn-kyoto" class="nav-button">京都</button>
+            <button onclick="filterArea('osaka')" id="btn-osaka" class="nav-button">大阪</button>
         </div>
     </div>
 
     <main id="spot-container" class="px-5 py-6 space-y-6 max-w-lg mx-auto"></main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex justify-around p-5 z-50 rounded-t-[2.5rem]">
-        <button onclick="useGPS()" class="flex flex-col items-center text-slate-500">
-            <i class="fas fa-location-arrow text-xl"></i>
-            <span class="text-[8px] font-black mt-1">近くを探す</span>
+    <nav class="fixed bottom-0 left-0 right-0 p-5 z-50 bottom-nav flex justify-around">
+        <button onclick="useGPS()" class="bottom-nav-item">
+            <i class="fas fa-location-arrow"></i>
+            <span>近くを探す</span>
         </button>
-        <div class="flex flex-col items-center text-blue-400">
-            <i class="fas fa-house text-xl"></i>
-            <span class="text-[8px] font-black mt-1">HOME</span>
+        <div class="bottom-nav-item active">
+            <i class="fas fa-house"></i>
+            <span>HOME</span>
         </div>
-        <a href="https://www.windy.com" target="_blank" class="flex flex-col items-center text-slate-500">
-            <i class="fas fa-chart-line text-xl"></i>
-            <span class="text-[8px] font-black mt-1">WINDY</span>
+        <a href="https://www.google.com" target="_blank" class="bottom-nav-item">
+            <i class="fab fa-google"></i>
+            <span>Google</span>
+        </a>
+        <a href="https://weathernews.jp" target="_blank" class="bottom-nav-item">
+            <i class="fas fa-cloud-sun"></i>
+            <span>ウェザー</span>
+        </a>
+        <a href="https://www.windy.com" target="_blank" class="bottom-nav-item">
+            <i class="fas fa-wind"></i>
+            <span>WINDY</span>
         </a>
     </nav>
 
     <script>
         const surfSpots = [
-            // 京都・和歌山・三重のスポット情報を網羅
-            { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '和歌山メジャーポイント。' },
-            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '初心者〜中級者向け。' },
-            { area: 'wakayama', name: '那智 / 下里', lat: 33.58, lon: 135.91, d: '南紀の代表的なビーチ。' },
-            { area: 'mie', name: '国府の浜', lat: 34.33, lon: 136.91, d: '三重のメッカ。' },
-            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '混雑が比較的少ない。' },
-            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: 'うねりに敏感でパワーあり。' },
+            // 和歌山
+            { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '関西随一のメッカ。イソコ。' },
+            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '初心者〜中級者。混雑回避。' },
+            { area: 'wakayama', name: '那智 / 下里', lat: 33.58, lon: 135.91, d: '南紀を代表する美しいビーチ。' },
+            // 三重
+            { area: 'mie', name: '国府の浜', lat: 34.33, lon: 136.91, d: '三重のメッカ。ポイント多数。' },
+            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '比較的混雑が緩和される。' },
+            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: '南向きのうねりに敏感。' },
+            // 京都
             { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '遠浅のビーチブレイク。' },
             { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '砂付きで波質が変化。' },
-            { area: 'kyoto', name: '琴引浜', lat: 35.70, lon: 135.04, d: '鳴き砂で有名。' },
-            // 大阪エリアの追加
-            { area: 'osaka', name: 'せんなん里海公園', lat: 34.34, lon: 135.18, d: '風向きにより練習可能。' },
-            { area: 'osaka', name: '二色浜', lat: 34.44, lon: 135.34, d: 'SUPやトレーニングに。' }
+            { area: 'kyoto', name: '琴引浜', lat: 35.70, lon: 135.04, d: '鳴き砂で有名。反応良。' },
+            // 大阪 (練習・風待ちエリア)
+            { area: 'osaka', name: 'せんなん里海公園', lat: 34.34, lon: 135.18, d: '風向き次第。小波練習に。' },
+            { area: 'osaka', name: '二色浜', lat: 34.44, lon: 135.34, d: 'SUPや風待ちのトレーニングに。' }
         ];
 
-        function drawTideGraph(canvasId) {
+        function getWeatherIcon(code) {
+            if (code <= 1) return 'fa-sun';
+            if (code <= 3) return 'fa-cloud-sun';
+            if (code <= 65) return 'fa-cloud-showers-heavy';
+            return 'fa-cloud';
+        }
+
+        function drawTideGraph(canvasId, tideData = []) {
             const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const w = canvas.width;
             const h = canvas.height;
-            const now = new Date().getHours();
+            const now = new Date().getHours() + new Date().getMinutes() / 60; // 現在時刻 (小数)
 
             ctx.clearRect(0, 0, w, h);
+
+            // グラフの背景
+            ctx.fillStyle = 'rgba(255,255,255,0.05)';
+            ctx.fillRect(0, 0, w, h);
+
             ctx.beginPath();
-            ctx.strokeStyle = '#3b82f6';
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#63b3ed'; // 明るいブルー
+            ctx.lineWidth = 2;
+
+            // ダミーの潮位データ生成 (よりリアルな24時間サイクル)
+            const simulatedTide = (hour) => {
+                const phase1 = Math.sin((hour - 4) * Math.PI / 12) * 0.4 + 0.6; // 12時間周期
+                const phase2 = Math.cos((hour - 10) * Math.PI / 12) * 0.2; // 補正
+                return (phase1 + phase2) * (h * 0.4) + (h * 0.1);
+            };
 
             for (let i = 0; i <= 24; i++) {
                 const x = (i / 24) * w;
-                const y = (Math.sin((i - 6) * Math.PI / 6) * 20) + (h / 2); // 潮位の擬似曲線
+                const y = simulatedTide(i);
                 if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
             }
             ctx.stroke();
 
             // 現在時刻のインジケーター
             const currentX = (now / 24) * w;
-            ctx.fillStyle = '#ef4444';
+            const currentY = simulatedTide(now);
+            ctx.fillStyle = '#fc8181'; // 赤
             ctx.beginPath();
-            ctx.arc(currentX, (Math.sin((now - 6) * Math.PI / 6) * 20) + (h / 2), 5, 0, Math.PI * 2);
+            ctx.arc(currentX, currentY, 4, 0, Math.PI * 2);
             ctx.fill();
+
+            // 現在時刻の縦線
+            ctx.strokeStyle = '#fc8181';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]); // 点線
+            ctx.beginPath();
+            ctx.moveTo(currentX, 0);
+            ctx.lineTo(currentX, h);
+            ctx.stroke();
+            ctx.setLineDash([]); // 点線リセット
         }
 
         async function fetchAll(lat, lon, id) {
             try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&marine=wave_height&timezone=Asia%2FTokyo`);
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&marine=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
+                
                 document.getElementById(`w-${id}`).innerText = (data.current.wave_height || 0.4).toFixed(1);
-                document.getElementById(`t-${id}`).innerText = Math.round(data.current.temperature_2m) + '°';
+                document.getElementById(`t-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
+                
+                // 天気アイコン
+                const weatherIconClass = getWeatherIcon(data.current.weather_code);
+                document.getElementById(`icon-${id}`).className = `fas ${weatherIconClass} text-2xl`;
+                
+                // 風向きと強さ
+                const windDirection = data.current.wind_direction_10m; // 0-360度
+                const windSpeed = (data.current.wind_speed_10m * 1000 / 3600).toFixed(1); // m/s
+                document.getElementById(`wind-${id}`).innerHTML = `
+                    <i class="fas fa-arrow-up text-blue-300 transform" style="transform: rotate(${windDirection}deg);"></i> ${windSpeed}m/s
+                `;
+
+                // 明日の天気
+                document.getElementById(`tm-icon-${id}`).className = `fas ${getWeatherIcon(data.daily.weather_code[1])} text-base`;
+                document.getElementById(`tm-temp-${id}`).innerText = Math.round(data.daily.temperature_2m_max[1]) + '°';
+
+                // 潮位グラフ描画
                 drawTideGraph(`tide-${id}`);
-            } catch (e) { console.error(e); }
+
+            } catch (e) { 
+                console.error("Fetch error:", e);
+                // エラー時でもグラフは描画
+                drawTideGraph(`tide-${id}`);
+            }
         }
 
         function filterArea(area) {
             ['wakayama', 'mie', 'kyoto', 'osaka'].forEach(a => {
                 const btn = document.getElementById(`btn-${a}`);
                 btn.className = (a === area) 
-                    ? "flex-none px-5 py-2 bg-blue-600 text-white rounded-full text-xs font-black" 
-                    : "flex-none px-5 py-2 bg-slate-800 text-slate-400 rounded-full text-xs font-black";
+                    ? "nav-button active" 
+                    : "nav-button";
             });
 
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const card = document.createElement('div');
-                card.className = 'spot-card p-6 shadow-xl';
+                card.className = 'spot-card p-5';
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <div onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')" class="cursor-pointer">
-                            <h3 class="text-xl font-black text-white flex items-center tracking-tight">
-                                ${spot.name} <i class="fas fa-chevron-right ml-2 text-[10px] text-blue-500"></i>
-                            </h3>
-                            <p class="text-[10px] text-slate-400 mt-1">"${spot.d}"</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')" class="cursor-pointer flex items-center">
+                            <h3 class="text-xl font-black text-white mr-2">${spot.name}</h3>
+                            <i class="fas fa-map-location-dot text-sm text-blue-400"></i>
+                        </div>
+                        <div id="wind-${i}" class="text-sm font-bold text-slate-300 flex items-center">
+                            <i class="fas fa-sync fa-spin mr-1 text-xs text-slate-500"></i> 風速...
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-3 mb-6">
-                        <div class="bg-slate-800/50 rounded-2xl p-4 border border-slate-700">
-                            <p class="text-[8px] font-bold text-blue-400 uppercase mb-1">Wave Height</p>
-                            <p class="accent-font text-3xl font-black"><span id="w-${i}">--</span><span class="text-xs ml-1 font-bold">m</span></p>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="info-box">
+                            <i class="fas fa-water info-box-bg-icon"></i>
+                            <p class="text-[9px] font-bold text-blue-300 uppercase z-10">波の高さ</p>
+                            <p class="accent-font text-3xl font-black text-blue-200 z-10"><span id="w-${i}">--</span><span class="text-sm ml-1 font-bold">m</span></p>
                         </div>
-                        <div class="bg-slate-800/50 rounded-2xl p-4 border border-slate-700">
-                            <p class="text-[8px] font-bold text-orange-400 uppercase mb-1">Temperature</p>
-                            <p id="t-${i}" class="accent-font text-3xl font-black">--</p>
+                        <div class="info-box">
+                            <i class="fas fa-temperature-half info-box-bg-icon"></i>
+                            <p class="text-[9px] font-bold text-orange-300 uppercase z-10">現在の気温</p>
+                            <p id="t-${i}" class="accent-font text-3xl font-black text-orange-200 z-10">--</p>
                         </div>
                     </div>
 
                     <div class="tide-graph-container">
-                        <div class="flex justify-between text-[8px] font-bold text-slate-500 mb-2 uppercase tracking-widest">
-                            <span>00:00</span>
-                            <span class="text-blue-400">Tide Graph (24h)</span>
-                            <span>24:00</span>
+                        <div class="tide-graph-bg-image"></div>
+                        <div class="flex justify-between text-[9px] font-bold text-slate-400 uppercase tracking-widest relative z-10">
+                            <span>0時</span>
+                            <span class="text-blue-300">潮位グラフ (24時間)</span>
+                            <span>24時</span>
                         </div>
-                        <canvas id="tide-${i}"></canvas>
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-bold text-white/10 pointer-events-none">SURF MASTER TIDE</div>
+                        <canvas id="tide-${i}" width="300" height="80"></canvas>
                     </div>
+
+                    <div class="mt-4 pt-4 border-t border-slate-700 text-[10px] text-slate-400 font-bold leading-relaxed italic">"${spot.d}"</div>
                 `;
                 container.appendChild(card);
                 fetchAll(spot.lat, spot.lon, i);
@@ -183,7 +354,7 @@
                 if(la > 35) filterArea('kyoto'); else if(la > 34.3) filterArea('osaka'); else if(la > 34.1) filterArea('wakayama'); else filterArea('mie');
             });
         }
-        filterArea('wakayama');
+        filterArea('wakayama'); // 初期表示エリア
     </script>
 </body>
 </html>
