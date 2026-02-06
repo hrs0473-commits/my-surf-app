@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surf App Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active { display: block !important; }
+    </style>
+</head>
+<body class="bg-slate-100 pb-20">
+
+    <header class="bg-blue-600 text-white p-4 shadow-lg">
+        <h1 class="text-xl font-bold">KINKI SURF 🌊</h1>
+    </header>
+
+    <div id="view-forecast" class="p-4 active">
+        <div class="bg-white p-6 rounded-2xl shadow-sm mb-4">
+            <h2 class="text-gray-500 text-sm">現在の波（三重・伊勢志摩）</h2>
+            <div id="wave-val" class="text-4xl font-black text-blue-600">--m</div>
+            <p id="wave-desc" class="text-xs text-gray-400 mt-2">データ取得中...</p>
+        </div>
+        
+        <div class="bg-white p-4 rounded-2xl shadow-sm">
+            <h3 class="font-bold mb-2">おすすめライブカメラ</h3>
+            <div class="space-y-2">
+                <a href="https://www.google.com/search?q=国府の浜+ライブカメラ+YouTube" class="block bg-blue-50 p-3 rounded-xl text-blue-700 text-sm">📺 国府の浜 (検索)</a>
+                <a href="https://www.google.com/search?q=磯ノ浦+ライブカメラ+YouTube" class="block bg-blue-50 p-3 rounded-xl text-blue-700 text-sm">📺 磯ノ浦 (検索)</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-chat" class="p-4 hidden">
+        <div class="bg-white p-4 rounded-2xl h-[400px] flex flex-col shadow-sm">
+            <div id="msg-list" class="flex-1 overflow-y-auto space-y-2 text-sm">
+                <p class="bg-gray-100 p-2 rounded-lg text-gray-600">ここはあなたのメモ帳です。<br>Firebaseを連携すると、みんなと繋がれます！</p>
+            </div>
+            <div class="mt-4 flex gap-2">
+                <input id="inp" type="text" class="border rounded-full px-4 py-2 flex-1" placeholder="波はどう？">
+                <button onclick="addMsg()" class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">送信</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed bottom-0 w-full bg-white border-t flex justify-around py-3">
+        <button onclick="nav('view-forecast')" class="text-blue-600 font-bold">予報</button>
+        <button onclick="nav('view-chat')" class="text-blue-600 font-bold">トーク</button>
+    </nav>
+
+    <script>
+        function nav(id) {
+            document.getElementById('view-forecast').style.display = 'none';
+            document.getElementById('view-chat').style.display = 'none';
+            document.getElementById(id).style.display = 'block';
+        }
+
+        async function fetchSurf() {
+            try {
+                const res = await fetch('https://marine-api.open-meteo.com/v1/marine?latitude=34.33&longitude=136.83&hourly=wave_height');
+                const data = await res.json();
+                const h = data.hourly.wave_height[new Date().getHours()];
+                document.getElementById('wave-val').innerText = h + 'm';
+                document.getElementById('wave-desc').innerText = '三重・国府の浜付近のリアルタイム波高';
+            } catch {
+                document.getElementById('wave-val').innerText = 'Error';
+            }
+        }
+
+        function addMsg() {
+            const val = document.getElementById('inp').value;
+            if(!val) return;
+            document.getElementById('msg-list').innerHTML += `<p class="bg-blue-50 p-2 rounded-lg text-blue-800"><b>自分:</b> ${val}</p>`;
+            document.getElementById('inp').value = '';
+        }
+
+        fetchSurf();
+    </script>
+</body>
+</html>
