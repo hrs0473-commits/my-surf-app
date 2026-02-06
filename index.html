@@ -3,78 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surf App Lite</title>
+    <title>Kinki Surf Master</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .active { display: block !important; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-slate-100 pb-20">
+<body class="bg-slate-50 pb-24">
 
-    <header class="bg-blue-600 text-white p-4 shadow-lg">
-        <h1 class="text-xl font-bold">KINKI SURF 🌊</h1>
+    <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-5 shadow-md">
+        <h1 class="text-2xl font-black italic tracking-wider">KINKI SURF MASTER</h1>
     </header>
 
-    <div id="view-forecast" class="p-4 active">
-        <div class="bg-white p-6 rounded-2xl shadow-sm mb-4">
-            <h2 class="text-gray-500 text-sm">現在の波（三重・伊勢志摩）</h2>
-            <div id="wave-val" class="text-4xl font-black text-blue-600">--m</div>
-            <p id="wave-desc" class="text-xs text-gray-400 mt-2">データ取得中...</p>
-        </div>
-        
-        <div class="bg-white p-4 rounded-2xl shadow-sm">
-            <h3 class="font-bold mb-2">おすすめライブカメラ</h3>
-            <div class="space-y-2">
-                <a href="https://www.google.com/search?q=国府の浜+ライブカメラ+YouTube" class="block bg-blue-50 p-3 rounded-xl text-blue-700 text-sm">📺 国府の浜 (検索)</a>
-                <a href="https://www.google.com/search?q=磯ノ浦+ライブカメラ+YouTube" class="block bg-blue-50 p-3 rounded-xl text-blue-700 text-sm">📺 磯ノ浦 (検索)</a>
-            </div>
-        </div>
+    <div class="p-4 flex gap-2 overflow-x-auto whitespace-nowrap bg-white shadow-sm mb-4">
+        <button onclick="changeArea('ise')" class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold">三重(伊勢)</button>
+        <button onclick="changeArea('wakayama')" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-bold">和歌山</button>
+        <button onclick="changeArea('kyoto')" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-bold">京都(日本海)</button>
     </div>
 
-    <div id="view-chat" class="p-4 hidden">
-        <div class="bg-white p-4 rounded-2xl h-[400px] flex flex-col shadow-sm">
-            <div id="msg-list" class="flex-1 overflow-y-auto space-y-2 text-sm">
-                <p class="bg-gray-100 p-2 rounded-lg text-gray-600">ここはあなたのメモ帳です。<br>Firebaseを連携すると、みんなと繋がれます！</p>
+    <main class="p-4">
+        <div class="bg-white rounded-3xl p-6 shadow-xl border border-blue-100 mb-6">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h2 id="area-title" class="text-xl font-bold text-gray-800">三重：国府の浜</h2>
+                    <p id="area-detail" class="text-xs text-gray-400">近畿最大のメジャーポイント</p>
+                </div>
+                <span class="bg-blue-100 text-blue-600 text-[10px] px-2 py-1 rounded font-bold">REALTIME</span>
             </div>
-            <div class="mt-4 flex gap-2">
-                <input id="inp" type="text" class="border rounded-full px-4 py-2 flex-1" placeholder="波はどう？">
-                <button onclick="addMsg()" class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">送信</button>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="text-center p-4 bg-blue-50 rounded-2xl">
+                    <div class="text-xs text-blue-400 mb-1">波の高さ</div>
+                    <div id="wave-h" class="text-3xl font-black text-blue-700">--m</div>
+                </div>
+                <div class="text-center p-4 bg-orange-50 rounded-2xl">
+                    <div class="text-xs text-orange-400 mb-1">風速</div>
+                    <div id="wind-s" class="text-3xl font-black text-orange-700">--m</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <nav class="fixed bottom-0 w-full bg-white border-t flex justify-around py-3">
-        <button onclick="nav('view-forecast')" class="text-blue-600 font-bold">予報</button>
-        <button onclick="nav('view-chat')" class="text-blue-600 font-bold">トーク</button>
+        <div class="space-y-4">
+            <h3 class="font-bold text-gray-700 ml-2">おすすめリンク & カメラ</h3>
+            <div id="links-container" class="grid grid-cols-1 gap-3">
+                </div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 w-full bg-white/80 backdrop-blur-md border-t flex justify-around py-4 shadow-2xl">
+        <button class="text-blue-600 flex flex-col items-center">
+            <i class="fas fa-water text-xl"></i><span class="text-[10px] mt-1 font-bold">波予報</span>
+        </button>
+        <button onclick="alert('チャット機能はFirebase連携が必要です')" class="text-gray-400 flex flex-col items-center">
+            <i class="fas fa-comments text-xl"></i><span class="text-[10px] mt-1">トーク</span>
+        </button>
     </nav>
 
     <script>
-        function nav(id) {
-            document.getElementById('view-forecast').style.display = 'none';
-            document.getElementById('view-chat').style.display = 'none';
-            document.getElementById(id).style.display = 'block';
-        }
-
-        async function fetchSurf() {
-            try {
-                const res = await fetch('https://marine-api.open-meteo.com/v1/marine?latitude=34.33&longitude=136.83&hourly=wave_height');
-                const data = await res.json();
-                const h = data.hourly.wave_height[new Date().getHours()];
-                document.getElementById('wave-val').innerText = h + 'm';
-                document.getElementById('wave-desc').innerText = '三重・国府の浜付近のリアルタイム波高';
-            } catch {
-                document.getElementById('wave-val').innerText = 'Error';
+        const spots = {
+            ise: {
+                title: "三重：国府の浜",
+                detail: "遠浅で初心者から上級者まで楽しめる。市後浜は南の穴場。",
+                lat: 34.33, lon: 136.83,
+                links: [
+                    { name: "📸 国府の浜ライブカメラ", url: "https://www.google.com/search?q=国府の浜+ライブカメラ" },
+                    { name: "🔍 市後浜コンディション(穴場)", url: "https://www.google.com/search?q=市後浜+サーフィン+情報" }
+                ]
+            },
+            wakayama: {
+                title: "和歌山：磯ノ浦",
+                detail: "関西サーファーの聖地。南紀エリアまで行けば穴場多数。",
+                lat: 34.25, lon: 135.10,
+                links: [
+                    { name: "📸 磯ノ浦ライブカメラ", url: "https://www.google.com/search?q=磯ノ浦+ライブカメラ" },
+                    { name: "🔍 南紀(串本方面)の波情報", url: "https://www.google.com/search?q=和歌山+南紀+サーフィン+ポイント" }
+                ]
+            },
+            kyoto: {
+                title: "京都：八丁浜",
+                detail: "冬の日本海シーズンがメイン。葛野浜は広大な穴場。",
+                lat: 35.69, lon: 135.05,
+                links: [
+                    { name: "📸 八丁浜ライブカメラ", url: "https://www.google.com/search?q=八丁浜+ライブカメラ" },
+                    { name: "🔍 葛野浜(穴場)の状況", url: "https://www.google.com/search?q=葛野浜+サーフィン+情報" }
+                ]
             }
+        };
+
+        async function fetchSurfData(lat, lon) {
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=wave_height,wind_speed_10m&timezone=Asia%2FTokyo`);
+            const data = await res.json();
+            const now = new Date().getHours();
+            document.getElementById('wave-h').innerText = data.hourly.wave_height[now] + 'm';
+            document.getElementById('wind-s').innerText = Math.round(data.hourly.wind_speed_10m[now]) + 'm';
         }
 
-        function addMsg() {
-            const val = document.getElementById('inp').value;
-            if(!val) return;
-            document.getElementById('msg-list').innerHTML += `<p class="bg-blue-50 p-2 rounded-lg text-blue-800"><b>自分:</b> ${val}</p>`;
-            document.getElementById('inp').value = '';
+        function changeArea(key) {
+            const spot = spots[key];
+            document.getElementById('area-title').innerText = spot.title;
+            document.getElementById('area-detail').innerText = spot.detail;
+            
+            // リンク集の生成
+            const container = document.getElementById('links-container');
+            container.innerHTML = spot.links.map(l => `
+                <a href="${l.url}" target="_blank" class="bg-white p-4 rounded-2xl flex justify-between items-center shadow-sm border border-gray-100">
+                    <span class="text-sm font-bold text-gray-700">${l.name}</span>
+                    <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+                </a>
+            `).join('');
+
+            fetchSurfData(spot.lat, spot.lon);
+
+            // ボタンの色管理
+            const btns = document.querySelectorAll('button');
+            btns.forEach(b => {
+                b.classList.remove('bg-blue-600', 'text-white');
+                b.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            event.target.classList.add('bg-blue-600', 'text-white');
         }
 
-        fetchSurf();
+        // 初期表示
+        changeArea('ise');
     </script>
 </body>
 </html>
