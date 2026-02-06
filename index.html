@@ -3,161 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinki Surf Master Elite</title>
+    <title>SURF MASTER PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Permanent+Marker&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@700&family=Permanent+Marker&display=swap');
         
-        body {
-            margin: 0;
-            background: #000;
-            font-family: 'Helvetica Neue', sans-serif;
-        }
+        body { margin: 0; background: #f8fafc; font-family: 'Noto Sans JP', sans-serif; }
 
-        /* 動く背景：オシャレな海の画像/動画風 */
-        .video-bg {
-            fixed: fixed;
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -1;
-            background: url('https://images.unsplash.com/photo-1502680399488-63449813253b?auto=format&fit=crop&q=80&w=2070') no-repeat center center;
+        /* 上段：ヒーロー画像エリア */
+        .hero-section {
+            height: 40vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1502680399488-63449813253b?auto=format&fit=crop&q=80&w=1000');
             background-size: cover;
-            filter: brightness(0.5) saturate(1.2);
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* 中段：ボタンエリア */
+        .nav-section {
+            background: white;
+            padding: 15px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* 下段：カードのデザイン */
+        .spot-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid #f1f5f9;
         }
 
         .logo-font { font-family: 'Permanent Marker', cursive; }
         .accent-font { font-family: 'Montserrat', sans-serif; }
-
-        .spot-card {
-            transition: transform 0.3s ease;
-        }
-        .spot-card:active { transform: scale(0.98); }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-24">
 
-    <div class="video-bg"></div>
+    <div class="hero-section">
+        <h1 class="text-4xl font-bold logo-font italic tracking-tighter">
+            SURF MASTER <span class="text-blue-400 font-sans font-black italic">PRO</span>
+        </h1>
+        <p class="text-[10px] font-bold tracking-[0.4em] mt-2 opacity-90 uppercase">Kinki Area Session</p>
+    </div>
 
-    <header class="p-8 text-center">
-        <div class="inline-block border-b-2 border-blue-400 pb-1 mb-2">
-            <h1 class="text-4xl font-bold logo-font italic tracking-tighter text-white drop-shadow-lg">
-                SURF MASTER <span class="text-blue-400">ELITE</span>
-            </h1>
-        </div>
-        <p class="text-[10px] text-blue-200 font-black tracking-[0.3em] uppercase opacity-80">Kinki Coast Realtime Session</p>
-    </header>
-
-    <div class="sticky top-0 z-50 px-4 mb-8 py-4 backdrop-blur-sm">
-        <div class="flex gap-3 overflow-x-auto justify-center no-scrollbar">
-            <button onclick="filterArea('wakayama')" id="btn-wakayama" class="px-6 py-2 glass rounded-full text-xs font-black text-white uppercase tracking-widest transition-all">Wakayama</button>
-            <button onclick="filterArea('mie')" id="btn-mie" class="px-6 py-2 glass rounded-full text-xs font-black text-white uppercase tracking-widest transition-all opacity-50">Mie</button>
-            <button onclick="filterArea('kyoto')" id="btn-kyoto" class="px-6 py-2 glass rounded-full text-xs font-black text-white uppercase tracking-widest transition-all opacity-50">Kyoto</button>
+    <div class="nav-section">
+        <div class="flex gap-2 overflow-x-auto justify-center no-scrollbar px-2">
+            <button onclick="filterArea('wakayama')" id="btn-wakayama" class="flex-none px-6 py-2 bg-blue-600 text-white rounded-full text-xs font-bold transition-all shadow-md">和歌山</button>
+            <button onclick="filterArea('mie')" id="btn-mie" class="flex-none px-6 py-2 bg-slate-100 text-slate-500 rounded-full text-xs font-bold transition-all">三重</button>
+            <button onclick="filterArea('kyoto')" id="btn-kyoto" class="flex-none px-6 py-2 bg-slate-100 text-slate-500 rounded-full text-xs font-bold transition-all">京都</button>
         </div>
     </div>
 
-    <main id="spot-container" class="px-5 space-y-6 max-w-lg mx-auto"></main>
+    <main id="spot-container" class="px-5 py-6 space-y-4 max-w-lg mx-auto">
+        </main>
 
-    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm glass rounded-3xl flex justify-around p-4 shadow-2xl z-50">
-        <button onclick="useGPS()" class="flex flex-col items-center text-white/70 hover:text-white">
-            <i class="fas fa-location-arrow text-xl"></i>
-            <span class="text-[9px] font-bold mt-1 uppercase">Nearby</span>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-4 shadow-2xl z-50 text-slate-400">
+        <button onclick="useGPS()" class="flex flex-col items-center">
+            <i class="fas fa-location-arrow text-lg"></i>
+            <span class="text-[9px] font-bold mt-1">近くを探す</span>
         </button>
-        <div class="flex flex-col items-center text-blue-400">
-            <i class="fas fa-wave-square text-xl"></i>
-            <span class="text-[9px] font-bold mt-1 uppercase">Live</span>
+        <div class="flex flex-col items-center text-blue-600">
+            <i class="fas fa-house text-lg"></i>
+            <span class="text-[9px] font-bold mt-1">ホーム</span>
         </div>
-        <a href="https://www.windy.com" target="_blank" class="flex flex-col items-center text-white/70 hover:text-white">
-            <i class="fas fa-wind text-xl"></i>
-            <span class="text-[9px] font-bold mt-1 uppercase">Forecast</span>
+        <a href="https://www.windy.com" target="_blank" class="flex flex-col items-center">
+            <i class="fas fa-chart-simple text-lg"></i>
+            <span class="text-[9px] font-bold mt-1">詳細予報</span>
         </a>
     </nav>
 
     <script>
         const surfSpots = [
-            { area: 'wakayama', name: '磯ノ浦 / ISOKO', lat: 34.26, lon: 135.10, d: 'The holy place of Kansai surfing.' },
-            { area: 'wakayama', name: '那智 / NACHI', lat: 33.58, lon: 135.91, d: 'Deep south, beautiful reef & beach.' },
-            { area: 'mie', name: '国府の浜 / KOU', lat: 34.33, lon: 136.91, d: 'Main spot in Ise-Shima.' },
-            { area: 'kyoto', name: '八丁浜 / HATCHO', lat: 35.69, lon: 135.05, d: 'Tango crystal clear water.' }
+            { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '和歌山最メジャー。イソコ。' },
+            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '初心者〜中級者。混雑回避に。' },
+            { area: 'wakayama', name: '下里 / 那智', lat: 33.58, lon: 135.91, d: '南紀勝浦エリアの代表。' },
+            { area: 'mie', name: '国府の浜', lat: 34.33, lon: 136.91, d: '三重を代表するメッカ。' },
+            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '比較的混雑が緩和される。' },
+            { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '関西屈指。アクセス良好。' },
+            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '丹後最西端。砂付きで変化。' }
+            // 他のスポットも同様に追加可能
         ];
 
-        async function fetchSurfData(lat, lon, id) {
+        async function fetchSurf(lat, lon, id) {
             try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&marine=wave_height&daily=sunrise,sunset&timezone=Asia%2FTokyo`);
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&marine=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
+                document.getElementById(`w-${id}`).innerText = (data.current.wave_height || 0.4).toFixed(1);
+                document.getElementById(`t-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
                 
-                document.getElementById(`wave-${id}`).innerText = (data.current.wave_height || 0.4).toFixed(1);
-                document.getElementById(`temp-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
-                
-                // 簡易タイド風表示
-                const now = new Date().getHours();
-                const status = (now % 12 < 6) ? "Raising" : "Falling";
-                document.getElementById(`tide-${id}`).innerHTML = `<i class="fas fa-arrows-up-down mr-1"></i>${status}`;
+                const hours = new Date().getHours();
+                const tide = (hours % 12 < 6) ? "潮位：上昇中" : "潮位：下降中";
+                document.getElementById(`td-${id}`).innerText = tide;
             } catch (e) { console.error(e); }
         }
 
         function filterArea(area) {
             ['wakayama', 'mie', 'kyoto'].forEach(a => {
                 const btn = document.getElementById(`btn-${a}`);
-                btn.style.opacity = (a === area) ? "1" : "0.5";
-                btn.style.background = (a === area) ? "rgba(59, 130, 246, 0.5)" : "rgba(255, 255, 255, 0.1)";
+                if(a === area) {
+                    btn.className = "flex-none px-6 py-2 bg-blue-600 text-white rounded-full text-xs font-bold shadow-md transition-all";
+                } else {
+                    btn.className = "flex-none px-6 py-2 bg-slate-100 text-slate-500 rounded-full text-xs font-bold transition-all";
+                }
             });
 
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
-            
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const card = document.createElement('div');
-                card.className = 'spot-card glass rounded-[2.5rem] p-7 shadow-2xl relative overflow-hidden';
+                card.className = 'spot-card p-5 animate-fade-in-up';
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-6">
+                    <div class="flex justify-between items-start mb-4">
                         <div>
-                            <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">${spot.area} Session</p>
-                            <h3 class="accent-font text-2xl font-black text-white tracking-tighter">${spot.name}</h3>
+                            <h3 class="text-xl font-black text-slate-800">${spot.name}</h3>
+                            <p class="text-[10px] text-slate-400 font-bold mt-1">${spot.d}</p>
                         </div>
-                        <div id="tide-${i}" class="text-[10px] font-black text-white/50 bg-white/10 px-3 py-1 rounded-full uppercase tracking-tighter">
-                            Checking...
-                        </div>
+                        <span id="td-${i}" class="text-[9px] font-bold bg-blue-50 text-blue-500 px-2 py-1 rounded">読込中...</span>
                     </div>
-                    
-                    <div class="flex items-end justify-between">
-                        <div class="flex items-baseline gap-1">
-                            <span id="wave-${i}" class="accent-font text-6xl font-black text-white">--</span>
-                            <span class="text-xl font-bold text-blue-400 uppercase italic">m</span>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-blue-50/50 rounded-2xl p-3">
+                            <p class="text-[9px] font-bold text-blue-400 uppercase">Wave</p>
+                            <p class="accent-font text-3xl font-black text-blue-600"><span id="w-${i}">--</span><span class="text-sm ml-1">m</span></p>
                         </div>
-                        <div class="text-right">
-                            <p class="text-[10px] font-black text-white/40 uppercase mb-1">Current Air</p>
-                            <p id="temp-${i}" class="accent-font text-2xl font-black text-white italic">--°C</p>
+                        <div class="bg-slate-50 rounded-2xl p-3">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Temp</p>
+                            <p class="accent-font text-3xl font-black text-slate-700"><span id="t-${i}">--</span></p>
                         </div>
-                    </div>
-
-                    <div class="mt-6 pt-4 border-t border-white/10">
-                        <p class="text-[11px] text-white/60 leading-relaxed italic font-medium">"${spot.d}"</p>
                     </div>
                 `;
                 container.appendChild(card);
-                fetchSurfData(spot.lat, spot.lon, i);
+                fetchSurf(spot.lat, spot.lon, i);
             });
         }
 
         function useGPS() {
             navigator.geolocation.getCurrentPosition((p) => {
                 const la = p.coords.latitude;
-                if(la > 35) filterArea('kyoto');
-                else if(la > 34.2) filterArea('wakayama');
-                else filterArea('mie');
+                if(la > 35) filterArea('kyoto'); else if(la > 34.2) filterArea('wakayama'); else filterArea('mie');
             });
         }
 
