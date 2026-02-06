@@ -3,79 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinki Surf Master Pro +Weather</title>
+    <title>Kinki Surf Master Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
         .logo-font { font-family: 'Permanent Marker', cursive; }
         body { background: #0f172a; min-height: 100vh; color: white; }
-        .glass-card { background: rgba(255, 255, 255, 0.98); color: #1e293b; }
+        .glass-card { background: rgba(255, 255, 255, 0.98); color: #1e293b; transition: 0.3s; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-28">
 
     <header class="p-6 text-center">
-        <h1 class="text-3xl font-bold logo-font italic tracking-wider uppercase text-blue-400">Surf Master Pro</h1>
-        <p class="text-[10px] opacity-70 mt-1 font-bold">Weather & Wave Realtime</p>
+        <h1 class="text-3xl font-bold logo-font italic tracking-wider text-blue-400">SURF MASTER PRO</h1>
+        <div id="near-info" class="text-[10px] text-orange-400 font-bold mt-1">和歌山・三重・京都 全スポット対応</div>
     </header>
 
     <div class="sticky top-0 z-10 px-4 mb-6 bg-[#0f172a]/95 backdrop-blur-md py-3">
         <div class="flex gap-2 overflow-x-auto justify-center no-scrollbar">
-            <button onclick="filterArea('wakayama')" id="btn-wakayama" class="px-5 py-2 bg-blue-600 rounded-full text-sm font-bold transition-all">和歌山</button>
-            <button onclick="filterArea('mie')" id="btn-mie" class="px-5 py-2 bg-slate-700 rounded-full text-sm font-bold transition-all">三重</button>
-            <button onclick="filterArea('kyoto')" id="btn-kyoto" class="px-5 py-2 bg-slate-700 rounded-full text-sm font-bold transition-all">京都</button>
+            <button onclick="filterArea('wakayama')" id="btn-wakayama" class="px-5 py-2 bg-blue-600 rounded-full text-sm font-bold shadow-lg">和歌山</button>
+            <button onclick="filterArea('mie')" id="btn-mie" class="px-5 py-2 bg-slate-700 rounded-full text-sm font-bold">三重</button>
+            <button onclick="filterArea('kyoto')" id="btn-kyoto" class="px-5 py-2 bg-slate-700 rounded-full text-sm font-bold">京都</button>
         </div>
     </div>
 
-    <main id="spot-container" class="px-4 space-y-6"></main>
+    <main id="spot-container" class="px-4 space-y-4"></main>
 
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-3 shadow-2xl z-20 text-slate-400">
-        <button onclick="getLocation()" class="flex flex-col items-center">
-            <i class="fas fa-location-arrow text-xl"></i>
-            <span class="text-[10px] font-bold mt-1">現在地</span>
+        <button onclick="useGPS()" class="flex flex-col items-center">
+            <i class="fas fa-location-dot text-xl"></i>
+            <span class="text-[10px] font-bold mt-1">近くを探す</span>
         </button>
         <div class="flex flex-col items-center text-blue-600">
-            <i class="fas fa-home text-xl"></i>
+            <i class="fas fa-house text-xl"></i>
             <span class="text-[10px] font-bold mt-1">ホーム</span>
         </div>
         <a href="https://www.windy.com" target="_blank" class="flex flex-col items-center">
-            <i class="fas fa-chart-line text-xl"></i>
-            <span class="text-[10px] font-bold mt-1">詳細予報</span>
+            <i class="fas fa-wind text-xl"></i>
+            <span class="text-[10px] font-bold mt-1">Windy</span>
         </a>
     </nav>
 
     <script>
         const surfSpots = [
-            { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '和歌山最メジャー。' },
-            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '混雑回避のサブ。' },
-            { area: 'mie', name: '国府の浜', lat: 34.33, lon: 136.91, d: '三重のメッカ。' },
-            { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '丹後のメイン。' }
+            { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '和歌山最メジャー' },
+            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '混雑回避・初心者向き' },
+            { area: 'wakayama', name: '那智 / 下里', lat: 33.58, lon: 135.91, d: '南紀を代表する美ビーチ' },
+            { area: 'mie', name: '国府の浜', lat: 34.33, lon: 136.91, d: '三重のメッカ。ポイント多数' },
+            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '比較的空いているビーチ' },
+            { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '丹後屈指のメジャーポイント' },
+            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '丹後最西端、砂付きで変化' },
+            { area: 'kyoto', name: '浜詰', lat: 35.66, lon: 134.97, d: '北東風を避けられる' }
         ];
 
-        // 天気アイコンの変換
-        function getWeatherIcon(code) {
-            if (code <= 1) return 'fa-sun text-orange-400';
-            if (code <= 3) return 'fa-cloud-sun text-slate-400';
-            if (code <= 61) return 'fa-cloud-showers-heavy text-blue-400';
-            return 'fa-cloud text-slate-500';
-        }
-
-        async function fetchAllData(lat, lon, id) {
+        async function fetchAll(lat, lon, id) {
             try {
-                // 波と天気を同時に取得
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&marine=wave_height&timezone=Asia%2FTokyo`);
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&marine=wave_height&daily=sunrise,sunset&timezone=Asia%2FTokyo`);
                 const data = await res.json();
                 
-                // 表示の書き換え
                 document.getElementById(`temp-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
                 document.getElementById(`wave-${id}`).innerText = (data.current.wave_height || 0.5) + 'm';
-                const icon = document.getElementById(`icon-${id}`);
-                icon.className = `fas ${getWeatherIcon(data.current.weather_code)} text-2xl`;
-            } catch (e) {
-                console.error(e);
-            }
+                
+                // タイドの代わりに日の出・日の入を表示（潮位データは別のAPIが必要なため、まずはここから）
+                document.getElementById(`tide-${id}`).innerText = '日出 ' + data.daily.sunrise[0].split('T')[1];
+            } catch (e) { console.error(e); }
         }
 
         function filterArea(area) {
@@ -90,40 +83,36 @@
             
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const card = document.createElement('div');
-                card.className = 'glass-card rounded-3xl p-6 shadow-2xl animate-fade-in';
+                card.className = 'glass-card rounded-3xl p-5 shadow-xl';
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h3 class="font-black text-2xl mb-1">${spot.name}</h3>
-                            <p class="text-xs text-slate-400 font-bold italic">${spot.d}</p>
-                        </div>
-                        <i id="icon-${i}" class="fas fa-circle-notch fa-spin text-2xl text-slate-200"></i>
+                        <h3 class="font-black text-xl">${spot.name}</h3>
+                        <span id="tide-${i}" class="text-[9px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500 uppercase">Loading...</span>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-blue-50 rounded-2xl p-4 text-center">
-                            <p class="text-[10px] font-black text-blue-400 uppercase mb-1">Wave Height</p>
-                            <p id="wave-${i}" class="text-3xl font-black text-blue-600">--m</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-blue-50 rounded-2xl p-3 text-center">
+                            <p class="text-[9px] font-bold text-blue-400 uppercase">Wave</p>
+                            <p id="wave-${i}" class="text-2xl font-black text-blue-600">--m</p>
                         </div>
-                        <div class="bg-orange-50 rounded-2xl p-4 text-center">
-                            <p class="text-[10px] font-black text-orange-400 uppercase mb-1">Temperature</p>
-                            <p id="temp-${id = i}" class="text-3xl font-black text-orange-600">--°C</p>
+                        <div class="bg-orange-50 rounded-2xl p-3 text-center">
+                            <p class="text-[9px] font-bold text-orange-400 uppercase">Temp</p>
+                            <p id="temp-${i}" class="text-2xl font-black text-orange-600">--°C</p>
                         </div>
                     </div>
                 `;
                 container.appendChild(card);
-                fetchAllData(spot.lat, spot.lon, i);
+                fetchAll(spot.lat, spot.lon, i);
             });
         }
 
-        function getLocation() {
-            alert("現在地に近いスポットを探します（ブラウザの許可が必要です）");
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const lat = position.coords.latitude;
-                    // ここに一番近いエリアを判定するロジックを今後追加できます
-                    filterArea('wakayama'); 
-                });
-            }
+        function useGPS() {
+            navigator.geolocation.getCurrentPosition((p) => {
+                const la = p.coords.latitude;
+                if(la > 35) filterArea('kyoto');
+                else if(la > 34.2) filterArea('wakayama');
+                else filterArea('mie');
+                document.getElementById('near-info').innerText = "現在地から近いエリアを表示しました！";
+            });
         }
 
         filterArea('wakayama');
