@@ -21,8 +21,6 @@
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
         .spot-card { background: #1e293b; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #334155; cursor: pointer; }
         .info-box { background: rgba(15, 23, 42, 0.7); border-radius: 20px; padding: 20px; text-align: center; }
-        
-        /* 下段メニューを横スクロール可能に修正 */
         .bottom-nav { 
             position: fixed; bottom: 0; left: 0; right: 0; 
             background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); 
@@ -57,7 +55,7 @@
         <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind"></i><span>風情報</span></a>
         <a href="https://www.google.com" target="_blank" class="nav-item text-white"><i class="fab fa-chrome"></i><span>Google検索</span></a>
         <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-400"><i class="fas fa-water"></i><span>潮見表</span></a>
-        <a href="https://weathernews.jp" target="_blank" class="nav-item"><i class="fas fa-cloud-sun"></i><span>天気予報</span></a>
+        <a href="https://weathernews.jp" target="_blank" class="nav-item text-orange-400"><i class="fas fa-cloud-sun"></i><span>天気予報</span></a>
     </nav>
 
     <script>
@@ -110,8 +108,8 @@
                         <span id="wind-${i}" class="text-[11px] text-blue-400 font-bold bg-blue-900/30 px-3 py-1 rounded-full border border-blue-900/50">--</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="info-box"><p class="text-[9px] text-blue-300 mb-1">WAVE</p><p class="text-3xl font-black"><span id="w-${i}">--</span><span class="text-xs ml-1">m</span></p></div>
-                        <div class="info-box"><p class="text-[9px] text-orange-300 mb-1">TEMP</p><p id="t-${i}" class="text-3xl font-black">--</p></div>
+                        <div class="info-box"><p class="text-[10px] text-blue-300 mb-1 font-bold">波の高さ</p><p class="text-3xl font-black"><span id="w-${i}">--</span><span class="text-xs ml-1">m</span></p></div>
+                        <div class="info-box"><p class="text-[10px] text-orange-300 mb-1 font-bold">気温</p><p id="t-${i}" class="text-3xl font-black">--</p></div>
                     </div>
                     <p class="mt-4 text-[10px] text-slate-500 italic">"${spot.d}"</p>
                 `;
@@ -130,7 +128,7 @@
                 else if(la > 34.1) filterArea('wakayama'); 
                 else filterArea('mie');
                 window.scrollTo({top: 250, behavior:'smooth'});
-            }, (err) => { alert("位置情報が取得できませんでした。設定を確認してください。"); }, { enableHighAccuracy: true, timeout: 5000 });
+            }, (err) => { alert("位置情報が取得できませんでした。"); }, { enableHighAccuracy: true, timeout: 5000 });
         }
         filterArea('wakayama');
     </script>
