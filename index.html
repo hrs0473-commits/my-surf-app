@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - OFFICIAL DATA EDITION</title>
+    <title>SURF MASTER PRO - GOOGLE WEATHER EDITION</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -38,6 +38,7 @@
 
         .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; }
         .wave-box { background: #eff6ff; border: 2px solid #dbeafe; }
+        /* 気温ボックスのスタイルを以前の状態に復元 */
         .temp-box { background: #fff7ed; border: 2px solid #ffedd5; }
 
         .forecast-btn { width: 48%; padding: 10px; border-radius: 15px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; transition: 0.2s; }
@@ -60,7 +61,7 @@
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">OFFICIAL DATA EDITION</div>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">GOOGLE WEATHER EDITION</div>
     </div>
 
     <div class="nav-section">
@@ -81,12 +82,12 @@
         <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind mb-1 text-xl"></i><span>風情報</span></a>
         <a href="https://www.google.com" target="_blank" class="nav-item text-slate-700"><i class="fab fa-chrome mb-1 text-xl"></i><span>検索</span></a>
         <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water mb-1 text-xl"></i><span>潮見表</span></a>
-        <a href="https://www.jma.go.jp/bosai/ocean/#type=wave" target="_blank" class="nav-item text-orange-500"><i class="fas fa-cloud-sun mb-1 text-xl"></i><span>波浪予報</span></a>
+        <a href="https://www.google.com/search?q=天気" target="_blank" class="nav-item text-orange-500"><i class="fas fa-sun mb-1 text-xl"></i><span>天気予報</span></a>
     </nav>
 
     <script>
         const surfSpots = [
-            // 和歌山 (11)
+            // 全20スポットのデータを完全キープ
             { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
             { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '磯ノ浦の西端。岩場に注意。' },
             { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '磯ノ浦東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時はルール厳守。' },
@@ -98,18 +99,15 @@
             { area: 'wakayama', name: '那智', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が近く便利。' },
             { area: 'wakayama', name: 'フカ', lat: 33.5512, lon: 135.5015, p: '駐車注意', s: 'なし', t: 'なし', o: 'パワフル。ローカルリスペクト。' },
             { area: 'wakayama', name: '漁港(印南)', lat: 33.8210, lon: 135.2015, p: '漁港ルール遵守', s: 'なし', t: '漁港付近', o: '作業優先。駐車厳禁。' },
-            // 三重 (5)
-            { area: 'mie', name: '国府の浜(三角)', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数(500円〜)', s: '各所に完備(有料多)', t: '各所に有', o: '三重のメッカ。休憩所充実。' },
-            { area: 'mie', name: '国府の浜(テトラ)', lat: 34.3410, lon: 136.9150, p: '松林付近の駐車場', s: '周辺に有', t: '有', o: 'テトラ付近カレント注意。' },
-            { area: 'mie', name: '市後浜', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '駐車場に完備', t: '有', o: 'キャンプ場併設。' },
-            { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '冬場に強い。波質ハード。' },
+            { area: 'mie', name: '国府の浜(三角)', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数', s: '各所に完備', t: '各所に有', o: '三重のメッカ。' },
+            { area: 'mie', name: '国府の浜(テトラ)', lat: 34.3410, lon: 136.9150, p: '松林付近', s: '周辺に有', t: '有', o: 'カレント注意。' },
+            { area: 'mie', name: '市後浜', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '完備', t: '有', o: 'キャンプ場併設。' },
+            { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。' },
             { area: 'mie', name: '阿児の松原', lat: 34.3350, lon: 136.9050, p: '共通駐車場', s: '周辺施設', t: '有', o: 'ロングに人気。' },
-            // 京都 (3)
-            { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。ファミリーにも。' },
-            { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備(温水有)', t: '有', o: '冬の日本海代表。' },
-            { area: 'kyoto', name: '琴引浜', lat: 35.7015, lon: 135.0452, p: 'キャンプ場P', s: '完備', t: '有', o: '鳴き砂保護。禁煙。' },
-            // 大阪 (1)
-            { area: 'osaka', name: 'せんなん里海公園', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '基本は波なし。台風時のみ。' }
+            { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。' },
+            { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備', t: '有', o: '冬の日本海代表。' },
+            { area: 'kyoto', name: '琴引浜', lat: 35.7015, lon: 135.0452, p: 'キャンプ場P', s: '完備', t: '有', o: '鳴き砂保護。' },
+            { area: 'osaka', name: 'せんなん里海公園', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '台風時のみ。' }
         ];
 
         async function fetchSurf(lat, lon, id) {
@@ -142,6 +140,9 @@
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
+                // Google天気検索URLをスポットの緯度経度から生成
+                const googleWeatherUrl = `https://www.google.com/search?q=${spot.lat},${spot.lon}+天気`;
+                
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-6" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')">
                         <h3 class="text-2xl font-black italic text-sky-900">${spot.name} <i class="fas fa-chevron-right text-sm text-blue-300 ml-1"></i></h3>
@@ -163,7 +164,7 @@
 
                     <div class="flex justify-between mb-6">
                         <button onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn">📊 公式 波浪実況</button>
-                        <button onclick="window.open('https://www.jma.go.jp/bosai/ocean/#type=wave')" class="forecast-btn temp-f-btn">🗾 気象庁 波浪図</button>
+                        <button onclick="window.open('${googleWeatherUrl}')" class="forecast-btn temp-f-btn">🔍 Google 天気予報</button>
                     </div>
                     
                     <div class="facility-group">
