@@ -11,7 +11,6 @@
         body { margin: 0; background: #0f172a; font-family: 'Noto Sans JP', sans-serif; color: #f8fafc; }
         .hero-section {
             height: 250px; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            /* 今ある画像ファイル名に正確に合わせました */
             background: linear-gradient(rgba(15,23,42,0.2), rgba(15,23,42,1)), url('1770389433670.png'), #0c4a6e;
             background-size: cover; background-position: center;
         }
@@ -20,10 +19,10 @@
         .nav-section { background: #0f172a; padding: 15px 0; border-bottom: 1px solid #1e293b; position: sticky; top: 0; z-index: 100; }
         .nav-btn { flex: none; padding: 10px 20px; margin: 0 5px; background: #1e293b; color: #64748b; border-radius: 12px; font-size: 14px; font-weight: 900; }
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-        .spot-card { background: #1e293b; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #334155; }
+        .spot-card { background: #1e293b; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #334155; cursor: pointer; }
         .info-box { background: rgba(15, 23, 42, 0.7); border-radius: 20px; padding: 20px; text-align: center; }
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); padding: 20px; display: flex; justify-content: space-around; border-top: 1px solid #1e293b; z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; text-decoration: none; font-weight: 900; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; text-decoration: none; font-weight: 900; background: none; border: none; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -41,17 +40,21 @@
         </div>
     </div>
     <main id="spot-container" class="px-5 py-6 max-w-md mx-auto"></main>
+
     <nav class="bottom-nav">
         <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs text-xl mb-1"></i><span>近くを探す</span></button>
         <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item"><i class="fas fa-home text-xl mb-1"></i><span>HOME</span></button>
-        <button onclick="alert('スポット名をタップすると個別のマップが開きます！')" class="nav-item text-green-500"><i class="fas fa-map-marked-alt text-xl mb-1"></i><span>MAP案内</span></button>
+        <a href="https://www.google.com/maps/search/%E3%82%B5%E3%83%BC%E3%83%95%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88/" target="_blank" class="nav-item text-green-500">
+            <i class="fas fa-map-marked-alt text-xl mb-1"></i><span>Googleマップ</span>
+        </a>
         <a href="https://weathernews.jp" target="_blank" class="nav-item"><i class="fas fa-cloud-sun text-xl mb-1"></i><span>天気予報</span></a>
     </nav>
+
     <script>
         const surfSpots = [
             { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, d: '和歌山メジャー。通称イソコ。' },
-            { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, d: '磯ノ浦の西側。' },
-            { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, d: '磯ノ浦の東奥。' },
+            { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, d: '磯ノ浦の西側ポイント。' },
+            { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, d: '磯ノ浦の東奥エリア。' },
             { area: 'wakayama', name: '浜の宮', lat: 34.1738, lon: 135.1882, d: '広いビーチ。' },
             { area: 'wakayama', name: '淡島神社', lat: 34.2750, lon: 135.0645, d: '中級者向けリーフ。' },
             { area: 'wakayama', name: 'ゴロゴロ', lat: 33.7225, lon: 135.3441, d: '南部のメジャーポイント。' },
@@ -60,14 +63,14 @@
             { area: 'wakayama', name: '那智', lat: 33.6385, lon: 135.9392, d: '那智勝浦エリア。' },
             { area: 'wakayama', name: 'フカ', lat: 33.5512, lon: 135.5015, d: '南部のリーフ。' },
             { area: 'wakayama', name: '漁港(印南)', lat: 33.8210, lon: 135.2015, d: '印南漁港付近。' },
-            { area: 'mie', name: '国府の浜(三角)', lat: 34.3325, lon: 136.9125, d: '三重のメインスポット。' },
+            { area: 'mie', name: '国府の浜(三角)', lat: 34.3325, lon: 136.9125, d: '三重のメッカ。メイン。' },
             { area: 'mie', name: '国府の浜(テトラ)', lat: 34.3410, lon: 136.9150, d: 'テトラ付近のブレイク。' },
             { area: 'mie', name: '市後浜', lat: 34.3215, lon: 136.9080, d: '落ち着いたビーチ。' },
-            { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, d: '中上級者向け。' },
+            { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, d: 'パワフル。中上級者向け。' },
             { area: 'mie', name: '阿児の松原', lat: 34.3350, lon: 136.9050, d: '長いロングビーチ。' },
-            { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, d: '丹後エリアの代表。' },
-            { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, d: '冬場の定番。' },
-            { area: 'kyoto', name: '琴引浜', lat: 35.7015, lon: 135.0452, d: '鳴き砂。' },
+            { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, d: '丹後エリアの代表格。' },
+            { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, d: '冬場の定番スポット。' },
+            { area: 'kyoto', name: '琴引浜', lat: 35.7015, lon: 135.0452, d: '鳴き砂。うねりに敏感。' },
             { area: 'osaka', name: 'せんなん里海公園', lat: 34.3435, lon: 135.1855, d: '大阪唯一。風次第。' }
         ];
 
@@ -83,18 +86,20 @@
 
         function filterArea(area) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`btn-${area}`).classList.add('active');
+            const btn = document.getElementById(`btn-${area}`);
+            if(btn) btn.classList.add('active');
+            
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
             
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
-                // タップでGoogleマップが開くように修正
-                div.onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}`);
+                // スポットをタップで個別マップを開く
+                div.onclick = () => window.open(`https://www.google.com/maps?q=${spot.lat},${spot.lon}`);
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-5">
-                        <h3 class="text-xl font-bold italic text-white">${spot.name} <i class="fas fa-map-marker-alt text-blue-400 text-sm ml-1"></i></h3>
+                        <h3 class="text-xl font-bold italic text-white">${spot.name} <i class="fas fa-external-link-alt text-xs opacity-50 ml-1"></i></h3>
                         <span id="wind-${i}" class="text-[11px] text-blue-400 font-bold bg-blue-900/30 px-3 py-1 rounded-full border border-blue-900/50">--</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
@@ -109,12 +114,23 @@
         }
 
         function useGPS() {
-            if (!navigator.geolocation) return;
+            if (!navigator.geolocation) {
+                alert("GPSが使えない端末です");
+                return;
+            }
+            // 反応を良くするためにオプションを追加
             navigator.geolocation.getCurrentPosition((p) => {
                 const la = p.coords.latitude;
-                if(la > 35) filterArea('kyoto'); else if(la > 34.3) filterArea('osaka'); else if(la > 34.1) filterArea('wakayama'); else filterArea('mie');
-            });
+                if(la > 35) filterArea('kyoto'); 
+                else if(la > 34.3) filterArea('osaka'); 
+                else if(la > 34.1) filterArea('wakayama'); 
+                else filterArea('mie');
+                window.scrollTo({top: 250, behavior:'smooth'});
+            }, (err) => {
+                alert("位置情報の許可をオンにしてください");
+            }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
         }
+
         filterArea('wakayama');
     </script>
 </body>
