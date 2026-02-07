@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - PERFECT FINAL</title>
+    <title>SURF MASTER PRO - ULTIMATE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@400;900&family=Permanent+Marker&display=swap');
         body { margin: 0; background: #f0f9ff; color: #1e293b; font-family: 'Noto Sans JP', sans-serif; background-image: radial-gradient(#bae6fd 0.5px, transparent 0.5px); background-size: 20px 20px; }
         
-        /* タイトルをさらに下げて背景のサーファーを完全に見せる */
         .hero-section { 
-            height: 400px; width: 100%; display: flex; flex-direction: column; 
+            height: 380px; width: 100%; display: flex; flex-direction: column; 
             justify-content: flex-end; align-items: center; 
-            padding-bottom: 30px; 
-            background: linear-gradient(rgba(0,0,0,0) 50%, rgba(240,249,255,1) 100%), url('1770389433670.png'); 
-            background-size: cover; background-position: center 30%; border-bottom: 4px solid #3b82f6; 
+            padding-bottom: 50px; 
+            background: linear-gradient(rgba(0,0,0,0) 40%, rgba(240,249,255,1) 100%), url('1770389433670.png'); 
+            background-size: cover; background-position: center; border-bottom: 4px solid #3b82f6; 
         }
         
         .hero-title { font-family: 'Permanent Marker', cursive; font-size: 3rem; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
@@ -34,11 +33,9 @@
         .forecast-btn { padding: 12px; border-radius: 15px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; cursor: pointer; }
         .wave-f-btn { color: #0369a1; border-color: #3b82f6; background: #f0f9ff; }
         .temp-f-btn { color: #9a3412; border-color: #f59e0b; background: #fff7ed; }
-        /* 潮汐ボタンの色をより鮮やかに */
-        .tide-f-btn { color: #0e7490; border-color: #06b6d4; background: #ecfeff; width: 100%; margin-top: 10px; display: block; }
+        .tide-f-btn { color: #0891b2; border-color: #22d3ee; background: #ecfeff; width: 100%; margin-top: 10px; display: block; }
         
-        /* 復活させた詳細情報エリア */
-        .facility-group { margin-top: 20px; background: #fffaf0; border-radius: 25px; padding: 20px; border: 1px solid #fef3c7; }
+        .facility-group { margin-top: 15px; background: #fffaf0; border-radius: 25px; padding: 20px; border: 1px solid #fef3c7; }
         .facility-item { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 15px; line-height: 1.5; color: #334155; }
         .facility-icon { color: #f59e0b; margin-right: 12px; margin-top: 4px; width: 22px; text-align: center; }
         .facility-label { font-weight: 900; color: #0369a1; margin-right: 8px; font-size: 13px; }
@@ -50,7 +47,7 @@
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="hero-subtitle">PREMIUM SURF NAVI</div>
+        <div class="hero-subtitle">PREMIUM ALL-STARS</div>
     </div>
 
     <div class="nav-section">
@@ -64,24 +61,36 @@
 
     <main id="spot-container" class="px-5 py-8 max-w-md mx-auto"></main>
 
-    <nav class="bottom-nav">
-        <button onclick="useGPS()" class="nav-item border-none bg-transparent"><i class="fas fa-crosshairs mb-1 text-xl text-blue-500"></i><span>近くを探す</span></button>
-        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item border-none bg-transparent"><i class="fas fa-home mb-1 text-xl"></i><span>HOME</span></button>
-        <a href="https://www.google.co.jp/maps/search/サーフィン" target="_blank" class="nav-item"><i class="fas fa-map-marked-alt mb-1 text-xl text-green-600"></i><span>マップ</span></a>
-        <a href="https://www.windy.com" target="_blank" class="nav-item"><i class="fas fa-wind mb-1 text-xl text-blue-400"></i><span>風情報</span></a>
-        <a href="https://www.data.jma.go.jp/gmd/tide/tide_pred/" target="_blank" class="nav-item"><i class="fas fa-water mb-1 text-xl text-cyan-500"></i><span>潮位表</span></a>
-    </nav>
-
     <script>
-        // スポット情報を全復元
         const surfSpots = [
-            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', t_site: '和歌山', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
-            { area: 'wakayama', name: '浜の宮', q: '和歌山市 天気', t_site: '和歌山', lat: 34.1738, lon: 135.1882, p: '海水浴場駐車場有', s: '夏季のみシャワー有', t: '公衆トイレ完備', o: 'マリーナシティ目前。' },
-            { area: 'wakayama', name: '那智', q: '那智勝浦町 天気', t_site: '勝浦', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が近く便利。水質最高。' },
-            { area: 'mie', name: '国府の浜', q: '志摩市 天気', t_site: '鳥羽', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数', s: '各所に完備(有料・無料)', t: '各所に有', o: '三重のメッカ。初心者から上級者まで。' },
-            { area: 'mie', name: '南張', q: '南張 天気', t_site: '御座', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。中上級者向け。' },
-            { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', t_site: '舞鶴', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。家族連れにも人気。' },
-            { area: 'osaka', name: 'せんなん里海公園', q: '岬町 天気', t_site: '淡輪', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '台風時や強い西うねりのみサーフ可能。' }
+            // --- 和歌山 (9) ---
+            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: '巨大P(1000円〜)', s: '温水・更衣室完備', t: '有', o: '関西のメッカ。通年人気。' },
+            { area: 'wakayama', name: '西磯', q: '和歌山市 天気', lat: 34.2595, lon: 135.0963, p: '磯ノ浦P利用', s: '共通設備', t: '有', o: '磯ノ浦の西側。岩場あり中級者向け。' },
+            { area: 'wakayama', name: '奥磯', q: '和歌山市 天気', lat: 34.2605, lon: 135.1120, p: '東側P至近', s: '有', t: '有', o: 'メインが混雑した時に。' },
+            { area: 'wakayama', name: '淡島神社', q: '和歌山市 天気', lat: 34.2721, lon: 135.0602, p: '近隣有料P', s: '小規模', t: '有', o: '中級者以上の岩場ポイント。' },
+            { area: 'wakayama', name: '浜の宮', q: '和歌山市 天気', lat: 34.1738, lon: 135.1882, p: '海水浴場P有', s: '夏季シャワー', t: '完備', o: 'マリーナ目前。練習に最適。' },
+            { area: 'wakayama', name: 'ゴロゴロ', q: '和歌山県 印南町 天気', lat: 33.8210, lon: 135.2120, p: '有料P・空地', s: '近隣有', t: '有', o: '印南エリア。パワフルな波。' },
+            { area: 'wakayama', name: 'モーテル下', q: '和歌山県 白浜町 天気', lat: 33.6820, lon: 135.3350, p: '近隣P有', s: '有', t: '有', o: '白浜周辺。リーフ中心。' },
+            { area: 'wakayama', name: '下里', q: '那智勝浦町 天気', lat: 33.5820, lon: 135.9150, p: 'ビーチ横P', s: '有', t: '有', o: '静かなビーチ。水質良。' },
+            { area: 'wakayama', name: '那智', q: '那智勝浦町 天気', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '完備', t: '有', o: '道の駅隣接。水質抜群。' },
+            
+            // --- 三重 (5) ---
+            { area: 'mie', name: '国府の浜', q: '志摩市 天気', lat: 34.3325, lon: 136.9125, p: '民間P多数', s: '各所に有', t: '各所に有', o: '三重のメッカ。広い砂浜。' },
+            { area: 'mie', name: '市後浜', q: '志摩市 天気', lat: 34.3215, lon: 136.9080, p: '有料P有', s: '完備', t: '有', o: 'キャンプ場併設。' },
+            { area: 'mie', name: '阿児の松原', q: '志摩市 天気', lat: 34.3380, lon: 136.9050, p: '民間P', s: '有', t: '有', o: '国府の浜の北側。' },
+            { area: 'mie', name: '南張', q: '志摩市 天気', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。中上級者向け。' },
+            { area: 'mie', name: 'ジャン', q: '志摩市 天気', lat: 34.3100, lon: 136.8800, p: '限られたP', s: '無', t: '無', o: 'リーフポイント。上級者限定。' },
+
+            // --- 京都 (6) ---
+            { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '日本海代表スポット。通年波が立ちやすい。' },
+            { area: 'kyoto', name: '浜詰(夕日ヶ浦)', q: '京丹後市 天気', lat: 35.6690, lon: 134.9250, p: '浜詰園地P', s: '無料水シャワー有', t: '完備', o: '北東風をかわしやすい。景色最高。' },
+            { area: 'kyoto', name: '葛野浜', q: '京丹後市 天気', lat: 35.6420, lon: 134.9080, p: '夏季有料P有', s: '夏季有', t: '有', o: 'うねりに敏感なロングビーチ。' },
+            { area: 'kyoto', name: '小天橋', q: '京丹後市 天気', lat: 35.6312, lon: 134.8950, p: '駐車場完備', s: '有', t: '有', o: '西風に強い。浜詰がクローズの時に。' },
+            { area: 'kyoto', name: '神崎', q: '舞鶴市 天気', lat: 35.5350, lon: 135.2420, p: '海水浴場P(広大)', s: '有', t: '有', o: '舞鶴エリアの代表格。風をかわしやすい。' },
+            { area: 'kyoto', name: '平', q: '京丹後市 天気', lat: 35.7530, lon: 135.1580, p: 'キャンプ場P', s: '有', t: '有', o: '丹後の穴場ポイント。' },
+
+            // --- 大阪 (1) ---
+            { area: 'osaka', name: 'せんなん里海公園', q: '岬町 天気', lat: 34.3435, lon: 135.1855, p: '巨大P有', s: '完備', t: '有', o: '台風・西うねり時限定。' }
         ];
 
         async function fetchSurf(lat, lon, i) {
@@ -89,12 +98,11 @@
                 const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&marine=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
                 const wave = data.current.wave_height || 0.4;
-                const temp = Math.round(data.current.temperature_2m);
                 document.getElementById(`w-val-${i}`).innerText = wave.toFixed(1);
-                document.getElementById(`t-val-${i}`).innerText = temp + '°C';
+                document.getElementById(`t-val-${i}`).innerText = Math.round(data.current.temperature_2m) + '°C';
                 document.getElementById(`wind-${i}`).innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
-                document.getElementById(`w-icon-${i}`).className = `fas fa-water text-3xl mb-2 text-blue-500`;
-                document.getElementById(`t-icon-${i}`).className = `fas fa-cloud-sun text-3xl mb-2 text-orange-400`;
+                document.getElementById(`w-icon-${i}`).className = "fas fa-water text-3xl mb-2 text-blue-500";
+                document.getElementById(`t-icon-${i}`).className = "fas fa-cloud-sun text-3xl mb-2 text-orange-400";
             } catch (e) { console.error(e); }
         }
 
@@ -108,13 +116,12 @@
                 const div = document.createElement('div');
                 div.className = 'spot-card';
                 const weatherUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.q)}`;
-                // 404が出ない安定した潮汐サイト(Chowari)の検索URLへ変更
-                const tideUrl = `https://tide.chowari.jp/search/?q=${encodeURIComponent(spot.t_site)}`;
-                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}`;
+                const tideUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.name + " 潮見表 タイドグラフ")}`;
+                const mapUrl = `http://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}`;
                 
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-6" onclick="window.open('${mapUrl}')">
-                        <h3 class="text-2xl font-black italic text-sky-900">${spot.name} <i class="fas fa-chevron-right text-sm text-blue-300 ml-1"></i></h3>
+                        <h3 class="text-2xl font-black italic text-sky-900">${spot.name} <i class="fas fa-map-marker-alt text-sm text-blue-400 ml-1"></i></h3>
                         <div class="text-right"><p class="text-[9px] font-bold text-blue-400 uppercase">Wind</p><span id="wind-${i}" class="text-xs font-black text-sky-700">-- km/h</span></div>
                     </div>
                     <div class="flex justify-between gap-4 mb-6">
@@ -130,9 +137,9 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
-                        <div onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn">📊 波浪実況</div>
-                        <div onclick="window.open('${weatherUrl}')" class="forecast-btn temp-f-btn">🌤 天気グラフ</div>
-                        <div onclick="window.open('${tideUrl}')" class="forecast-btn tide-f-btn col-span-2">🌊 タイドグラフを表示</div>
+                        <div onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn">📊 ナウファス</div>
+                        <div onclick="window.open('${weatherUrl}')" class="forecast-btn temp-f-btn">🌤 天気詳細</div>
+                        <div onclick="window.open('${tideUrl}')" class="forecast-btn tide-f-btn col-span-2">🌊 潮見グラフ(Google)</div>
                     </div>
                     <div class="facility-group">
                         <div class="facility-item"><i class="fas fa-parking facility-icon"></i><div><span class="facility-label">駐車場</span>${spot.p}</div></div>
