@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - FINAL EDITION</title>
+    <title>SURF MASTER PRO - OFFICIAL DATA EDITION</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -40,9 +40,9 @@
         .wave-box { background: #eff6ff; border: 2px solid #dbeafe; }
         .temp-box { background: #fff7ed; border: 2px solid #ffedd5; }
 
-        .forecast-btn { width: 48%; padding: 10px; border-radius: 15px; font-size: 12px; font-weight: 900; text-align: center; border: 1px solid; transition: 0.2s; }
-        .wave-f-btn { color: #3b82f6; border-color: #3b82f6; background: #fff; }
-        .temp-f-btn { color: #f59e0b; border-color: #f59e0b; background: #fff; }
+        .forecast-btn { width: 48%; padding: 10px; border-radius: 15px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; transition: 0.2s; }
+        .wave-f-btn { color: #0369a1; border-color: #3b82f6; background: #f0f9ff; }
+        .temp-f-btn { color: #9a3412; border-color: #f59e0b; background: #fff7ed; }
 
         .facility-group { margin-top: 15px; background: #fffaf0; border-radius: 25px; padding: 20px; border: 1px solid #fef3c7; }
         .facility-item { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 15px; line-height: 1.5; color: #334155; }
@@ -60,7 +60,7 @@
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">SOUTHERN BREEZE EDITION</div>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">OFFICIAL DATA EDITION</div>
     </div>
 
     <div class="nav-section">
@@ -81,7 +81,7 @@
         <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind mb-1 text-xl"></i><span>風情報</span></a>
         <a href="https://www.google.com" target="_blank" class="nav-item text-slate-700"><i class="fab fa-chrome mb-1 text-xl"></i><span>検索</span></a>
         <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water mb-1 text-xl"></i><span>潮見表</span></a>
-        <a href="https://weathernews.jp" target="_blank" class="nav-item text-orange-500"><i class="fas fa-cloud-sun mb-1 text-xl"></i><span>天気予報</span></a>
+        <a href="https://www.jma.go.jp/bosai/ocean/#type=wave" target="_blank" class="nav-item text-orange-500"><i class="fas fa-cloud-sun mb-1 text-xl"></i><span>波浪予報</span></a>
     </nav>
 
     <script>
@@ -162,8 +162,8 @@
                     </div>
 
                     <div class="flex justify-between mb-6">
-                        <button onclick="window.open('https://namiaru.tv')" class="forecast-btn wave-f-btn">🌊 スポット波予報</button>
-                        <button onclick="window.open('https://weathernews.jp/onebox/${spot.lat}/${spot.lon}/')" class="forecast-btn temp-f-btn">☀️ スポット天気</button>
+                        <button onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn">📊 公式 波浪実況</button>
+                        <button onclick="window.open('https://www.jma.go.jp/bosai/ocean/#type=wave')" class="forecast-btn temp-f-btn">🗾 気象庁 波浪図</button>
                     </div>
                     
                     <div class="facility-group">
@@ -191,3 +191,4 @@
     </script>
 </body>
 </html>
+
