@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - GOOGLE WEATHER EDITION</title>
+    <title>SURF MASTER PRO - SPOT WEATHER EDITION</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -31,14 +31,10 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #e0f2fe;
             position: relative; overflow: hidden;
         }
-        .spot-card::after {
-            content: "\f7d9"; font-family: "Font Awesome 5 Free"; font-weight: 900;
-            position: absolute; right: -15px; top: -15px; font-size: 100px; color: rgba(59, 130, 246, 0.04); transform: rotate(15deg); pointer-events: none;
-        }
 
-        .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; }
+        .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; cursor: pointer; transition: 0.2s; }
+        .info-box:active { transform: scale(0.95); }
         .wave-box { background: #eff6ff; border: 2px solid #dbeafe; }
-        /* 気温ボックスのスタイルを以前の状態に復元 */
         .temp-box { background: #fff7ed; border: 2px solid #ffedd5; }
 
         .forecast-btn { width: 48%; padding: 10px; border-radius: 15px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; transition: 0.2s; }
@@ -61,7 +57,7 @@
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">GOOGLE WEATHER EDITION</div>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">SPOT SYNC EDITION</div>
     </div>
 
     <div class="nav-section">
@@ -82,17 +78,17 @@
         <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind mb-1 text-xl"></i><span>風情報</span></a>
         <a href="https://www.google.com" target="_blank" class="nav-item text-slate-700"><i class="fab fa-chrome mb-1 text-xl"></i><span>検索</span></a>
         <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water mb-1 text-xl"></i><span>潮見表</span></a>
-        <a href="https://www.google.com/search?q=天気" target="_blank" class="nav-item text-orange-500"><i class="fas fa-sun mb-1 text-xl"></i><span>天気予報</span></a>
+        <a href="https://www.google.com/search?q=現在地の天気" target="_blank" class="nav-item text-orange-500"><i class="fas fa-cloud-sun mb-1 text-xl"></i><span>天気予報</span></a>
     </nav>
 
     <script>
         const surfSpots = [
-            // 全20スポットのデータを完全キープ
+            // スポットデータ（変更なし）
             { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
-            { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '磯ノ浦の西端。岩場に注意。' },
-            { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '磯ノ浦東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時はルール厳守。' },
+            { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '岩場に注意。' },
+            { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時ルール厳守。' },
             { area: 'wakayama', name: '浜の宮', lat: 34.1738, lon: 135.1882, p: '海水浴場駐車場有', s: '夏季のみシャワー有', t: '公衆トイレ完備', o: 'マリーナシティ目前。' },
-            { area: 'wakayama', name: '淡島神社', lat: 34.2750, lon: 135.0645, p: '神社付近・周辺に数台', s: 'なし', t: '神社・公園に有', o: 'リーフ。中級者以上推奨。' },
+            { area: 'wakayama', name: '淡島神社', lat: 34.2750, lon: 135.0645, p: '神社付近・周辺', s: 'なし', t: '神社・公園に有', o: 'リーフ。中級者以上推奨。' },
             { area: 'wakayama', name: 'ゴロゴロ', lat: 33.7225, lon: 135.3441, p: '周辺有料駐車場', s: '簡易シャワー有', t: '付近に有', o: '玉石ポイント。ブーツ推奨。' },
             { area: 'wakayama', name: 'モーテル下', lat: 33.7188, lon: 135.3522, p: '有料P利用推奨', s: 'ショップに相談', t: '付近に有', o: 'カレント注意。' },
             { area: 'wakayama', name: '下里', lat: 33.5855, lon: 135.9185, p: 'ビーチ前駐車場', s: '夏季シャワー有', t: '有', o: '非常に綺麗な水質。' },
@@ -140,8 +136,8 @@
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
-                // Google天気検索URLをスポットの緯度経度から生成
-                const googleWeatherUrl = `https://www.google.com/search?q=${spot.lat},${spot.lon}+天気`;
+                // 各スポットの緯度経度からGoogle天気URLを生成
+                const spotWeatherUrl = `https://www.google.com/search?q=${spot.lat},${spot.lon}+天気`;
                 
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-6" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')">
@@ -155,7 +151,7 @@
                             <p class="text-[11px] font-bold text-blue-500 mb-1">波の高さ</p>
                             <p class="text-3xl font-black text-sky-900"><span id="w-val-${i}">--</span><span class="text-sm ml-1">m</span></p>
                         </div>
-                        <div class="info-box temp-box flex-1">
+                        <div class="info-box temp-box flex-1" onclick="window.open('${spotWeatherUrl}')">
                             <i id="t-icon-${i}" class="fas fa-spinner fa-spin text-orange-200"></i>
                             <p class="text-[11px] font-bold text-orange-500 mb-1">気温・天気</p>
                             <p id="t-val-${i}" class="text-3xl font-black text-sky-900">--</p>
@@ -164,7 +160,7 @@
 
                     <div class="flex justify-between mb-6">
                         <button onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn">📊 公式 波浪実況</button>
-                        <button onclick="window.open('${googleWeatherUrl}')" class="forecast-btn temp-f-btn">🔍 Google 天気予報</button>
+                        <button onclick="window.open('${spotWeatherUrl}')" class="forecast-btn temp-f-btn">🔍 スポット天気予報</button>
                     </div>
                     
                     <div class="facility-group">
@@ -192,4 +188,3 @@
     </script>
 </body>
 </html>
-
