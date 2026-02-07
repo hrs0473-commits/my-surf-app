@@ -8,155 +8,100 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@700;900&family=Permanent+Marker&display=swap');
-        
         body { margin: 0; background: #0f172a; font-family: 'Noto Sans JP', sans-serif; color: #f8fafc; }
-
-        /* 黄金色のサーファー画像 - 最も安定したリンクに差し替え */
         .hero-section {
-            height: 20vh;
-            width: 100%;
-            /* 1番目に画像、2番目に予備のグラデーションを設定 */
-            background: linear-gradient(rgba(15,23,42,0.3), rgba(15,23,42,1)), 
-                        url('https://images.unsplash.com/photo-1502680399488-63449813253b?auto=format&fit=crop&w=1000&q=80'),
-                        linear-gradient(45deg, #0c4a6e, #1e293b); 
-            background-size: cover;
-            background-position: center 30%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            height: 25vh; width: 100%;
+            /* ステップ1でアップした画像の名前を指定 */
+            background: linear-gradient(rgba(15,23,42,0.3), rgba(15,23,42,1)), url('1000008048.png');
+            background-size: cover; background-position: center 40%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
         }
-
-        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: #ffffff; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
-        .hero-subtitle { font-size: 0.6rem; font-weight: 900; letter-spacing: 0.3em; color: #60a5fa; margin-top: 5px; text-transform: uppercase; }
-
+        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 1.8rem; color: #ffffff; text-shadow: 0 4px 12px rgba(0,0,0,0.9); }
+        .hero-subtitle { font-size: 0.7rem; font-weight: 900; letter-spacing: 0.3em; color: #3b82f6; text-transform: uppercase; }
         .nav-section { background: #0f172a; padding: 12px 0; border-bottom: 1px solid #1e293b; position: sticky; top: 0; z-index: 100; }
-        .nav-btn { flex-none px-6 py-2 bg-slate-800 text-slate-400 rounded-full text-[11px] font-black transition-all; }
-        .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-
-        .spot-card { background: #1e293b; border-radius: 24px; border: 1px solid #334155; overflow: hidden; margin-bottom: 24px; }
-        
-        /* カード内の背景画像も安定化 */
-        .info-box { 
-            position: relative; height: 110px; border-radius: 18px; overflow: hidden; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: #0c4a6e;
-        }
-        .box-img {
-            position: absolute; inset: 0;
-            background-size: cover; background-position: center; opacity: 0.4;
-            z-index: 0;
-        }
-
-        .bottom-nav { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(10px); border-top: 1px solid #1e293b; border-radius: 24px 24px 0 0; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: 900; color: #64748b; text-decoration: none; }
+        .nav-btn { flex: none; px-6; py-2; background: #1e293b; color: #64748b; border-radius: 9999px; font-size: 11px; font-weight: 900; margin-right: 8px; }
+        .nav-btn.active { background: #3b82f6; color: white; }
+        .spot-card { background: #1e293b; border-radius: 24px; padding: 24px; margin-bottom: 24px; }
+        .info-box { background: rgba(15, 23, 42, 0.5); border-radius: 20px; height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.95); padding: 20px; display: flex; justify-content: space-around; border-radius: 24px 24px 0 0; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 9px; color: #64748b; text-decoration: none; }
         .nav-item.active { color: #3b82f6; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-36">
-
     <div class="hero-section">
         <h1 class="hero-title italic">SURF MASTER PRO</h1>
-        <p class="hero-subtitle italic">20 Spots Full Coverage</p>
+        <p class="hero-subtitle italic">20 SPOTS FULL COVERAGE</p>
     </div>
-
     <div class="nav-section">
-        <div class="flex gap-2 overflow-x-auto no-scrollbar px-5">
+        <div class="flex overflow-x-auto no-scrollbar px-5" id="nav-container">
             <button onclick="filterArea('wakayama')" id="btn-wakayama" class="nav-btn active">和歌山</button>
             <button onclick="filterArea('mie')" id="btn-mie" class="nav-btn">三重</button>
             <button onclick="filterArea('kyoto')" id="btn-kyoto" class="nav-btn">京都</button>
             <button onclick="filterArea('osaka')" id="btn-osaka" class="nav-btn">大阪</button>
         </div>
     </div>
-
     <main id="spot-container" class="px-5 py-6 max-w-lg mx-auto"></main>
-
-    <nav class="fixed bottom-0 left-0 right-0 p-5 z-50 bottom-nav flex justify-around items-center">
+    <nav class="bottom-nav">
         <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs text-xl mb-1"></i><span>近くを探す</span></button>
         <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item active"><i class="fas fa-home text-xl mb-1"></i><span>HOME</span></button>
-        <a href="https://www.google.com/maps" target="_blank" class="nav-item text-green-500"><i class="fas fa-map-marked-alt text-xl mb-1"></i><span>MAP</span></a>
+        <a href="https://www.google.com/maps" target="_blank" class="nav-item"><i class="fas fa-map-marked-alt text-xl mb-1"></i><span>MAP</span></a>
         <a href="https://www.google.com" target="_blank" class="nav-item"><i class="fas fa-search text-xl mb-1"></i><span>検索</span></a>
-        <a href="https://weathernews.jp" target="_blank" class="nav-item"><i class="fas fa-cloud-sun text-xl mb-1"></i><span>天気予報</span></a>
     </nav>
-
     <script>
-        // 全20スポット・データ
         const surfSpots = [
             { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '和歌山メジャー。通称イソコ。' },
             { area: 'wakayama', name: '西磯', lat: 34.26, lon: 135.09, d: '磯ノ浦の西側。' },
-            { area: 'wakayama', name: '奥磯', lat: 34.26, lon: 135.11, d: '磯ノ浦の東奥。' },
-            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '広いビーチポイント。' },
+            { area: 'wakayama', name: '奥磯', lat: 34.26, lon: 135.11, d: '磯ノ浦の東奥エリア。' },
+            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '広いビーチ。初心者にも。' },
             { area: 'wakayama', name: '淡島神社', lat: 34.27, lon: 135.06, d: '中級者向けリーフ。' },
             { area: 'wakayama', name: 'ゴロゴロ', lat: 33.72, lon: 135.34, d: '南部のメジャーポイント。' },
-            { area: 'wakayama', name: 'モーテル下', lat: 33.71, lon: 135.35, d: '南部の人気スポット。' },
+            { area: 'wakayama', name: 'モーテル下', lat: 33.71, lon: 135.35, d: '施設近くの人気スポット。' },
             { area: 'wakayama', name: '下里', lat: 33.58, lon: 135.91, d: '南紀の美しいビーチ。' },
             { area: 'wakayama', name: '那智', lat: 33.63, lon: 135.93, d: '那智勝浦エリア。' },
-            { area: 'wakayama', name: 'フカ', lat: 33.55, lon: 135.50, d: '南部のリーフ。' },
+            { area: 'wakayama', name: 'フカ', lat: 33.55, lon: 135.50, d: '南部のリーフポイント。' },
             { area: 'wakayama', name: '漁港(印南)', lat: 33.82, lon: 135.20, d: '印南漁港付近。' },
-            { area: 'mie', name: '国府の浜(三角)', lat: 34.33, lon: 136.91, d: '伊勢エリアのメイン。' },
+            { area: 'mie', name: '国府の浜(三角)', lat: 34.33, lon: 136.91, d: '三重のメッカ。メイン。' },
             { area: 'mie', name: '国府の浜(テトラ)', lat: 34.34, lon: 136.91, d: 'テトラ付近のブレイク。' },
-            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '落ち着いた雰囲気。' },
-            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: 'パワフルな中上級者向け。' },
+            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '落ち着いたビーチ。' },
+            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: 'パワフル。中上級者向け。' },
             { area: 'mie', name: '阿児の松原', lat: 34.33, lon: 136.90, d: '約3kmのロングビーチ。' },
             { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '丹後エリアの代表格。' },
-            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '冬場に反応が良いビーチ。' },
+            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '冬場に反応が良い。' },
             { area: 'kyoto', name: '琴引浜', lat: 35.70, lon: 135.04, d: '鳴き砂。うねりに敏感。' },
             { area: 'osaka', name: 'せんなん里海公園', lat: 34.34, lon: 135.18, d: '風次第で練習可能。' }
         ];
-
         async function fetchSurf(lat, lon, id) {
             try {
                 const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m&marine=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
                 document.getElementById(`w-${id}`).innerText = (data.current.wave_height || 0.4).toFixed(1);
                 document.getElementById(`t-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
-                const windDir = data.current.wind_direction_10m;
-                document.getElementById(`wind-${id}`).innerHTML = `<i class="fas fa-location-arrow transform" style="transform: rotate(${windDir}deg);"></i> ${Math.round(data.current.wind_speed_10m)}km/h`;
+                document.getElementById(`wind-${id}`).innerText = Math.round(data.current.wind_speed_10m) + 'km/h';
             } catch (e) { console.error(e); }
         }
-
         function filterArea(area) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-${area}`).classList.add('active');
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
-            
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
-                div.className = 'spot-card p-6';
+                div.className = 'spot-card';
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-5">
-                        <div onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')" class="cursor-pointer">
-                            <h3 class="text-xl font-black text-white italic">${spot.name} <i class="fas fa-external-link-alt text-blue-400 text-xs"></i></h3>
-                        </div>
-                        <div id="wind-${i}" class="text-[10px] font-bold text-blue-400 bg-blue-900/30 px-3 py-1 rounded-full border border-blue-900/50">--</div>
+                        <h3 class="text-xl font-black text-white italic">${spot.name}</h3>
+                        <div id="wind-${i}" class="text-[10px] font-bold text-blue-400 bg-blue-900/30 px-3 py-1 rounded-full">--</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="info-box">
-                            <div class="box-img" style="background-image: url('https://images.unsplash.com/photo-1516149893016-813d9a01d5d3?auto=format&fit=crop&w=300')"></div>
-                            <p class="relative z-10 text-[9px] font-black text-blue-200 uppercase mb-1">Wave Height</p>
-                            <p class="relative z-10 text-3xl font-black text-white"><span id="w-${i}">--</span><span class="text-xs ml-1">m</span></p>
-                        </div>
-                        <div class="info-box">
-                            <div class="box-img" style="background-image: url('https://images.unsplash.com/photo-1504370805625-d32c54b16100?auto=format&fit=crop&w=300')"></div>
-                            <p class="relative z-10 text-[9px] font-black text-orange-200 uppercase mb-1">Temperature</p>
-                            <p id="t-${i}" class="relative z-10 text-3xl font-black text-white">--</p>
-                        </div>
+                        <div class="info-box"><p class="text-[9px] text-blue-200 mb-1 uppercase">Wave</p><p class="text-3xl font-black text-white"><span id="w-${i}">--</span><span class="text-xs ml-1">m</span></p></div>
+                        <div class="info-box"><p class="text-[9px] text-orange-200 mb-1 uppercase">Temp</p><p id="t-${i}" class="text-3xl font-black text-white">--</p></div>
                     </div>
-                    <p class="mt-4 text-[10px] font-bold text-slate-500 italic border-t border-slate-800 pt-3 opacity-80">"${spot.d}"</p>
+                    <p class="mt-4 text-[10px] text-slate-500 italic opacity-70">"${spot.d}"</p>
                 `;
                 container.appendChild(div);
                 fetchSurf(spot.lat, spot.lon, i);
-            });
-        }
-
-        function useGPS() {
-            if (!navigator.geolocation) return;
-            navigator.geolocation.getCurrentPosition((p) => {
-                const la = p.coords.latitude;
-                if(la > 35) filterArea('kyoto'); else if(la > 34.3) filterArea('osaka'); else if(la > 34.1) filterArea('wakayama'); else filterArea('mie');
             });
         }
         filterArea('wakayama');
