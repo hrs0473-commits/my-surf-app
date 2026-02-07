@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - TIDE GRAPH RESTORED</title>
+    <title>SURF MASTER PRO - FIXED</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -14,32 +14,30 @@
         .nav-section { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); padding: 15px 0; border-bottom: 1px solid #bae6fd; position: sticky; top: 0; z-index: 100; }
         .nav-btn { flex: none; padding: 10px 22px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; }
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
-        .spot-card { background: #ffffff; border-radius: 35px; padding: 25px; margin-bottom: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #e0f2fe; position: relative; overflow: hidden; }
-        .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; cursor: pointer; transition: 0.2s; }
-        .info-box:active { transform: scale(0.95); }
+        .spot-card { background: #ffffff; border-radius: 35px; padding: 25px; margin-bottom: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #e0f2fe; }
+        .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; transition: 0.2s; }
         .wave-box { background: #eff6ff; border: 2px solid #dbeafe; }
         .temp-box { background: #fff7ed; border: 2px solid #ffedd5; }
-        .forecast-btn { padding: 12px; border-radius: 15px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; transition: 0.2s; }
+        .forecast-btn { padding: 12px; border-radius: 15px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; transition: 0.2s; cursor: pointer; }
         .wave-f-btn { color: #0369a1; border-color: #3b82f6; background: #f0f9ff; }
         .temp-f-btn { color: #9a3412; border-color: #f59e0b; background: #fff7ed; }
         .tide-f-btn { color: #0891b2; border-color: #22d3ee; background: #ecfeff; width: 100%; margin-top: 10px; }
         .facility-group { margin-top: 15px; background: #fffaf0; border-radius: 25px; padding: 20px; border: 1px solid #fef3c7; }
-        .facility-item { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 15px; line-height: 1.5; color: #334155; }
-        .facility-icon { color: #f59e0b; margin-right: 12px; margin-top: 4px; font-size: 1.2rem; width: 22px; text-align: center; }
+        .facility-item { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 15px; line-height: 1.5; }
+        .facility-icon { color: #f59e0b; margin-right: 12px; margin-top: 4px; width: 20px; text-align: center; }
         .facility-label { font-weight: 900; color: #0369a1; margin-right: 8px; font-size: 13px; }
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); padding: 15px 10px; display: flex; overflow-x: auto; border-top: 3px solid #3b82f6; z-index: 1000; gap: 20px; }
-        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; min-width: 65px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; min-width: 65px; text-decoration: none; }
     </style>
 </head>
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">ALL-IN-ONE SURF NAVI</div>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2">ALL-IN-ONE NAVI</div>
     </div>
 
     <div class="nav-section">
-        <div class="flex overflow-x-auto no-scrollbar px-5">
+        <div class="flex overflow-x-auto px-5 no-scrollbar">
             <button onclick="filterArea('wakayama')" id="btn-wakayama" class="nav-btn active">和歌山</button>
             <button onclick="filterArea('mie')" id="btn-mie" class="nav-btn">三重</button>
             <button onclick="filterArea('kyoto')" id="btn-kyoto" class="nav-btn">京都</button>
@@ -49,55 +47,62 @@
 
     <main id="spot-container" class="px-5 py-8 max-w-md mx-auto"></main>
 
-    <nav class="bottom-nav no-scrollbar">
-        <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs mb-1 text-xl text-blue-500"></i><span>近くを探す</span></button>
-        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item"><i class="fas fa-home mb-1 text-xl"></i><span>HOME</span></button>
-        <a href="https://www.google.co.jp/maps/search/サーフポイント" target="_blank" class="nav-item text-green-600"><i class="fas fa-map-marked-alt mb-1 text-xl"></i><span>マップ</span></a>
-        <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind mb-1 text-xl"></i><span>風情報</span></a>
-        <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water mb-1 text-xl"></i><span>潮見表</span></a>
-        <a href="https://www.google.com/search?q=現在地の天気" target="_blank" class="nav-item text-orange-500"><i class="fas fa-cloud-sun mb-1 text-xl"></i><span>天気予報</span></a>
+    <nav class="bottom-nav">
+        <button onclick="useGPS()" class="nav-item border-none bg-transparent"><i class="fas fa-crosshairs mb-1 text-xl text-blue-500"></i><span>近くを探す</span></button>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item border-none bg-transparent"><i class="fas fa-home mb-1 text-xl"></i><span>HOME</span></button>
+        <a href="https://www.google.co.jp/maps/search/サーフポイント" target="_blank" class="nav-item"><i class="fas fa-map-marked-alt mb-1 text-xl text-green-600"></i><span>マップ</span></a>
+        <a href="https://www.windy.com" target="_blank" class="nav-item"><i class="fas fa-wind mb-1 text-xl text-blue-400"></i><span>風情報</span></a>
+        <a href="https://tide736.net" target="_blank" class="nav-item"><i class="fas fa-water mb-1 text-xl text-cyan-500"></i><span>潮見表</span></a>
     </nav>
 
     <script>
         const surfSpots = [
-            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', tide: 'wakayama/wakayama', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
-            { area: 'wakayama', name: '浜の宮', q: '和歌山市 天気', tide: 'wakayama/wakayama', lat: 34.1738, lon: 135.1882, p: '海水浴場駐車場有', s: '夏季のみシャワー有', t: '公衆トイレ完備', o: 'マリーナシティ目前。' },
-            { area: 'wakayama', name: 'ゴロゴロ', q: '和歌山 広川町 天気', tide: 'wakayama/shimotsu', lat: 33.7225, lon: 135.3441, p: '周辺有料駐車場', s: '簡易シャワー有', t: '付近に有', o: '玉石ポイント。ブーツ推奨。' },
-            { area: 'wakayama', name: '那智', q: '那智勝浦町 天気', tide: 'wakayama/uragami', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が近く便利。' },
-            { area: 'mie', name: '国府の浜', q: '志摩市 天気', tide: 'mie/toba', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数', s: '各所に完備', t: '各所に有', o: '三重のメッカ。' },
-            { area: 'mie', name: '市後浜', q: '志摩市 天気', tide: 'mie/toba', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '完備', t: '有', o: 'キャンプ場併設。' },
+            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', tide: 'wakayama/wakayama', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有', s: '温水シャワー有', t: '公衆トイレ有', o: '通年人気。' },
+            { area: 'wakayama', name: '浜の宮', q: '和歌山市 天気', tide: 'wakayama/wakayama', lat: 34.1738, lon: 135.1882, p: '海水浴場P有', s: '夏季シャワー有', t: '完備', o: 'マリーナシティ目前。' },
+            { area: 'wakayama', name: '那智', q: '那智勝浦町 天気', tide: 'wakayama/uragami', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '完備', t: '有', o: '道の駅至近。' },
+            { area: 'mie', name: '国府の浜', q: '志摩市 天気', tide: 'mie/toba', lat: 34.3325, lon: 136.9125, p: '民間P多数', s: '各所に有', t: '各所に有', o: '三重のメッカ。' },
             { area: 'mie', name: '南張', q: '南張 天気', tide: 'mie/goza', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。' },
-            { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', tide: 'kyoto/maizuru', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。' },
-            { area: 'kyoto', name: '小天橋', q: '京丹後市 天気', tide: 'kyoto/maizuru', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備', t: '有', o: '冬の日本海代表。' },
-            { area: 'osaka', name: 'せんなん里海公園', q: '岬町 天気', tide: 'osaka/tannowa', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '台風時のみ。' }
-            // ...他のスポットも同様に tide キーを追加
+            { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', tide: 'kyoto/maizuru', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP', s: '更衣室・シャワー', t: '有', o: '公園併設。' },
+            { area: 'osaka', name: 'せんなん里海公園', q: '岬町 天気', tide: 'osaka/tannowa', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '有', o: '台風時のみ。' }
         ];
 
-        async function fetchSurf(lat, lon, id) {
+        async function fetchSurf(lat, lon, i) {
             try {
                 const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&marine=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
                 const wave = data.current.wave_height || 0.4;
                 const code = data.current.weather_code;
-                let waveIcon = wave > 1.2 ? 'fa-water' : (wave < 0.5 ? 'fa-ellipsis-h text-blue-200' : 'fa-align-center text-sm opacity-50');
+                
+                let waveIcon = wave > 1.2 ? 'fa-water' : (wave < 0.5 ? 'fa-ellipsis-h text-blue-200' : 'fa-align-center text-sm');
                 let weatherIcon = 'fa-sun text-orange-400';
                 if(code >= 1 && code <= 3) weatherIcon = 'fa-cloud-sun text-blue-300';
                 if(code >= 45) weatherIcon = 'fa-cloud text-gray-400';
                 if(code >= 51) weatherIcon = 'fa-cloud-showers-heavy text-blue-500';
-                document.getElementById(`w-icon-${id}`).className = `fas ${waveIcon} text-3xl mb-2 text-blue-500`;
-                document.getElementById(`w-val-${id}`).innerText = wave.toFixed(1);
-                document.getElementById(`t-icon-${id}`).className = `fas ${weatherIcon} text-3xl mb-2`;
-                document.getElementById(`t-val-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
-                document.getElementById(`wind-${id}`).innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
-            } catch (e) { console.error(e); }
+
+                const wIconEl = document.getElementById(`w-icon-${i}`);
+                const wValEl = document.getElementById(`w-val-${i}`);
+                const tIconEl = document.getElementById(`t-icon-${i}`);
+                const tValEl = document.getElementById(`t-val-${i}`);
+                const windEl = document.getElementById(`wind-${i}`);
+
+                if(wIconEl) wIconEl.className = `fas ${waveIcon} text-3xl mb-2 text-blue-500`;
+                if(wValEl) wValEl.innerText = wave.toFixed(1);
+                if(tIconEl) tIconEl.className = `fas ${weatherIcon} text-3xl mb-2`;
+                if(tValEl) tValEl.innerText = Math.round(data.current.temperature_2m) + '°C';
+                if(windEl) windEl.innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
+            } catch (e) { console.error("Fetch error:", e); }
         }
 
         function filterArea(area) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`btn-${area}`).classList.add('active');
+            const activeBtn = document.getElementById(`btn-${area}`);
+            if(activeBtn) activeBtn.classList.add('active');
+
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
-            surfSpots.filter(s => s.area === area).forEach((spot, i) => {
+            
+            const filtered = surfSpots.filter(s => s.area === area);
+            filtered.forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
                 const weatherUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.q)}`;
@@ -111,39 +116,41 @@
                     </div>
                     <div class="flex justify-between gap-4 mb-6">
                         <div class="info-box wave-box flex-1">
-                            <i id="w-icon-${i}" class="fas fa-spinner fa-spin text-blue-200"></i>
+                            <i id="w-icon-${i}" class="fas fa-circle-notch fa-spin text-blue-200 text-3xl"></i>
                             <p class="text-[11px] font-bold text-blue-500 mb-1">波の高さ</p>
                             <p class="text-3xl font-black text-sky-900"><span id="w-val-${i}">--</span><span class="text-sm ml-1">m</span></p>
                         </div>
                         <div class="info-box temp-box flex-1" onclick="window.open('${weatherUrl}')">
-                            <i id="t-icon-${id}" class="fas fa-spinner fa-spin text-orange-200"></i>
+                            <i id="t-icon-${i}" class="fas fa-circle-notch fa-spin text-orange-200 text-3xl"></i>
                             <p class="text-[11px] font-bold text-orange-500 mb-1">気温・天気</p>
                             <p id="t-val-${i}" class="text-3xl font-black text-sky-900">--</p>
                         </div>
                     </div>
                     <div class="flex flex-wrap justify-between gap-y-2">
-                        <button onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn w-[48%]">📊 波浪実況</button>
-                        <button onclick="window.open('${weatherUrl}')" class="forecast-btn temp-f-btn w-[48%]">🌤 天気グラフ</button>
-                        <button onclick="window.open('${tideUrl}')" class="forecast-btn tide-f-btn">🌊 スポット限定タイドグラフ</button>
+                        <div onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn w-[48%]">📊 波浪実況</div>
+                        <div onclick="window.open('${weatherUrl}')" class="forecast-btn temp-f-btn w-[48%]">🌤 天気グラフ</div>
+                        <div onclick="window.open('${tideUrl}')" class="forecast-btn tide-f-btn">🌊 スポット限定タイドグラフ</div>
                     </div>
                     <div class="facility-group">
                         <div class="facility-item"><i class="fas fa-parking facility-icon"></i><div><span class="facility-label">駐車場</span>${spot.p}</div></div>
                         <div class="facility-item"><i class="fas fa-shower facility-icon"></i><div><span class="facility-label">シャワー</span>${spot.s}</div></div>
-                        <div class="facility-item mt-4 text-sky-700 bg-white/70 p-3 rounded-xl border border-sky-100 font-bold text-xs italic"><i class="fas fa-info-circle facility-icon"></i>${spot.o}</div>
+                        <div class="facility-item mt-4 text-sky-700 bg-white/70 p-3 rounded-xl border border-sky-100 font-bold text-xs italic"><i class="fas fa-info-circle mr-1"></i>${spot.o}</div>
                     </div>
                 `;
                 container.appendChild(div);
                 fetchSurf(spot.lat, spot.lon, i);
             });
         }
+
         function useGPS() {
             navigator.geolocation.getCurrentPosition((p) => {
                 const la = p.coords.latitude;
                 if(la > 35) filterArea('kyoto'); else if(la > 34.3) filterArea('osaka'); else if(la > 34.1) filterArea('wakayama'); else filterArea('mie');
-                window.scrollTo({top: 280, behavior:'smooth'});
             });
         }
-        filterArea('wakayama');
+        
+        // 初期表示
+        window.onload = () => filterArea('wakayama');
     </script>
 </body>
 </html>
