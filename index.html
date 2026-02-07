@@ -8,153 +8,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;900&display=swap');
+        body { margin: 0; background: #f8fafc; font-family: 'Noto Sans JP', sans-serif; padding-bottom: 120px; }
         
-        body { margin: 0; background: #f0f9ff; font-family: 'Noto Sans JP', sans-serif; padding-bottom: 120px; }
-        
-        /* ヘッダー */
-        .header { 
-            height: 200px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('1770389433670.png') center/cover;
+        .hero { 
+            height: 220px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('1770389433670.png') center/cover;
             display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;
         }
-        .header h1 { font-size: 3rem; font-weight: 900; margin: 0; font-style: italic; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-        .header .badge { background: #3b82f6; padding: 4px 18px; border-radius: 50px; font-size: 13px; font-weight: 900; margin-top: 5px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; font-style: italic; margin: 0; }
+        .hero .badge { background: #3b82f6; padding: 4px 22px; border-radius: 50px; font-size: 14px; font-weight: 900; margin-top: 5px; }
 
-        /* エリア選択 */
-        .area-nav { background: white; padding: 15px 0; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: center; gap: 8px; position: sticky; top: 0; z-index: 100; overflow-x: auto; }
-        .area-btn { padding: 10px 18px; border-radius: 30px; background: #f1f5f9; color: #64748b; font-weight: 900; border: none; font-size: 14px; white-space: nowrap; }
-        .area-btn.active { background: #3b82f6; color: white; }
+        .area-nav { display: flex; overflow-x: auto; padding: 20px 10px; background: white; gap: 10px; border-bottom: 1px solid #e2e8f0; }
+        .area-btn { flex: 0 0 85px; height: 110px; border-radius: 50px; background: #f1f5f9; color: #64748b; font-weight: 900; display: flex; align-items: center; justify-content: center; font-size: 18px; border: none; }
+        .area-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
 
-        /* スポットカード */
-        .card { background: white; border-radius: 25px; margin: 15px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .spot-name { font-size: 24px; font-weight: 900; color: #1e293b; margin-bottom: 15px; }
+        .card { background: white; border-radius: 40px; margin: 20px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .spot-name { font-size: 28px; font-weight: 900; color: #1e293b; margin-bottom: 20px; }
         
-        /* データ部分（日本語・カラー指定） */
-        .info-box { border: 2px solid #f1f5f9; border-radius: 20px; padding: 15px; margin-bottom: 10px; text-align: center; }
-        .label-wave { color: #3b82f6; font-size: 14px; font-weight: 900; margin-bottom: 2px; }
-        .label-temp { color: #f97316; font-size: 14px; font-weight: 900; margin-bottom: 2px; }
-        .value { font-size: 32px; font-weight: 900; color: #0f172a; }
-
-        /* ボタン */
-        .btn { width: 100%; padding: 15px; border-radius: 12px; font-weight: 900; margin-bottom: 8px; font-size: 14px; border: none; cursor: pointer; display: block; text-align: center; }
-        .btn-tide { background: #e0f2fe; color: #0369a1; }
-        .btn-weather { background: #fff7ed; color: #9a3412; }
-
-        .footer-info { background: #fffbeb; padding: 15px; border-radius: 15px; font-size: 13px; color: #92400e; border: 1px solid #fef3c7; line-height: 1.5; }
-
-        /* 下段ナビ（6アイコン完璧版） */
-        .bottom-nav { 
-            position: fixed; bottom: 0; left: 0; right: 0; 
-            background: white; display: flex; justify-content: space-around; 
-            padding: 10px 0 30px; border-top: 2px solid #3b82f6; z-index: 1000;
-        }
-        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; color: #3b82f6; text-decoration: none; }
-        .nav-item i { font-size: 20px; margin-bottom: 4px; }
-        .nav-item span { font-size: 9px; font-weight: 900; white-space: nowrap; }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
-</head>
-<body>
-
-<div class="header">
-    <h1>SURF MASTER</h1>
-    <div class="badge">ALL-IN-ONE SURF NAVI</div>
-</div>
-
-<div class="area-nav no-scrollbar px-2">
-    <button onclick="filterArea('wakayama')" id="btn-wakayama" class="area-btn active">和歌山</button>
-    <button onclick="filterArea('mie')" id="btn-mie" class="area-btn">三重</button>
-    <button onclick="filterArea('kyoto')" id="btn-kyoto" class="area-btn">京都</button>
-    <button onclick="filterArea('osaka')" id="btn-osaka" class="area-btn">大阪</button>
-</div>
-
-<div id="spot-container"></div>
-
-<nav class="bottom-nav">
-    <a href="http://googleusercontent.com/maps.google.com/9" target="_blank" class="nav-item"><i class="fas fa-crosshairs"></i><span>近くを探す</span></a>
-    <a href="#" class="nav-item"><i class="fas fa-home"></i><span>HOME</span></a>
-    <a href="https://www.google.co.jp/maps" target="_blank" class="nav-item"><i class="fas fa-map-marked-alt"></i><span>Googleマップ</span></a>
-    <a href="https://nowphas.mlit.go.jp/" target="_blank" class="nav-item"><i class="fas fa-chart-line"></i><span>ナウファス</span></a>
-    <a href="https://www.google.com/search?q=天気" target="_blank" class="nav-item"><i class="fas fa-cloud-sun"></i><span>Google天気</span></a>
-    <a href="https://www.windy.com" target="_blank" class="nav-item"><i class="fas fa-wind"></i><span>風情報</span></a>
-</nav>
-
-<script>
-    const surfSpots = [
-        // 和歌山 (9)
-        { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, p: '巨大P有', s: '温水完備', t: '有', o: '関西のメッカ' },
-        { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦P', s: '共通', t: '有', o: '中級者' },
-        { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '東側P', s: '有', t: '有', o: '混雑回避' },
-        { area: 'wakayama', name: '淡島神社', lat: 34.2721, lon: 135.0602, p: '有料P', s: '小規模', t: '有', o: 'リーフ' },
-        { area: 'wakayama', name: '浜の宮', lat: 34.1738, lon: 135.1882, p: '海水浴場P', s: '夏季有', t: '有', o: '練習に' },
-        { area: 'wakayama', name: 'ゴロゴロ', lat: 33.8210, lon: 135.2120, p: '有料P', s: '近隣有', t: '有', o: 'パワフル' },
-        { area: 'wakayama', name: 'モーテル下', lat: 33.6820, lon: 135.3350, p: '近隣P', s: '有', t: '有', o: '白浜' },
-        { area: 'wakayama', name: '下里', lat: 33.5820, lon: 135.9150, p: 'ビーチ横', s: '有', t: '有', o: '水質良' },
-        { area: 'wakayama', name: '那智', lat: 33.6385, lon: 135.9392, p: '駅前P', s: '完備', t: '有', o: '道の駅隣' },
-        
-        // 三重 (5)
-        { area: 'mie', name: '国府の浜', lat: 34.3325, lon: 136.9125, p: '民間P多数', s: '有', t: '有', o: '三重メイン' },
-        { area: 'mie', name: '市後浜', lat: 34.3215, lon: 136.9080, p: '有料P', s: '有', t: '有', o: 'キャンプ併設' },
-        { area: 'mie', name: '阿児の松原', lat: 34.3380, lon: 136.9050, p: '民間P', s: '有', t: '有', o: '国府北側' },
-        { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, p: '有料P', s: '有', t: '有', o: '中上級者' },
-        { area: 'mie', name: 'ジャン', lat: 34.3100, lon: 136.8800, p: '少量', s: '無', t: '無', o: 'リーフ' },
-
-        // 京都 (6)
-        { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, p: 'パークP', s: '温水完備', t: '有', o: '丹後代表' },
-        { area: 'kyoto', name: '夕日ヶ浦', lat: 35.6690, lon: 134.9250, p: '園地P', s: '有', t: '有', o: '北東に強い' },
-        { area: 'kyoto', name: '葛野浜', lat: 35.6420, lon: 134.9080, p: '夏季有料', s: '有', t: '有', o: 'ロングビーチ' },
-        { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, p: '完備', s: '有', t: '有', o: '西風に強い' },
-        { area: 'kyoto', name: '神崎', lat: 35.5350, lon: 135.2420, p: '広大P', s: '有', t: '有', o: '舞鶴エリア' },
-        { area: 'kyoto', name: '平', lat: 35.7530, lon: 135.1580, p: 'キャンプP', s: '有', t: '有', o: '穴場' },
-
-        // 大阪 (1)
-        { area: 'osaka', name: 'せんなん里海', lat: 34.3435, lon: 135.1855, p: '巨大P', s: '有', t: '有', o: '限定' }
-    ];
-
-    async function fetchSurf(lat, lon, i) {
-        try {
-            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&marine=wave_height&timezone=Asia%2FTokyo`);
-            const data = await res.json();
-            document.getElementById(`w-${i}`).innerText = (data.current.wave_height || 0.5).toFixed(1) + 'm';
-            document.getElementById(`t-${i}`).innerText = Math.round(data.current.temperature_2m) + '℃';
-        } catch (e) { }
-    }
-
-    function filterArea(area) {
-        document.querySelectorAll('.area-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(`btn-${area}`).classList.add('active');
-        const container = document.getElementById('spot-container');
-        container.innerHTML = '';
-        
-        surfSpots.filter(s => s.area === area).forEach((spot, i) => {
-            const div = document.createElement('div');
-            div.className = 'card';
-            const tideUrl = `https://www.google.com/search?q=site:tide736.net+${encodeURIComponent(spot.name)}`;
-            const weatherUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.name + " 天気")}`;
-            
-            div.innerHTML = `
-                <div class="spot-name">${spot.name}</div>
-                <div class="info-box">
-                    <div class="label-wave">現在の波高</div>
-                    <div id="w-${i}" class="value">--m</div>
-                </div>
-                <div class="info-box">
-                    <div class="label-temp">現在の気温</div>
-                    <div id="t-${i}" class="value">--℃</div>
-                </div>
-                <button class="btn btn-tide" onclick="window.open('${tideUrl}')">🌊 潮見表(タイドグラフ)を開く</button>
-                <button class="btn btn-weather" onclick="window.open('${weatherUrl}')">🌤 Google天気で詳細を確認</button>
-                <div class="footer-info">
-                    <b>P: ${spot.p} / 🚿: ${spot.s} / WC: ${spot.t}</b><br>
-                    <span style="opacity: 0.7;">ℹ️ ${spot.o}</span>
-                </div>
-            `;
-            container.appendChild(div);
-            fetchSurf(spot.lat, spot.lon, i);
-        });
-    }
-    window.onload = () => filterArea('wakayama');
-</script>
-
-</body>
-</html>
+        .data-box { border: 2px solid #f1f5f9; border-radius: 30px; padding: 20px; margin-bottom: 15px; text-align: center; }
+        .label-wave { color: #3b82f6; font-size: 15px; font-weight: 900; margin-bottom: 5px; }
+        .label-temp { color: #f97316; font-size: 15px; font-weight: 900; margin-bottom: 5px; }
+        .value { font-size: 42px; font-weight: 900; color: #1e293b; line
