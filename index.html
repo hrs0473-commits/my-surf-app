@@ -9,7 +9,17 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@400;900&family=Permanent+Marker&display=swap');
         body { margin: 0; background: #f0f9ff; color: #1e293b; font-family: 'Noto Sans JP', sans-serif; background-image: radial-gradient(#bae6fd 0.5px, transparent 0.5px); background-size: 20px 20px; }
-        .hero-section { height: 280px; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(rgba(255,255,255,0.1), rgba(240,249,255,1)), url('1770389433670.png'); background-size: cover; background-position: center; border-bottom: 4px solid #3b82f6; }
+        
+        /* ヘッダー：justify-contentをflex-endに変更し、タイトルを下に配置 */
+        .hero-section { 
+            height: 280px; width: 100%; display: flex; flex-direction: column; 
+            justify-content: flex-end; /* タイトルを一番下に配置 */
+            align-items: center; 
+            background: linear-gradient(rgba(255,255,255,0.1), rgba(240,249,255,1)), url('1770389433670.png'); 
+            background-size: cover; background-position: center; border-bottom: 4px solid #3b82f6;
+            padding-bottom: 20px; /* 下に少し余白 */
+        }
+        
         .hero-title { font-family: 'Permanent Marker', cursive; font-size: 2.8rem; color: #fff; text-shadow: 0 4px 15px rgba(0,140,255,0.8); }
         .nav-section { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); padding: 15px 0; border-bottom: 1px solid #bae6fd; position: sticky; top: 0; z-index: 100; }
         .nav-btn { flex: none; padding: 10px 22px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; }
@@ -60,7 +70,6 @@
 
     <script>
         const surfSpots = [
-            // 和歌山 (11)
             { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
             { area: 'wakayama', name: '西磯', q: '和歌山市 天気', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '岩場に注意。' },
             { area: 'wakayama', name: '奥磯', q: '和歌山市 天気', lat: 34.2605, lon: 135.1120, p: '東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時ルール厳守。' },
@@ -72,26 +81,18 @@
             { area: 'wakayama', name: '那智', q: '那智勝浦町 天気', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が近く便利。' },
             { area: 'wakayama', name: 'フカ', q: '串本町 天気', lat: 33.5512, lon: 135.5015, p: '駐車注意', s: 'なし', t: 'なし', o: 'パワフル。ローカルリスペクト。' },
             { area: 'wakayama', name: '漁港(印南)', q: '印南町 天気', lat: 33.8210, lon: 135.2015, p: '漁港ルール遵守', s: 'なし', t: '漁港付近', o: '作業優先。駐車厳禁。' },
-            
-            // 三重 (5)
             { area: 'mie', name: '国府の浜', q: '志摩市 天気', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数', s: '各所に完備', t: '各所に有', o: '三重のメッカ。' },
             { area: 'mie', name: '市後浜', q: '志摩市 天気', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '完備', t: '有', o: 'キャンプ場併設。' },
             { area: 'mie', name: '阿児の松原', q: '志摩市 天気', lat: 34.3380, lon: 136.9050, p: '民間P', s: '有', t: '有', o: '国府北側。' },
             { area: 'mie', name: '南張', q: '南張 天気', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。' },
             { area: 'mie', name: 'ジャン', q: '志摩市 天気', lat: 34.3100, lon: 136.8800, p: '少量', s: '無', t: '無', o: 'エキスパート向け。' },
-
-            // 京都 (6)
             { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。' },
             { area: 'kyoto', name: '夕日ヶ浦(浜詰)', q: '京丹後市 天気', lat: 35.6690, lon: 134.9250, p: '園地駐車場', s: '有', t: '有', o: '北東風に強い。' },
             { area: 'kyoto', name: '葛野浜', q: '京丹後市 天気', lat: 35.6420, lon: 134.9080, p: '夏季有料P', s: '有', t: '有', o: 'ロングビーチ。' },
             { area: 'kyoto', name: '小天橋', q: '京丹後市 天気', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備', t: '有', o: '冬の日本海代表。' },
             { area: 'kyoto', name: '神崎', q: '舞鶴市 天気', lat: 35.5350, lon: 135.2420, p: '広大P', s: '有', t: '有', o: '舞鶴エリア。' },
             { area: 'kyoto', name: '平', q: '伊根町 天気', lat: 35.7530, lon: 135.1580, p: 'キャンプ場P', s: '有', t: '有', o: '丹後の穴場。' },
-
-            // 大阪 (3)
-            { area: 'osaka', name: 'せんなん里海公園', q: '岬町 天気', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '台風時のみ。' },
-            { area: 'osaka', name: '箱作(ピチピチビーチ)', q: '阪南市 天気', lat: 34.3500, lon: 135.2000, p: '海水浴場P', s: '夏季有', t: '有', o: '大阪南部。' },
-            { area: 'osaka', name: '二色浜', q: '貝塚市 天気', lat: 34.4420, lon: 135.3400, p: '巨大P', s: '完備', t: '有', o: 'ウインド中心。' }
+            { area: 'osaka', name: 'せんなん里海公園', q: '岬町 天気', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '台風時のみ。' }
         ];
 
         async function fetchSurf(lat, lon, id) {
@@ -105,29 +106,19 @@
                 if(code >= 1 && code <= 3) weatherIcon = 'fa-cloud-sun text-blue-300';
                 if(code >= 45) weatherIcon = 'fa-cloud text-gray-400';
                 if(code >= 51) weatherIcon = 'fa-cloud-showers-heavy text-blue-500';
-                
-                const wIconEl = document.getElementById(`w-icon-${id}`);
-                const wValEl = document.getElementById(`w-val-${id}`);
-                const tIconEl = document.getElementById(`t-icon-${id}`);
-                const tValEl = document.getElementById(`t-val-${id}`);
-                const windEl = document.getElementById(`wind-${id}`);
-
-                if(wIconEl) wIconEl.className = `fas ${waveIcon} text-3xl mb-2 text-blue-500`;
-                if(wValEl) wValEl.innerText = wave.toFixed(1);
-                if(tIconEl) tIconEl.className = `fas ${weatherIcon} text-3xl mb-2`;
-                if(tValEl) tValEl.innerText = Math.round(data.current.temperature_2m) + '°C';
-                if(windEl) windEl.innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
+                document.getElementById(`w-icon-${id}`).className = `fas ${waveIcon} text-3xl mb-2 text-blue-500`;
+                document.getElementById(`w-val-${id}`).innerText = wave.toFixed(1);
+                document.getElementById(`t-icon-${id}`).className = `fas ${weatherIcon} text-3xl mb-2`;
+                document.getElementById(`t-val-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
+                document.getElementById(`wind-${id}`).innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
             } catch (e) { console.error(e); }
         }
 
         function filterArea(area) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById(`btn-${area}`);
-            if(activeBtn) activeBtn.classList.add('active');
-            
+            document.getElementById(`btn-${area}`).classList.add('active');
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
-            
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
