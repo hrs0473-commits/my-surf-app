@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - FINAL STABLE</title>
+    <title>SURF MASTER PRO - GOOGLE WEATHER FIXED</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -57,7 +57,7 @@
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">STABLE WEATHER SYNC</div>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">GOOGLE WEATHER SYNC</div>
     </div>
 
     <div class="nav-section">
@@ -83,26 +83,27 @@
 
     <script>
         const surfSpots = [
-            { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
-            { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '岩場に注意。' },
-            { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時ルール厳守。' },
-            { area: 'wakayama', name: '浜の宮', lat: 34.1738, lon: 135.1882, p: '海水浴場駐車場有', s: '夏季のみシャワー有', t: '公衆トイレ完備', o: 'マリーナシティ目前。' },
-            { area: 'wakayama', name: '淡島神社', lat: 34.2750, lon: 135.0645, p: '神社付近・周辺', s: 'なし', t: '神社・公園に有', o: 'リーフ。中級者以上推奨。' },
-            { area: 'wakayama', name: 'ゴロゴロ', lat: 33.7225, lon: 135.3441, p: '周辺有料駐車場', s: '簡易シャワー有', t: '付近に有', o: '玉石ポイント。ブーツ推奨。' },
-            { area: 'wakayama', name: 'モーテル下', lat: 33.7188, lon: 135.3522, p: '有料P利用推奨', s: 'ショップに相談', t: '付近に有', o: 'カレント注意。' },
-            { area: 'wakayama', name: '下里', lat: 33.5855, lon: 135.9185, p: 'ビーチ前駐車場', s: '夏季シャワー有', t: '有', o: '非常に綺麗な水質。' },
-            { area: 'wakayama', name: '那智', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が近く便利。' },
-            { area: 'wakayama', name: 'フカ', lat: 33.5512, lon: 135.5015, p: '駐車注意', s: 'なし', t: 'なし', o: 'パワフル。ローカルリスペクト。' },
-            { area: 'wakayama', name: '漁港(印南)', lat: 33.8210, lon: 135.2015, p: '漁港ルール遵守', s: 'なし', t: '漁港付近', o: '作業優先。駐車厳禁。' },
-            { area: 'mie', name: '国府の浜(三角)', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数', s: '各所に完備', t: '各所に有', o: '三重のメッカ。' },
-            { area: 'mie', name: '国府の浜(テトラ)', lat: 34.3410, lon: 136.9150, p: '松林付近', s: '周辺に有', t: '有', o: 'カレント注意。' },
-            { area: 'mie', name: '市後浜', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '完備', t: '有', o: 'キャンプ場併設。' },
-            { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。' },
-            { area: 'mie', name: '阿児の松原', lat: 34.3350, lon: 136.9050, p: '共通駐車場', s: '周辺施設', t: '有', o: 'ロングに人気。' },
-            { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。' },
-            { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備', t: '有', o: '冬の日本海代表。' },
-            { area: 'kyoto', name: '琴引浜', lat: 35.7015, lon: 135.0452, p: 'キャンプ場P', s: '完備', t: '有', o: '鳴き砂保護。' },
-            { area: 'osaka', name: 'せんなん里海公園', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '台風時のみ。' }
+            // q: に天気グラフを表示させるための最適化キーワードを設定
+            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 磯ノ浦 天気', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
+            { area: 'wakayama', name: '西磯', q: '和歌山市 磯ノ浦 天気', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '岩場に注意。' },
+            { area: 'wakayama', name: '奥磯', q: '和歌山市 磯ノ浦 天気', lat: 34.2605, lon: 135.1120, p: '東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時ルール厳守。' },
+            { area: 'wakayama', name: '浜の宮', q: '和歌山市 浜の宮 天気', lat: 34.1738, lon: 135.1882, p: '海水浴場駐車場有', s: '夏季のみシャワー有', t: '公衆トイレ完備', o: 'マリーナシティ目前。' },
+            { area: 'wakayama', name: '淡島神社', q: '和歌山市 加太 天気', lat: 34.2750, lon: 135.0645, p: '神社付近・周辺', s: 'なし', t: '神社・公園に有', o: 'リーフ。中級者以上推奨。' },
+            { area: 'wakayama', name: 'ゴロゴロ', q: '和歌山県 広川町 天気', lat: 33.7225, lon: 135.3441, p: '周辺有料駐車場', s: '簡易シャワー有', t: '付近に有', o: '玉石ポイント。ブーツ推奨。' },
+            { area: 'wakayama', name: 'モーテル下', q: '和歌山県 広川町 天気', lat: 33.7188, lon: 135.3522, p: '有料P利用推奨', s: 'ショップに相談', t: '付近に有', o: 'カレント注意。' },
+            { area: 'wakayama', name: '下里', q: '那智勝浦町 下里 天気', lat: 33.5855, lon: 135.9185, p: 'ビーチ前駐車場', s: '夏季シャワー有', t: '有', o: '非常に綺麗な水質。' },
+            { area: 'wakayama', name: '那智', q: '那智勝浦町 那智浜 天気', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が近く便利。' },
+            { area: 'wakayama', name: 'フカ', q: '串本町 潮岬 天気', lat: 33.5512, lon: 135.5015, p: '駐車注意', s: 'なし', t: 'なし', o: 'パワフル。ローカルリスペクト。' },
+            { area: 'wakayama', name: '漁港(印南)', q: '和歌山県 印南町 天気', lat: 33.8210, lon: 135.2015, p: '漁港ルール遵守', s: 'なし', t: '漁港付近', o: '作業優先。駐車厳禁。' },
+            { area: 'mie', name: '国府の浜(三角)', q: '志摩市 阿児町 天気', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数', s: '各所に完備', t: '各所に有', o: '三重のメッカ。' },
+            { area: 'mie', name: '国府の浜(テトラ)', q: '志摩市 阿児町 天気', lat: 34.3410, lon: 136.9150, p: '松林付近', s: '周辺に有', t: '有', o: 'カレント注意。' },
+            { area: 'mie', name: '市後浜', q: '志摩市 阿児町 天気', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '完備', t: '有', o: 'キャンプ場併設。' },
+            { area: 'mie', name: '南張', q: '志摩市 浜島町 天気', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。' },
+            { area: 'mie', name: '阿児の松原', q: '志摩市 阿児町 天気', lat: 34.3350, lon: 136.9050, p: '共通駐車場', s: '周辺施設', t: '有', o: 'ロングに人気。' },
+            { area: 'kyoto', name: '八丁浜', q: '京丹後市 網野町 天気', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。' },
+            { area: 'kyoto', name: '小天橋', q: '京丹後市 久美浜町 天気', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備', t: '有', o: '冬の日本海代表。' },
+            { area: 'kyoto', name: '琴引浜', q: '京丹後市 網野町 天気', lat: 35.7015, lon: 135.0452, p: 'キャンプ場P', s: '完備', t: '有', o: '鳴き砂保護。' },
+            { area: 'osaka', name: 'せんなん里海公園', q: '岬町 淡輪 天気', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '台風時のみ。' }
         ];
 
         async function fetchSurf(lat, lon, id) {
@@ -135,8 +136,8 @@
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
-                // 確実に天気グラフを出すための検索URL
-                const weatherUrl = `https://www.google.com/search?q=${spot.lat},${spot.lon}+${encodeURIComponent(spot.name)}+天気`;
+                // 座標を排除し、シンプルな地名検索URLに変更
+                const weatherUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.q)}`;
                 
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-6" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')">
