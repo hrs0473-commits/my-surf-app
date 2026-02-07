@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - PERFECT WEATHER</title>
+    <title>SURF MASTER PRO - PRECISION WEATHER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -57,7 +57,7 @@
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">SMART WEATHER SYNC</div>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">PRECISION WEATHER SYNC</div>
     </div>
 
     <div class="nav-section">
@@ -83,7 +83,6 @@
 
     <script>
         const surfSpots = [
-            // 全20スポット（和歌山11, 三重5, 京都3, 大阪1）
             { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
             { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '岩場に注意。' },
             { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時ルール厳守。' },
@@ -136,8 +135,8 @@
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
-                // Google検索で「(スポット名) 天気」を検索するURL。確実性を高めるために名称+キーワードを採用。
-                const weatherSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.name)}+天気`;
+                // 住所名に頼らず、座標数値を直接Googleに投げて天気を強制表示させる
+                const weatherUrl = `https://www.google.com/search?q=${spot.lat},${spot.lon}+天気予報`;
                 
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-6" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')">
@@ -151,7 +150,7 @@
                             <p class="text-[11px] font-bold text-blue-500 mb-1">波の高さ</p>
                             <p class="text-3xl font-black text-sky-900"><span id="w-val-${i}">--</span><span class="text-sm ml-1">m</span></p>
                         </div>
-                        <div class="info-box temp-box flex-1" onclick="window.open('${weatherSearchUrl}')">
+                        <div class="info-box temp-box flex-1" onclick="window.open('${weatherUrl}')">
                             <i id="t-icon-${i}" class="fas fa-spinner fa-spin text-orange-200"></i>
                             <p class="text-[11px] font-bold text-orange-500 mb-1">気温・天気</p>
                             <p id="t-val-${i}" class="text-3xl font-black text-sky-900">--</p>
@@ -160,7 +159,7 @@
 
                     <div class="flex justify-between mb-6">
                         <button onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn">📊 公式 波浪実況</button>
-                        <button onclick="window.open('${weatherSearchUrl}')" class="forecast-btn temp-f-btn">🌤 スポット天気予報</button>
+                        <button onclick="window.open('${weatherUrl}')" class="forecast-btn temp-f-btn">🌤 スポット天気予報</button>
                     </div>
                     
                     <div class="facility-group">
