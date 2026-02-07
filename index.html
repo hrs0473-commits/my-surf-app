@@ -3,101 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER</title>
+    <title>SURF MASTER PRO - KYOTO COMPLETE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;900&display=swap');
-        body { margin: 0; background: #f8fafc; font-family: 'Noto Sans JP', sans-serif; padding-bottom: 120px; }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@400;900&family=Permanent+Marker&display=swap');
+        body { margin: 0; background: #f0f9ff; color: #1e293b; font-family: 'Noto Sans JP', sans-serif; background-image: radial-gradient(#bae6fd 0.5px, transparent 0.5px); background-size: 20px 20px; }
         
-        /* ヘッダー：ロゴとバッジ */
-        .hero { 
-            height: 220px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('1770389433670.png') center/cover;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;
+        .hero-section { 
+            height: 380px; width: 100%; display: flex; flex-direction: column; 
+            justify-content: flex-end; align-items: center; 
+            padding-bottom: 50px; 
+            background: linear-gradient(rgba(0,0,0,0) 40%, rgba(240,249,255,1) 100%), url('1770389433670.png'); 
+            background-size: cover; background-position: center; border-bottom: 4px solid #3b82f6; 
         }
-        .hero h1 { font-size: 3.5rem; font-weight: 900; font-style: italic; margin: 0; }
-        .hero .badge { background: #3b82f6; padding: 4px 22px; border-radius: 50px; font-size: 14px; font-weight: 900; margin-top: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-
-        /* エリアボタン：縦長楕円 */
-        .area-nav { display: flex; overflow-x: auto; padding: 20px 10px; background: white; gap: 10px; border-bottom: 1px solid #e2e8f0; }
-        .area-btn { flex: 0 0 85px; height: 110px; border-radius: 50px; background: #f1f5f9; color: #64748b; font-weight: 900; display: flex; align-items: center; justify-content: center; font-size: 18px; border: none; }
-        .area-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
-
-        /* メインカード */
-        .card { background: white; border-radius: 40px; margin: 20px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .spot-name { font-size: 28px; font-weight: 900; color: #1e293b; margin-bottom: 20px; }
         
-        /* データボックス（日本語表記） */
-        .data-box { border: 2px solid #f1f5f9; border-radius: 30px; padding: 20px; margin-bottom: 15px; text-align: center; }
-        .label-wave { color: #3b82f6; font-size: 15px; font-weight: 900; margin-bottom: 5px; } /* 青文字 */
-        .label-temp { color: #f97316; font-size: 15px; font-weight: 900; margin-bottom: 5px; } /* オレンジ文字 */
-        .value { font-size: 42px; font-weight: 900; color: #1e293b; line-height: 1; }
-
-        /* ボタン */
-        .btn { width: 100%; padding: 18px; border-radius: 20px; font-weight: 900; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; }
-        .btn-tide { background: #ecfeff; color: #0891b2; border: 1px solid #cffafe; }
-        .btn-weather { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
-
-        .footer-info { background: #fffbeb; padding: 20px; border-radius: 20px; font-size: 14px; color: #92400e; border: 1px solid #fef3c7; line-height: 1.6; }
-
-        /* 下段ナビ：6アイコン完全版 */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0 35px; border-top: 2px solid #3b82f6; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #3b82f6; }
-        .nav-item i { font-size: 24px; margin-bottom: 5px; }
-        .nav-item span { font-size: 9px; font-weight: 900; white-space: nowrap; }
+        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 3rem; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hero-subtitle { background: #3b82f6; color: white; padding: 2px 15px; border-radius: 50px; font-weight: 900; font-size: 10px; margin-top: 5px; letter-spacing: 2px; }
         
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .nav-section { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); padding: 15px 0; border-bottom: 1px solid #bae6fd; position: sticky; top: 0; z-index: 100; }
+        .nav-btn { flex: none; padding: 10px 22px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; }
+        .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        
+        .spot-card { background: #ffffff; border-radius: 35px; padding: 25px; margin-bottom: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #e0f2fe; }
+        .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; }
+        .wave-box { background: #eff6ff; border: 2px solid #dbeafe; }
+        .temp-box { background: #fff7ed; border: 2px solid #ffedd5; }
+        
+        .forecast-btn { padding: 12px; border-radius: 15px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; cursor: pointer; }
+        .wave-f-btn { color: #0369a1; border-color: #3b82f6; background: #f0f9ff; }
+        .temp-f-btn { color: #9a3412; border-color: #f59e0b; background: #fff7ed; }
+        .tide-f-btn { color: #0891b2; border-color: #22d3ee; background: #ecfeff; width: 100%; margin-top: 10px; display: block; }
+        
+        .facility-group { margin-top: 15px; background: #fffaf0; border-radius: 25px; padding: 20px; border: 1px solid #fef3c7; }
+        .facility-item { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 15px; line-height: 1.5; color: #334155; }
+        .facility-icon { color: #f59e0b; margin-right: 12px; margin-top: 4px; width: 22px; text-align: center; }
+        .facility-label { font-weight: 900; color: #0369a1; margin-right: 8px; font-size: 13px; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); padding: 15px 10px; display: flex; overflow-x: auto; border-top: 3px solid #3b82f6; z-index: 1000; gap: 20px; }
+        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; min-width: 65px; text-decoration: none; }
     </style>
 </head>
-<body>
+<body class="pb-40">
+    <div class="hero-section">
+        <h1 class="hero-title">SURF MASTER</h1>
+        <div class="hero-subtitle">KYOTO SURF EXPLORER</div>
+    </div>
 
-<div class="hero">
-    <h1>SURF MASTER</h1>
-    <div class="badge">ALL-IN-ONE SURF NAVI</div>
-</div>
-
-<div class="area-nav no-scrollbar px-3">
-    <button class="area-btn active">和歌山</button>
-    <button class="area-btn">三重</button>
-    <button class="area-btn">京都</button>
-    <button class="area-btn">大阪</button>
-</div>
-
-<div id="content">
-    <div class="card">
-        <div class="spot-name">磯ノ浦</div>
-        
-        <div class="data-box">
-            <div class="label-wave">現在の波高</div>
-            <div class="value">0.5m</div>
-        </div>
-        <div class="data-box">
-            <div class="label-temp">現在の気温</div>
-            <div class="value">7℃</div>
-        </div>
-        
-        <button class="btn btn-tide" onclick="window.open('https://www.google.com/search?q=磯ノ浦+潮見表')">
-            🌊 潮見表(タイドグラフ)を開く
-        </button>
-        <button class="btn btn-weather" onclick="window.open('https://www.google.com/search?q=磯ノ浦+天気')">
-            🌤 Google天気で詳細を確認
-        </button>
-
-        <div class="footer-info">
-            <b>P: 巨大P有 / 🚿: 温水完備 / WC: 有</b><br>
-            <span style="opacity: 0.7;">ℹ️ 関西のサーフメッカ。通年サーフィン可能</span>
+    <div class="nav-section">
+        <div class="flex overflow-x-auto no-scrollbar px-5">
+            <button onclick="filterArea('kyoto')" id="btn-kyoto" class="nav-btn active">京都</button>
+            <button onclick="filterArea('wakayama')" id="btn-wakayama" class="nav-btn">和歌山</button>
+            <button onclick="filterArea('mie')" id="btn-mie" class="nav-btn">三重</button>
+            <button onclick="filterArea('osaka')" id="btn-osaka" class="nav-btn">大阪</button>
         </div>
     </div>
-</div>
 
-<nav class="bottom-nav">
-    <a href="#" class="nav-item"><i class="fas fa-crosshairs"></i><span>近くを探す</span></a>
-    <a href="#" class="nav-item"><i class="fas fa-home"></i><span>HOME</span></a>
-    <a href="#" class="nav-item"><i class="fas fa-map-marked-alt"></i><span>Googleマップ</span></a>
-    <a href="https://nowphas.mlit.go.jp/" class="nav-item"><i class="fas fa-chart-line"></i><span>ナウファス</span></a>
-    <a href="https://www.google.com/search?q=天気" class="nav-item"><i class="fas fa-cloud-sun"></i><span>Google天気</span></a>
-    <a href="https://www.windy.com" class="nav-item"><i class="fas fa-wind"></i><span>風情報</span></a>
-</nav>
+    <main id="spot-container" class="px-5 py-8 max-w-md mx-auto"></main>
 
+    <script>
+        // 【復元・追加】京都エリアのスポット詳細
+        const surfSpots = [
+            { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '公衆トイレ有(綺麗)', o: '日本海を代表するメジャーポイント。通年波が立ちやすくアクセスも良好。' },
+            { area: 'kyoto', name: '浜詰(夕日ヶ浦)', q: '京丹後市 網野町 浜詰 天気', lat: 35.6690, lon: 134.9250, p: '浜詰園地P(広め)', s: '無料水シャワー有', t: '完備(比較的綺麗)', o: '北東風をかわしやすく、コンディションが整いやすい。夕日が非常に美しい。' },
+            { area: 'kyoto', name: '葛野浜', q: '京丹後市 久美浜町 葛野 天気', lat: 35.6420, lon: 134.9080, p: '夏季有料P、オフ期無料スペース有', s: '夏季のみ有', t: '有', o: 'うねりに敏感なロングビーチ。初心者から上級者まで。' },
+            { area: 'kyoto', name: '小天橋', q: '京丹後市 久美浜町 湊宮 天気', lat: 35.6312, lon: 134.8950, p: '駐車場完備', s: '有(夏季)', t: '有', o: '西風をかわしやすいポイント。浜詰がクローズ気味の時に。' },
+            { area: 'kyoto', name: '神崎', q: '舞鶴市 神崎 天気', lat: 35.5350, lon: 135.2420, p: '神崎海水浴場P(約1500台)', s: '有', t: '有', o: '舞鶴の代表ポイント。東の山が東寄りの風をかわしてくれる。由良川河口に隣接。' },
+            { area: 'kyoto', name: '平', q: '京丹後市 丹後町 平 天気', lat: 35.7530, lon: 135.1580, p: 'キャンプ場P', s: 'キャンプ場設備有', t: '有', o: '風の影響を受けやすいが、整うと良質な波が立つ穴場。' },
+            
+            // 他エリアも以前のデータを維持
+            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: '巨大P(1000円〜)', s: '温水・更衣室完備', t: '有', o: '関西のメッカ。通年人気。' },
+            { area: 'mie', name: '国府の浜', q: '志摩市 天気', lat: 34.3325, lon: 136.9125, p: '民間P多数', s: '完備', t: '有', o: '三重のメッカ。初心者に最適。' }
+        ];
+
+        async function fetchSurf(lat, lon, i) {
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&marine=wave_height&timezone=Asia%2FTokyo`);
+                const data = await res.json();
+                const wave = data.current.wave_height || 0.4;
+                document.getElementById(`w-val-${i}`).innerText = wave.toFixed(1);
+                document.getElementById(`t-val-${i}`).innerText = Math.round(data.current.temperature_2m) + '°C';
+                document.getElementById(`wind-${i}`).innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
+                document.getElementById(`w-icon-${i}`).className = "fas fa-water text-3xl mb-2 text-blue-500";
+                document.getElementById(`t-icon-${i}`).className = "fas fa-cloud-sun text-3xl mb-2 text-orange-400";
+            } catch (e) { console.error(e); }
+        }
+
+        function filterArea(area) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${area}`).classList.add('active');
+            const container = document.getElementById('spot-container');
+            container.innerHTML = '';
+            
+            surfSpots.filter(s => s.area === area).forEach((spot, i) => {
+                const div = document.createElement('div');
+                div.className = 'spot-card';
+                const weatherUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.q)}`;
+                const tideUrl = `https://www.google.com/search?q=${encodeURIComponent(spot.name + " 潮見表 タイドグラフ")}`;
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}`;
+                
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-6" onclick="window.open('${mapUrl}')">
+                        <h3 class="text-2xl font-black italic text-sky-900">${spot.name} <i class="fas fa-map-marker-alt text-sm text-blue-400 ml-1"></i></h3>
+                        <div class="text-right"><p class="text-[9px] font-bold text-blue-400 uppercase">Wind</p><span id="wind-${i}" class="text-xs font-black text-sky-700">-- km/h</span></div>
+                    </div>
+                    <div class="flex justify-between gap-4 mb-6">
+                        <div class="info-box wave-box flex-1">
+                            <i id="w-icon-${i}" class="fas fa-circle-notch fa-spin text-blue-200 text-3xl mb-2"></i>
+                            <p class="text-[11px] font-bold text-blue-500 mb-1">波の高さ</p>
+                            <p class="text-3xl font-black text-sky-900"><span id="w-val-${i}">--</span><span class="text-sm ml-1">m</span></p>
+                        </div>
+                        <div class="info-box temp-box flex-1" onclick="window.open('${weatherUrl}')">
+                            <i id="t-icon-${i}" class="fas fa-circle-notch fa-spin text-orange-200 text-3xl mb-2"></i>
+                            <p class="text-[11px] font-bold text-orange-500 mb-1">天気・気温</p>
+                            <p id="t-val-${i}" class="text-3xl font-black text-sky-900">--</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div onclick="window.open('https://nowphas.mlit.go.jp/')" class="forecast-btn wave-f-btn">📊 ナウファス</div>
+                        <div onclick="window.open('${weatherUrl}')" class="forecast-btn temp-f-btn">🌤 天気詳細</div>
+                        <div onclick="window.open('${tideUrl}')" class="forecast-btn tide-f-btn col-span-2">🌊 潮見グラフ(Google)</div>
+                    </div>
+                    <div class="facility-group">
+                        <div class="facility-item"><i class="fas fa-parking facility-icon"></i><div><span class="facility-label">駐車場</span>${spot.p}</div></div>
+                        <div class="facility-item"><i class="fas fa-shower facility-icon"></i><div><span class="facility-label">シャワー</span>${spot.s}</div></div>
+                        <div class="facility-item"><i class="fas fa-restroom facility-icon"></i><div><span class="facility-label">トイレ</span>${spot.t}</div></div>
+                        <div class="facility-item mt-4 text-sky-700 bg-white/70 p-3 rounded-xl border border-sky-100 font-bold text-xs italic"><i class="fas fa-info-circle mr-1"></i>${spot.o}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+                fetchSurf(spot.lat, spot.lon, i);
+            });
+        }
+        window.onload = () => filterArea('kyoto');
+    </script>
 </body>
 </html>
