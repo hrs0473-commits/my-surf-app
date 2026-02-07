@@ -27,4 +27,104 @@
         .data-box { border: 2px solid #f1f5f9; border-radius: 30px; padding: 20px; margin-bottom: 15px; text-align: center; }
         .label-wave { color: #3b82f6; font-size: 15px; font-weight: 900; margin-bottom: 5px; }
         .label-temp { color: #f97316; font-size: 15px; font-weight: 900; margin-bottom: 5px; }
-        .value { font-size: 42px; font-weight: 900; color: #1e293b; line
+        .value { font-size: 42px; font-weight: 900; color: #1e293b; line-height: 1; }
+
+        .btn-weather { width: 100%; padding: 18px; border-radius: 20px; font-weight: 900; background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; font-size: 16px; display: block; text-align: center; }
+
+        .footer-info { margin-top: 15px; background: #fffbeb; padding: 20px; border-radius: 20px; font-size: 14px; color: #92400e; border: 1px solid #fef3c7; line-height: 1.6; }
+
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0 35px; border-top: 2px solid #3b82f6; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #3b82f6; }
+        .nav-item i { font-size: 24px; margin-bottom: 5px; }
+        .nav-item span { font-size: 9px; font-weight: 900; white-space: nowrap; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>SURF MASTER</h1>
+    <div class="badge">ALL-IN-ONE SURF NAVI</div>
+</div>
+
+<div class="area-nav no-scrollbar px-3">
+    <button onclick="filterArea('wakayama')" id="btn-wakayama" class="area-btn active">和歌山</button>
+    <button onclick="filterArea('mie')" id="btn-mie" class="area-btn">三重</button>
+    <button onclick="filterArea('kyoto')" id="btn-kyoto" class="area-btn">京都</button>
+    <button onclick="filterArea('osaka')" id="btn-osaka" class="area-btn">大阪</button>
+</div>
+
+<div id="spot-container"></div>
+
+<nav class="bottom-nav">
+    <a href="https://www.google.co.jp/maps/search/サーフスポット" target="_blank" class="nav-item"><i class="fas fa-crosshairs"></i><span>近くを探す</span></a>
+    <a href="#" class="nav-item" onclick="location.reload()"><i class="fas fa-home"></i><span>HOME</span></a>
+    <a href="https://www.google.co.jp/maps" target="_blank" class="nav-item"><i class="fas fa-map-marked-alt"></i><span>Googleマップ</span></a>
+    <a href="https://nowphas.mlit.go.jp/" target="_blank" class="nav-item"><i class="fas fa-chart-line"></i><span>ナウファス</span></a>
+    <a href="https://www.google.com/search?q=天気" target="_blank" class="nav-item"><i class="fas fa-cloud-sun"></i><span>Google天気</span></a>
+    <a href="https://www.windy.com" target="_blank" class="nav-item"><i class="fas fa-wind"></i><span>風情報</span></a>
+</nav>
+
+<script>
+    const surfSpots = [
+        { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, p: '巨大P有', s: '温水完備', t: '有', o: '関西のメッカ' },
+        { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦P', s: '共通', t: '有', o: '中級者' },
+        { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '東側P', s: '有', t: '有', o: '混雑回避' },
+        { area: 'wakayama', name: '淡島神社', lat: 34.2721, lon: 135.0602, p: '有料P', s: '小規模', t: '有', o: 'リーフ' },
+        { area: 'wakayama', name: '浜の宮', lat: 34.1738, lon: 135.1882, p: '海水浴場P', s: '夏季有', t: '有', o: '練習に' },
+        { area: 'wakayama', name: 'ゴロゴロ', lat: 33.8210, lon: 135.2120, p: '有料P', s: '近隣有', t: '有', o: 'パワフル' },
+        { area: 'wakayama', name: 'モーテル下', lat: 33.6820, lon: 135.3350, p: '近隣P', s: '有', t: '有', o: '白浜' },
+        { area: 'wakayama', name: '下里', lat: 33.5820, lon: 135.9150, p: 'ビーチ横', s: '有', t: '有', o: '水質良' },
+        { area: 'wakayama', name: '那智', lat: 33.6385, lon: 135.9392, p: '駅前P', s: '完備', t: '有', o: '道の駅隣' },
+        { area: 'mie', name: '国府の浜', lat: 34.3325, lon: 136.9125, p: '民間P多数', s: '有', t: '有', o: '三重メイン' },
+        { area: 'mie', name: '市後浜', lat: 34.3215, lon: 136.9080, p: '有料P', s: '有', t: '有', o: 'キャンプ併設' },
+        { area: 'mie', name: '阿児の松原', lat: 34.3380, lon: 136.9050, p: '民間P', s: '有', t: '有', o: '国府北側' },
+        { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, p: '有料P', s: '有', t: '有', o: '中上級者' },
+        { area: 'mie', name: 'ジャン', lat: 34.3100, lon: 136.8800, p: '少量', s: '無', t: '無', o: 'リーフ' },
+        { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, p: 'パークP', s: '温水完備', t: '有', o: '丹後代表' },
+        { area: 'kyoto', name: '夕日ヶ浦', lat: 35.6690, lon: 134.9250, p: '園地P', s: '有', t: '有', o: '北東に強い' },
+        { area: 'kyoto', name: '葛野浜', lat: 35.6420, lon: 134.9080, p: '夏季有料', s: '有', t: '有', o: 'ロングビーチ' },
+        { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, p: '完備', s: '有', t: '有', o: '西風に強い' },
+        { area: 'kyoto', name: '神崎', lat: 35.5350, lon: 135.2420, p: '広大P', s: '有', t: '有', o: '舞鶴エリア' },
+        { area: 'kyoto', name: '平', lat: 35.7530, lon: 135.1580, p: 'キャンプP', s: '有', t: '有', o: '穴場' },
+        { area: 'osaka', name: 'せんなん里海', lat: 34.3435, lon: 135.1855, p: '巨大P', s: '有', t: '有', o: '限定' }
+    ];
+
+    async function fetchSurf(lat, lon, i) {
+        try {
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&marine=wave_height&timezone=Asia%2FTokyo`);
+            const data = await res.json();
+            const wEl = document.getElementById(`w-${i}`);
+            const tEl = document.getElementById(`t-${i}`);
+            if(wEl) wEl.innerText = (data.current.wave_height || 0.5).toFixed(1) + 'm';
+            if(tEl) tEl.innerText = Math.round(data.current.temperature_2m) + '℃';
+        } catch (e) { }
+    }
+
+    function filterArea(area) {
+        document.querySelectorAll('.area-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.getElementById(`btn-${area}`);
+        if(activeBtn) activeBtn.classList.add('active');
+        
+        const container = document.getElementById('spot-container');
+        container.innerHTML = '';
+        
+        surfSpots.filter(s => s.area === area).forEach((spot, i) => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div class="spot-name">${spot.name}</div>
+                <div class="data-box"><div class="label-wave">現在の波高</div><div id="w-${i}" class="value">--m</div></div>
+                <div class="data-box"><div class="label-temp">現在の気温</div><div id="t-${i}" class="value">--℃</div></div>
+                <button class="btn-weather" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(spot.name + " 天気")}')">🌤 Google天気で詳細を確認</button>
+                <div class="footer-info"><b>P: ${spot.p} / 🚿: ${spot.s} / WC: ${spot.t}</b><br><span>ℹ️ ${spot.o}</span></div>
+            `;
+            container.appendChild(div);
+            fetchSurf(spot.lat, spot.lon, i);
+        });
+    }
+    window.onload = () => filterArea('wakayama');
+</script>
+</body>
+</html>
