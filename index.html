@@ -21,8 +21,17 @@
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
         .spot-card { background: #1e293b; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #334155; cursor: pointer; }
         .info-box { background: rgba(15, 23, 42, 0.7); border-radius: 20px; padding: 20px; text-align: center; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); padding: 20px; display: flex; justify-content: space-around; border-top: 1px solid #1e293b; z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; text-decoration: none; font-weight: 900; background: none; border: none; }
+        
+        /* 下段メニューを横スクロール可能に修正 */
+        .bottom-nav { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); 
+            padding: 15px 10px; display: flex; overflow-x: auto; 
+            border-top: 1px solid #1e293b; z-index: 1000; 
+            justify-content: flex-start; gap: 20px;
+        }
+        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 9px; color: #64748b; text-decoration: none; font-weight: 900; background: none; border: none; min-width: 60px; }
+        .nav-item i { font-size: 1.2rem; margin-bottom: 4px; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -41,13 +50,14 @@
     </div>
     <main id="spot-container" class="px-5 py-6 max-w-md mx-auto"></main>
 
-    <nav class="bottom-nav">
-        <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs text-xl mb-1"></i><span>近くを探す</span></button>
-        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item"><i class="fas fa-home text-xl mb-1"></i><span>HOME</span></button>
-        <a href="https://www.google.com/maps/search/%E3%82%B5%E3%83%BC%E3%83%95%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88/" target="_blank" class="nav-item text-green-500">
-            <i class="fas fa-map-marked-alt text-xl mb-1"></i><span>Googleマップ</span>
-        </a>
-        <a href="https://weathernews.jp" target="_blank" class="nav-item"><i class="fas fa-cloud-sun text-xl mb-1"></i><span>天気予報</span></a>
+    <nav class="bottom-nav no-scrollbar">
+        <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs"></i><span>近くを探す</span></button>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item"><i class="fas fa-home"></i><span>HOME</span></button>
+        <a href="https://www.google.co.jp/maps/search/サーフポイント" target="_blank" class="nav-item text-green-500"><i class="fas fa-map-marked-alt"></i><span>Googleマップ</span></a>
+        <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind"></i><span>風情報</span></a>
+        <a href="https://www.google.com" target="_blank" class="nav-item text-white"><i class="fab fa-chrome"></i><span>Google検索</span></a>
+        <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-400"><i class="fas fa-water"></i><span>潮見表</span></a>
+        <a href="https://weathernews.jp" target="_blank" class="nav-item"><i class="fas fa-cloud-sun"></i><span>天気予報</span></a>
     </nav>
 
     <script>
@@ -88,15 +98,12 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             const btn = document.getElementById(`btn-${area}`);
             if(btn) btn.classList.add('active');
-            
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
-            
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
-                // スポットをタップで個別マップを開く
-                div.onclick = () => window.open(`https://www.google.com/maps?q=${spot.lat},${spot.lon}`);
+                div.onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}`);
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-5">
                         <h3 class="text-xl font-bold italic text-white">${spot.name} <i class="fas fa-external-link-alt text-xs opacity-50 ml-1"></i></h3>
@@ -114,11 +121,8 @@
         }
 
         function useGPS() {
-            if (!navigator.geolocation) {
-                alert("GPSが使えない端末です");
-                return;
-            }
-            // 反応を良くするためにオプションを追加
+            if (!navigator.geolocation) { alert("GPS非対応端末です"); return; }
+            alert("現在地を取得します...");
             navigator.geolocation.getCurrentPosition((p) => {
                 const la = p.coords.latitude;
                 if(la > 35) filterArea('kyoto'); 
@@ -126,11 +130,8 @@
                 else if(la > 34.1) filterArea('wakayama'); 
                 else filterArea('mie');
                 window.scrollTo({top: 250, behavior:'smooth'});
-            }, (err) => {
-                alert("位置情報の許可をオンにしてください");
-            }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
+            }, (err) => { alert("位置情報が取得できませんでした。設定を確認してください。"); }, { enableHighAccuracy: true, timeout: 5000 });
         }
-
         filterArea('wakayama');
     </script>
 </body>
