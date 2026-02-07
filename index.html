@@ -8,46 +8,62 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@700;900&family=Permanent+Marker&display=swap');
+        
         body { margin: 0; background: #0f172a; font-family: 'Noto Sans JP', sans-serif; color: #f8fafc; overflow-x: hidden; }
         
+        /* タイトル画像セクション - 読み込みをより安定したURLに修正 */
         .hero-section {
+            position: relative;
             height: 22vh;
-            background: linear-gradient(rgba(15,23,42,0.2), rgba(15,23,42,1)), 
-                        url('http://googleusercontent.com/generated_image_content/0');
-            background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #1e293b; /* 画像がない時の予備色 */
         }
-        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 1.5rem; color: #ffffff; text-shadow: 0 4px 12px rgba(0,0,0,0.9); }
-        .hero-subtitle { font-size: 0.6rem; font-weight: 900; letter-spacing: 0.4em; color: #3b82f6; margin-top: 5px; }
 
+        /* 黄金色のサーファー画像（Unsplashの高品質・高安定リンクを使用） */
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(15,23,42,0.2), rgba(15,23,42,1)), 
+                              url('https://images.unsplash.com/photo-1502680399488-63449813253b?auto=format&fit=crop&q=80&w=1200');
+            background-size: cover;
+            background-position: center 30%;
+            z-index: 0;
+        }
+
+        .hero-content { position: relative; z-index: 10; text-align: center; }
+        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: #ffffff; text-shadow: 0 4px 12px rgba(0,0,0,0.9); margin: 0; }
+        .hero-subtitle { font-size: 0.6rem; font-weight: 900; letter-spacing: 0.4em; color: #3b82f6; margin-top: 5px; text-transform: uppercase; }
+
+        /* ナビゲーション */
         .nav-section { background: #0f172a; padding: 12px 0; border-bottom: 1px solid #1e293b; position: sticky; top: 0; z-index: 100; }
         .nav-btn { flex-none px-6 py-2 bg-slate-800 text-slate-400 rounded-full text-[11px] font-black transition-all; }
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
 
+        /* カードデザイン */
         .spot-card { background: #1e293b; border-radius: 24px; border: 1px solid #334155; overflow: hidden; margin-bottom: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-
-        .info-box { position: relative; height: 115px; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .box-overlay { position: absolute; inset: 0; z-index: 1; }
-        .wave-bg { background-image: url('https://images.unsplash.com/photo-1516149893016-813d9a01d5d3?auto=format&fit=crop&q=60&w=400'); background-color: #0c4a6e; background-size: cover; }
-        .temp-bg { background-image: url('https://images.unsplash.com/photo-1592210633461-177265e3158e?auto=format&fit=crop&q=60&w=400'); background-color: #1e293b; background-size: cover; }
-        .wave-overlay { background: rgba(7, 89, 133, 0.65); }
-        .temp-overlay { background: rgba(30, 41, 59, 0.65); }
-
-        .tide-box { position: relative; background: #111827; border-radius: 18px; padding: 15px; margin-top: 15px; overflow: hidden; background-image: url('https://images.unsplash.com/photo-1439405326854-01517489c73e?auto=format&fit=crop&q=60&w=500'); background-size: cover; }
-        .tide-overlay { position: absolute; inset: 0; background: rgba(17, 24, 39, 0.85); z-index: 0; }
-        canvas { position: relative; z-index: 2; width: 100% !important; height: 85px !important; }
-
+        .info-box { position: relative; height: 110px; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #0c4a6e; }
+        .info-bg-img { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.4; }
+        
+        /* 下部メニュー */
         .bottom-nav { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); border-top: 1px solid #1e293b; border-radius: 28px 28px 0 0; }
         .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: 900; color: #64748b; text-decoration: none; }
         .nav-item.active { color: #3b82f6; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-36">
 
     <div class="hero-section">
-        <h1 class="hero-title italic">SURF MASTER PRO</h1>
-        <p class="hero-subtitle italic tracking-widest uppercase">20 Spots Full Coverage</p>
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title italic">SURF MASTER PRO</h1>
+            <p class="hero-subtitle italic">20 Spots Full Coverage</p>
+        </div>
     </div>
 
     <div class="nav-section">
@@ -62,20 +78,20 @@
     <main id="spot-container" class="px-5 py-6 max-w-lg mx-auto"></main>
 
     <nav class="fixed bottom-0 left-0 right-0 p-5 z-50 bottom-nav flex justify-around items-center">
-        <button onclick="useGPS()" class="nav-item"><i class="fas fa-location-crosshairs text-xl mb-1"></i><span>近くを探す</span></button>
-        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item active"><i class="fas fa-house text-xl mb-1"></i><span>HOME</span></button>
+        <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs text-xl mb-1"></i><span>近くを探す</span></button>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item active"><i class="fas fa-home text-xl mb-1"></i><span>HOME</span></button>
         <a href="https://www.google.com/maps" target="_blank" class="nav-item text-green-500"><i class="fas fa-map-marked-alt text-xl mb-1"></i><span>MAP</span></a>
-        <a href="https://www.google.com" target="_blank" class="nav-item"><i class="fab fa-google text-xl mb-1"></i><span>検索</span></a>
-        <a href="https://weathernews.jp" target="_blank" class="nav-item"><i class="fas fa-sun text-xl mb-1"></i><span>天気予報</span></a>
+        <a href="https://www.google.com" target="_blank" class="nav-item"><i class="fas fa-search text-xl mb-1"></i><span>検索</span></a>
+        <a href="https://weathernews.jp" target="_blank" class="nav-item"><i class="fas fa-cloud-sun text-xl mb-1"></i><span>天気予報</span></a>
     </nav>
 
     <script>
         const surfSpots = [
             // 和歌山 (11スポット)
             { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '和歌山メジャー。通称イソコ。' },
-            { area: 'wakayama', name: '西磯', lat: 34.26, lon: 135.09, d: '磯ノ浦の西側ポイント。' },
+            { area: 'wakayama', name: '西磯', lat: 34.26, lon: 135.09, d: '磯ノ浦の西側。' },
             { area: 'wakayama', name: '奥磯', lat: 34.26, lon: 135.11, d: '磯ノ浦の東奥エリア。' },
-            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '混雑回避の広いビーチ。' },
+            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '広いビーチ。初心者にも。' },
             { area: 'wakayama', name: '淡島神社', lat: 34.27, lon: 135.06, d: '中級者向けリーフ。' },
             { area: 'wakayama', name: 'ゴロゴロ', lat: 33.72, lon: 135.34, d: '南部のメジャーポイント。' },
             { area: 'wakayama', name: 'モーテル下', lat: 33.71, lon: 135.35, d: '施設近くの人気スポット。' },
@@ -84,37 +100,18 @@
             { area: 'wakayama', name: 'フカ', lat: 33.55, lon: 135.50, d: '南部のリーフポイント。' },
             { area: 'wakayama', name: '漁港(印南)', lat: 33.82, lon: 135.20, d: '印南漁港付近。' },
             // 三重 (5スポット)
-            { area: 'mie', name: '国府の浜(三角)', lat: 34.33, lon: 136.91, d: '三重のメッカ。メインポイント。' },
+            { area: 'mie', name: '国府の浜(三角)', lat: 34.33, lon: 136.91, d: '三重のメッカ。メイン。' },
             { area: 'mie', name: '国府の浜(テトラ)', lat: 34.34, lon: 136.91, d: 'テトラ付近のブレイク。' },
-            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '落ち着いた雰囲気のビーチ。' },
-            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: 'パワフルな波。中上級者向け。' },
+            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '落ち着いたビーチ。' },
+            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: 'パワフル。中上級者向け。' },
             { area: 'mie', name: '阿児の松原', lat: 34.33, lon: 136.90, d: '約3kmのロングビーチ。' },
             // 京都 (3スポット)
-            { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '丹後エリアの代表ポイント。' },
-            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '冬場に反応が良いビーチ。' },
+            { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '丹後エリアの代表格。' },
+            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '冬場に反応が良い。' },
             { area: 'kyoto', name: '琴引浜', lat: 35.70, lon: 135.04, d: '鳴き砂。うねりに敏感。' },
             // 大阪 (1スポット)
             { area: 'osaka', name: 'せんなん里海公園', lat: 34.34, lon: 135.18, d: '風次第で練習可能。' }
         ];
-
-        function drawTide(canvasId) {
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width; const h = canvas.height;
-            const now = new Date().getHours() + new Date().getMinutes()/60;
-            ctx.clearRect(0, 0, w, h);
-            ctx.beginPath(); ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 4;
-            for (let i = 0; i <= 24; i++) {
-                const x = (i / 24) * w;
-                const y = (Math.sin((i - 6) * Math.PI / 6) * 22) + (h / 2);
-                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-            const curX = (now / 24) * w;
-            const curY = (Math.sin((now - 6) * Math.PI / 6) * 22) + (h / 2);
-            ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(curX, curY, 6, 0, Math.PI * 2); ctx.fill();
-        }
 
         async function fetchSurf(lat, lon, id) {
             try {
@@ -124,8 +121,7 @@
                 document.getElementById(`t-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
                 const windDir = data.current.wind_direction_10m;
                 document.getElementById(`wind-${id}`).innerHTML = `<i class="fas fa-location-arrow transform" style="transform: rotate(${windDir}deg);"></i> ${Math.round(data.current.wind_speed_10m)}km/h`;
-                drawTide(`tide-${id}`);
-            } catch (e) { drawTide(`tide-${id}`); }
+            } catch (e) { console.error(e); }
         }
 
         function filterArea(area) {
@@ -139,27 +135,22 @@
                 div.className = 'spot-card p-6';
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-5">
-                        <div onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')" class="cursor-pointer flex items-center">
-                            <h3 class="text-xl font-black text-white italic mr-2">${spot.name}</h3>
-                            <i class="fas fa-map-pin text-blue-400"></i>
+                        <div onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')" class="cursor-pointer">
+                            <h3 class="text-xl font-black text-white italic">${spot.name} <i class="fas fa-map-marker-alt text-blue-400 text-sm"></i></h3>
                         </div>
                         <div id="wind-${i}" class="text-[10px] font-bold text-blue-400 bg-blue-900/30 px-3 py-1 rounded-full border border-blue-900/50">--</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="info-box wave-bg">
-                            <div class="box-overlay wave-overlay"></div>
-                            <p class="relative z-10 text-[9px] font-black text-blue-200 uppercase mb-1 tracking-widest">Wave Height</p>
-                            <p class="relative z-10 accent-font text-4xl font-black text-white"><span id="w-${i}">--</span><span class="text-sm ml-1 italic">m</span></p>
+                        <div class="info-box">
+                            <div class="info-bg-img" style="background-image: url('https://images.unsplash.com/photo-1516149893016-813d9a01d5d3?auto=format&fit=crop&q=40&w=300')"></div>
+                            <p class="relative z-10 text-[9px] font-black text-blue-200 uppercase mb-1">Wave Height</p>
+                            <p class="relative z-10 text-3xl font-black text-white"><span id="w-${i}">--</span><span class="text-xs ml-1">m</span></p>
                         </div>
-                        <div class="info-box temp-bg">
-                            <div class="box-overlay temp-overlay"></div>
-                            <p class="relative z-10 text-[9px] font-black text-orange-200 uppercase mb-1 tracking-widest">Temperature</p>
-                            <p id="t-${i}" class="relative z-10 accent-font text-4xl font-black text-white">--</p>
+                        <div class="info-box" style="background-color: #334155;">
+                            <div class="info-bg-img" style="background-image: url('https://images.unsplash.com/photo-1592210633461-177265e3158e?auto=format&fit=crop&q=40&w=300')"></div>
+                            <p class="relative z-10 text-[9px] font-black text-orange-200 uppercase mb-1">Temperature</p>
+                            <p id="t-${i}" class="relative z-10 text-3xl font-black text-white">--</p>
                         </div>
-                    </div>
-                    <div class="tide-box">
-                        <div class="tide-overlay"></div>
-                        <canvas id="tide-${i}" width="400" height="100"></canvas>
                     </div>
                     <p class="mt-4 text-[10px] font-bold text-slate-500 italic border-t border-slate-800 pt-3 opacity-70">"${spot.d}"</p>
                 `;
