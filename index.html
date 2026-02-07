@@ -9,61 +9,57 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@700;900&family=Permanent+Marker&display=swap');
         
-        body { margin: 0; background: #0f172a; font-family: 'Noto Sans JP', sans-serif; color: #f8fafc; overflow-x: hidden; }
-        
-        /* タイトル画像セクション - 読み込みをより安定したURLに修正 */
+        body { margin: 0; background: #0f172a; font-family: 'Noto Sans JP', sans-serif; color: #f8fafc; }
+
+        /* 黄金色のサーファー画像 - 最も安定したリンクに差し替え */
         .hero-section {
-            position: relative;
-            height: 22vh;
+            height: 20vh;
             width: 100%;
-            overflow: hidden;
+            /* 1番目に画像、2番目に予備のグラデーションを設定 */
+            background: linear-gradient(rgba(15,23,42,0.3), rgba(15,23,42,1)), 
+                        url('https://images.unsplash.com/photo-1502680399488-63449813253b?auto=format&fit=crop&w=1000&q=80'),
+                        linear-gradient(45deg, #0c4a6e, #1e293b); 
+            background-size: cover;
+            background-position: center 30%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #1e293b; /* 画像がない時の予備色 */
+            text-align: center;
         }
 
-        /* 黄金色のサーファー画像（Unsplashの高品質・高安定リンクを使用） */
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(15,23,42,0.2), rgba(15,23,42,1)), 
-                              url('https://images.unsplash.com/photo-1502680399488-63449813253b?auto=format&fit=crop&q=80&w=1200');
-            background-size: cover;
-            background-position: center 30%;
-            z-index: 0;
-        }
+        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: #ffffff; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+        .hero-subtitle { font-size: 0.6rem; font-weight: 900; letter-spacing: 0.3em; color: #60a5fa; margin-top: 5px; text-transform: uppercase; }
 
-        .hero-content { position: relative; z-index: 10; text-align: center; }
-        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: #ffffff; text-shadow: 0 4px 12px rgba(0,0,0,0.9); margin: 0; }
-        .hero-subtitle { font-size: 0.6rem; font-weight: 900; letter-spacing: 0.4em; color: #3b82f6; margin-top: 5px; text-transform: uppercase; }
-
-        /* ナビゲーション */
         .nav-section { background: #0f172a; padding: 12px 0; border-bottom: 1px solid #1e293b; position: sticky; top: 0; z-index: 100; }
         .nav-btn { flex-none px-6 py-2 bg-slate-800 text-slate-400 rounded-full text-[11px] font-black transition-all; }
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
 
-        /* カードデザイン */
-        .spot-card { background: #1e293b; border-radius: 24px; border: 1px solid #334155; overflow: hidden; margin-bottom: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        .info-box { position: relative; height: 110px; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #0c4a6e; }
-        .info-bg-img { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.4; }
+        .spot-card { background: #1e293b; border-radius: 24px; border: 1px solid #334155; overflow: hidden; margin-bottom: 24px; }
         
-        /* 下部メニュー */
-        .bottom-nav { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); border-top: 1px solid #1e293b; border-radius: 28px 28px 0 0; }
+        /* カード内の背景画像も安定化 */
+        .info-box { 
+            position: relative; height: 110px; border-radius: 18px; overflow: hidden; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: #0c4a6e;
+        }
+        .box-img {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center; opacity: 0.4;
+            z-index: 0;
+        }
+
+        .bottom-nav { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(10px); border-top: 1px solid #1e293b; border-radius: 24px 24px 0 0; }
         .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: 900; color: #64748b; text-decoration: none; }
         .nav-item.active { color: #3b82f6; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-36">
 
     <div class="hero-section">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <h1 class="hero-title italic">SURF MASTER PRO</h1>
-            <p class="hero-subtitle italic">20 Spots Full Coverage</p>
-        </div>
+        <h1 class="hero-title italic">SURF MASTER PRO</h1>
+        <p class="hero-subtitle italic">20 Spots Full Coverage</p>
     </div>
 
     <div class="nav-section">
@@ -86,30 +82,27 @@
     </nav>
 
     <script>
+        // 全20スポット・データ
         const surfSpots = [
-            // 和歌山 (11スポット)
             { area: 'wakayama', name: '磯ノ浦', lat: 34.26, lon: 135.10, d: '和歌山メジャー。通称イソコ。' },
             { area: 'wakayama', name: '西磯', lat: 34.26, lon: 135.09, d: '磯ノ浦の西側。' },
-            { area: 'wakayama', name: '奥磯', lat: 34.26, lon: 135.11, d: '磯ノ浦の東奥エリア。' },
-            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '広いビーチ。初心者にも。' },
+            { area: 'wakayama', name: '奥磯', lat: 34.26, lon: 135.11, d: '磯ノ浦の東奥。' },
+            { area: 'wakayama', name: '浜の宮', lat: 34.17, lon: 135.18, d: '広いビーチポイント。' },
             { area: 'wakayama', name: '淡島神社', lat: 34.27, lon: 135.06, d: '中級者向けリーフ。' },
             { area: 'wakayama', name: 'ゴロゴロ', lat: 33.72, lon: 135.34, d: '南部のメジャーポイント。' },
-            { area: 'wakayama', name: 'モーテル下', lat: 33.71, lon: 135.35, d: '施設近くの人気スポット。' },
+            { area: 'wakayama', name: 'モーテル下', lat: 33.71, lon: 135.35, d: '南部の人気スポット。' },
             { area: 'wakayama', name: '下里', lat: 33.58, lon: 135.91, d: '南紀の美しいビーチ。' },
             { area: 'wakayama', name: '那智', lat: 33.63, lon: 135.93, d: '那智勝浦エリア。' },
-            { area: 'wakayama', name: 'フカ', lat: 33.55, lon: 135.50, d: '南部のリーフポイント。' },
+            { area: 'wakayama', name: 'フカ', lat: 33.55, lon: 135.50, d: '南部のリーフ。' },
             { area: 'wakayama', name: '漁港(印南)', lat: 33.82, lon: 135.20, d: '印南漁港付近。' },
-            // 三重 (5スポット)
-            { area: 'mie', name: '国府の浜(三角)', lat: 34.33, lon: 136.91, d: '三重のメッカ。メイン。' },
+            { area: 'mie', name: '国府の浜(三角)', lat: 34.33, lon: 136.91, d: '伊勢エリアのメイン。' },
             { area: 'mie', name: '国府の浜(テトラ)', lat: 34.34, lon: 136.91, d: 'テトラ付近のブレイク。' },
-            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '落ち着いたビーチ。' },
-            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: 'パワフル。中上級者向け。' },
+            { area: 'mie', name: '市後浜', lat: 34.32, lon: 136.90, d: '落ち着いた雰囲気。' },
+            { area: 'mie', name: '南張', lat: 34.28, lon: 136.75, d: 'パワフルな中上級者向け。' },
             { area: 'mie', name: '阿児の松原', lat: 34.33, lon: 136.90, d: '約3kmのロングビーチ。' },
-            // 京都 (3スポット)
             { area: 'kyoto', name: '八丁浜', lat: 35.69, lon: 135.05, d: '丹後エリアの代表格。' },
-            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '冬場に反応が良い。' },
+            { area: 'kyoto', name: '小天橋', lat: 35.63, lon: 134.89, d: '冬場に反応が良いビーチ。' },
             { area: 'kyoto', name: '琴引浜', lat: 35.70, lon: 135.04, d: '鳴き砂。うねりに敏感。' },
-            // 大阪 (1スポット)
             { area: 'osaka', name: 'せんなん里海公園', lat: 34.34, lon: 135.18, d: '風次第で練習可能。' }
         ];
 
@@ -136,23 +129,23 @@
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-5">
                         <div onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')" class="cursor-pointer">
-                            <h3 class="text-xl font-black text-white italic">${spot.name} <i class="fas fa-map-marker-alt text-blue-400 text-sm"></i></h3>
+                            <h3 class="text-xl font-black text-white italic">${spot.name} <i class="fas fa-external-link-alt text-blue-400 text-xs"></i></h3>
                         </div>
                         <div id="wind-${i}" class="text-[10px] font-bold text-blue-400 bg-blue-900/30 px-3 py-1 rounded-full border border-blue-900/50">--</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="info-box">
-                            <div class="info-bg-img" style="background-image: url('https://images.unsplash.com/photo-1516149893016-813d9a01d5d3?auto=format&fit=crop&q=40&w=300')"></div>
+                            <div class="box-img" style="background-image: url('https://images.unsplash.com/photo-1516149893016-813d9a01d5d3?auto=format&fit=crop&w=300')"></div>
                             <p class="relative z-10 text-[9px] font-black text-blue-200 uppercase mb-1">Wave Height</p>
                             <p class="relative z-10 text-3xl font-black text-white"><span id="w-${i}">--</span><span class="text-xs ml-1">m</span></p>
                         </div>
-                        <div class="info-box" style="background-color: #334155;">
-                            <div class="info-bg-img" style="background-image: url('https://images.unsplash.com/photo-1592210633461-177265e3158e?auto=format&fit=crop&q=40&w=300')"></div>
+                        <div class="info-box">
+                            <div class="box-img" style="background-image: url('https://images.unsplash.com/photo-1504370805625-d32c54b16100?auto=format&fit=crop&w=300')"></div>
                             <p class="relative z-10 text-[9px] font-black text-orange-200 uppercase mb-1">Temperature</p>
                             <p id="t-${i}" class="relative z-10 text-3xl font-black text-white">--</p>
                         </div>
                     </div>
-                    <p class="mt-4 text-[10px] font-bold text-slate-500 italic border-t border-slate-800 pt-3 opacity-70">"${spot.d}"</p>
+                    <p class="mt-4 text-[10px] font-bold text-slate-500 italic border-t border-slate-800 pt-3 opacity-80">"${spot.d}"</p>
                 `;
                 container.appendChild(div);
                 fetchSurf(spot.lat, spot.lon, i);
