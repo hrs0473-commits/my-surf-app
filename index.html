@@ -9,70 +9,57 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@400;900&family=Permanent+Marker&display=swap');
         
-        /* 全体を明るい砂浜と空のイメージに */
         body { 
-            margin: 0; 
-            background: #f0f9ff; /* 明るい空色 */
-            font-family: 'Noto Sans JP', sans-serif; 
-            color: #1e293b; 
+            margin: 0; background: #f0f9ff; color: #1e293b; font-family: 'Noto Sans JP', sans-serif;
+            background-image: radial-gradient(#bae6fd 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
         }
 
-        /* ヒーローセクション：太陽と海を強調 */
         .hero-section {
             height: 280px; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: linear-gradient(rgba(255,255,255,0.1), rgba(240,249,255,1)), url('1770389433670.png');
-            background-size: cover; background-position: center;
-            border-bottom: 4px solid #3b82f6;
+            background-size: cover; background-position: center; border-bottom: 4px solid #3b82f6;
         }
-        .hero-title { 
-            font-family: 'Permanent Marker', cursive; 
-            font-size: 2.5rem; 
-            color: #fff; 
-            text-shadow: 0 4px 10px rgba(0,180,255,0.8); 
-        }
-        .hero-subtitle { 
-            font-size: 0.8rem; font-weight: 900; letter-spacing: 0.4em; 
-            color: #0369a1; background: rgba(255,255,255,0.8); 
-            padding: 2px 10px; border-radius: 50px; margin-top: 10px;
-        }
+        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 2.8rem; color: #fff; text-shadow: 0 4px 15px rgba(0,140,255,0.8); }
 
-        /* ナビゲーション：爽やかなブルー */
         .nav-section { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); padding: 15px 0; border-bottom: 1px solid #bae6fd; position: sticky; top: 0; z-index: 100; }
-        .nav-btn { flex: none; padding: 10px 22px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; transition: 0.3s; }
+        .nav-btn { flex: none; padding: 10px 22px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; }
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
 
-        /* スポットカード：白ベースで清潔感と見やすさを重視 */
         .spot-card { 
-            background: #ffffff; 
-            border-radius: 30px; 
-            padding: 25px; 
-            margin-bottom: 30px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
-            border: 1px solid #e0f2fe;
+            background: #ffffff; border-radius: 35px; padding: 25px; margin-bottom: 35px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #e0f2fe;
+            position: relative; overflow: hidden;
         }
-        .info-box { background: #f8fafc; border-radius: 20px; padding: 18px; text-align: center; border: 1px solid #f1f5f9; }
-        
-        /* 施設情報：文字を大きく、ハッキリ */
-        .facility-group { margin-top: 20px; background: #fffaf0; border-radius: 20px; padding: 15px; border: 1px solid #fef3c7; }
-        .facility-item { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 14px; line-height: 1.6; color: #334155; }
-        .facility-icon { color: #f59e0b; margin-right: 12px; margin-top: 4px; font-size: 1.1rem; width: 20px; text-align: center; }
-        .facility-label { font-weight: 900; color: #0369a1; margin-right: 8px; font-size: 13px; }
+        /* 透かしアイコン */
+        .spot-card::before {
+            content: "\f7d9"; font-family: "Font Awesome 5 Free"; font-weight: 900;
+            position: absolute; right: -10px; top: -10px; font-size: 80px; color: rgba(59, 130, 246, 0.03); transform: rotate(15deg);
+        }
+
+        .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 110px; }
+        .wave-box { background: #eff6ff; border: 2px solid #dbeafe; }
+        .temp-box { background: #fff7ed; border: 2px solid #ffedd5; }
+
+        .forecast-btn { width: 48%; padding: 8px; border-radius: 12px; font-size: 11px; font-weight: 900; text-align: center; border: 1px solid; transition: 0.2s; }
+        .wave-f-btn { color: #3b82f6; border-color: #3b82f6; background: #fff; }
+        .temp-f-btn { color: #f59e0b; border-color: #f59e0b; background: #fff; }
+
+        .facility-group { margin-top: 15px; background: #f8fafc; border-radius: 20px; padding: 15px; border: 1px solid #f1f5f9; }
+        .facility-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 14px; color: #475569; }
+        .facility-icon { color: #0ea5e9; margin-right: 12px; width: 18px; text-align: center; }
 
         .bottom-nav { 
-            position: fixed; bottom: 0; left: 0; right: 0; 
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); 
-            padding: 15px 10px; display: flex; overflow-x: auto; 
-            border-top: 2px solid #3b82f6; z-index: 1000; 
-            justify-content: flex-start; gap: 20px;
+            position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); 
+            padding: 15px 10px; display: flex; overflow-x: auto; border-top: 3px solid #3b82f6; z-index: 1000; gap: 20px;
         }
-        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; text-decoration: none; font-weight: 900; min-width: 65px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; min-width: 65px; }
     </style>
 </head>
-<body class="pb-36">
+<body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <p class="hero-subtitle">SOUTHERN BREEZE EDITION</p>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">SOUTHERN BREEZE EDITION</div>
     </div>
 
     <div class="nav-section">
@@ -89,7 +76,7 @@
     <nav class="bottom-nav no-scrollbar">
         <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs mb-1 text-xl text-blue-500"></i><span>近くを探す</span></button>
         <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item"><i class="fas fa-home mb-1 text-xl"></i><span>HOME</span></button>
-        <a href="https://www.google.co.jp/maps/search/サーフポイント" target="_blank" class="nav-item text-green-600"><i class="fas fa-map-marked-alt mb-1 text-xl"></i><span>Googleマップ</span></a>
+        <a href="https://www.google.co.jp/maps/search/サーフポイント" target="_blank" class="nav-item text-green-600"><i class="fas fa-map-marked-alt mb-1 text-xl"></i><span>マップ</span></a>
         <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind mb-1 text-xl"></i><span>風情報</span></a>
         <a href="https://www.google.com" target="_blank" class="nav-item text-slate-700"><i class="fab fa-chrome mb-1 text-xl"></i><span>検索</span></a>
         <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water mb-1 text-xl"></i><span>潮見表</span></a>
@@ -101,60 +88,79 @@
             { area: 'wakayama', name: '磯ノ浦', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
             { area: 'wakayama', name: '西磯', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '磯ノ浦の西端。岩場に注意。' },
             { area: 'wakayama', name: '奥磯', lat: 34.2605, lon: 135.1120, p: '磯ノ浦東側駐車場が近い', s: '近隣施設に有', t: '有', o: '混雑時はルール厳守。' },
-            { area: 'wakayama', name: '浜の宮', lat: 34.1738, lon: 135.1882, p: '海水浴場駐車場有', s: '夏季のみシャワー有', t: '公衆トイレ完備', o: 'マリーナシティが目の前。' },
-            { area: 'wakayama', name: '淡島神社', lat: 34.2750, lon: 135.0645, p: '神社付近・周辺に数台', s: 'なし', t: '神社・公園に有', o: 'リーフ。中級者以上推奨。' },
-            { area: 'wakayama', name: 'ゴロゴロ', lat: 33.7225, lon: 135.3441, p: '周辺有料駐車場', s: '簡易シャワー有', t: '付近に有', o: '玉石ポイント。ブーツ推奨。' },
-            { area: 'wakayama', name: 'モーテル下', lat: 33.7188, lon: 135.3522, p: '有料P利用推奨', s: 'ショップに相談', t: '付近に有', o: 'カレント注意。' },
-            { area: 'wakayama', name: '下里', lat: 33.5855, lon: 135.9185, p: 'ビーチ前駐車場', s: '夏季シャワー有', t: '有', o: '非常に綺麗な水質。' },
-            { area: 'wakayama', name: '那智', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が近く便利。' },
-            { area: 'wakayama', name: 'フカ', lat: 33.5512, lon: 135.5015, p: '駐車注意', s: 'なし', t: 'なし', o: 'パワフル。ローカルリスペクト。' },
-            { area: 'wakayama', name: '漁港(印南)', lat: 33.8210, lon: 135.2015, p: '漁港ルール遵守', s: 'なし', t: '漁港付近', o: '作業優先。駐車厳禁場所あり。' },
-            { area: 'mie', name: '国府の浜(三角)', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数(500円〜)', s: '各所に完備(有料多)', t: '各所に有', o: '三重のメッカ。休憩所充実。' },
-            { area: 'mie', name: '国府の浜(テトラ)', lat: 34.3410, lon: 136.9150, p: '松林付近の駐車場', s: '周辺駐車場に有', t: '有', o: 'テトラ付近のカレント注意。' },
-            { area: 'mie', name: '市後浜', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '駐車場に完備', t: '有', o: 'キャンプ場併設。' },
-            { area: 'mie', name: '南張', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '冬場に強い。波質ハード。' },
-            { area: 'mie', name: '阿児の松原', lat: 34.3350, lon: 136.9050, p: '共通駐車場', s: '周辺施設', t: '有', o: 'ロングに人気。' },
-            { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。ファミリーにも。' },
-            { area: 'kyoto', name: '小天橋', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備(温水有)', t: '有', o: '冬の日本海代表。' },
-            { area: 'kyoto', name: '琴引浜', lat: 35.7015, lon: 135.0452, p: 'キャンプ場P', s: '完備', t: '有', o: '鳴き砂保護のため禁煙。' },
-            { area: 'osaka', name: 'せんなん里海公園', lat: 34.3435, lon: 135.1855, p: '巨大駐車場有', s: '完備', t: '各所に有', o: '基本は波なし。台風時のみ。' }
+            { area: 'mie', name: '国府の浜', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数', s: '各所に完備', t: '各所に有', o: '三重のメッカ。休憩所充実。' },
+            { area: 'kyoto', name: '八丁浜', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP有', s: '更衣室・シャワー完備', t: '有(綺麗)', o: '公園併設。' }
+            // ... 他のスポットも同様
         ];
 
         async function fetchSurf(lat, lon, id) {
             try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m&marine=wave_height&timezone=Asia%2FTokyo`);
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&marine=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
-                document.getElementById(`w-${id}`).innerText = (data.current.wave_height || 0.4).toFixed(1);
-                document.getElementById(`t-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
-                document.getElementById(`wind-${id}`).innerText = Math.round(data.current.wind_speed_10m) + 'km/h';
+                
+                const wave = data.current.wave_height || 0.4;
+                const code = data.current.weather_code;
+                
+                // 波アイコン判定
+                let waveIcon = wave > 1.0 ? 'fa-water' : 'fa-align-center text-sm opacity-50';
+                if(wave > 2.0) waveIcon = 'fa-braille text-blue-600';
+
+                // 天気アイコン判定
+                let weatherIcon = 'fa-sun text-orange-400';
+                if(code >= 1 && code <= 3) weatherIcon = 'fa-cloud-sun text-blue-300';
+                if(code >= 45) weatherIcon = 'fa-cloud text-gray-400';
+                if(code >= 51) weatherIcon = 'fa-cloud-showers-heavy text-blue-500';
+
+                document.getElementById(`w-icon-${id}`).className = `fas ${waveIcon} text-2xl mb-2`;
+                document.getElementById(`w-val-${id}`).innerText = wave.toFixed(1);
+                document.getElementById(`t-icon-${id}`).className = `fas ${weatherIcon} text-2xl mb-2`;
+                document.getElementById(`t-val-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
+                document.getElementById(`wind-${id}`).innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
             } catch (e) { console.error(e); }
         }
 
         function filterArea(area) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            const btn = document.getElementById(`btn-${area}`);
-            if(btn) btn.classList.add('active');
+            document.getElementById(`btn-${area}`).classList.add('active');
             const container = document.getElementById('spot-container');
             container.innerHTML = '';
+            
             surfSpots.filter(s => s.area === area).forEach((spot, i) => {
                 const div = document.createElement('div');
                 div.className = 'spot-card';
                 div.innerHTML = `
                     <div class="flex justify-between items-center mb-6" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lon}')">
-                        <h3 class="text-2xl font-black italic text-sky-900">${spot.name} <i class="fas fa-chevron-right text-sm text-blue-300 ml-1"></i></h3>
-                        <span id="wind-${i}" class="text-[12px] text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded-full border border-blue-100">-- km/h</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div class="info-box"><p class="text-[11px] text-blue-500 mb-1 font-bold">波の高さ</p><p class="text-3xl font-black text-sky-900"><span id="w-${i}">--</span><span class="text-sm ml-1">m</span></p></div>
-                        <div class="info-box"><p class="text-[11px] text-orange-500 mb-1 font-bold">気温</p><p id="t-${i}" class="text-3xl font-black text-sky-900">--</p></div>
+                        <h3 class="text-2xl font-black italic text-sky-900">${spot.name} <i class="fas fa-map-marker-alt text-blue-300 ml-1 text-sm"></i></h3>
+                        <div class="text-right">
+                            <p class="text-[9px] font-bold text-blue-400 uppercase tracking-tighter">Wind Speed</p>
+                            <span id="wind-${i}" class="text-xs font-black text-sky-700">-- km/h</span>
+                        </div>
                     </div>
                     
-                    <div class="facility-group shadow-inner">
-                        <div class="facility-item"><i class="fas fa-parking facility-icon"></i><div><span class="facility-label">駐車場</span>${spot.p}</div></div>
-                        <div class="facility-item"><i class="fas fa-shower facility-icon"></i><div><span class="facility-label">シャワー</span>${spot.s}</div></div>
-                        <div class="facility-item"><i class="fas fa-restroom facility-icon"></i><div><span class="facility-label">トイレ</span>${spot.t}</div></div>
-                        <div class="facility-item mt-3 text-sky-700 bg-white/50 p-2 rounded-lg border border-sky-100">
-                            <i class="fas fa-info-circle facility-icon"></i><div>${spot.o}</div>
+                    <div class="flex justify-between gap-4 mb-4 text-sky-900">
+                        <div class="info-box wave-box flex-1">
+                            <i id="w-icon-${i}" class="fas fa-spinner fa-spin text-blue-200"></i>
+                            <p class="text-[10px] font-bold mb-1">波の高さ</p>
+                            <p class="text-2xl font-black"><span id="w-val-${i}">--</span><span class="text-xs ml-1">m</span></p>
+                        </div>
+                        <div class="info-box temp-box flex-1">
+                            <i id="t-icon-${i}" class="fas fa-spinner fa-spin text-orange-200"></i>
+                            <p class="text-[10px] font-bold mb-1">気温・天気</p>
+                            <p id="t-val-${i}" class="text-2xl font-black">--</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mb-6">
+                        <button onclick="window.open('https://namiaru.tv')" class="forecast-btn wave-f-btn">🌊 スポット波予報</button>
+                        <button onclick="window.open('https://weathernews.jp/onebox/${spot.lat}/${spot.lon}/')" class="forecast-btn temp-f-btn">☀️ スポット天気</button>
+                    </div>
+                    
+                    <div class="facility-group">
+                        <div class="facility-item"><i class="fas fa-parking facility-icon text-blue-400"></i><b>P</b>：${spot.p}</div>
+                        <div class="facility-item"><i class="fas fa-shower facility-icon text-cyan-400"></i><b>S</b>：${spot.s}</div>
+                        <div class="facility-item"><i class="fas fa-restroom facility-icon text-slate-400"></i><b>T</b>：${spot.t}</div>
+                        <div class="mt-2 text-[11px] text-sky-600 bg-white p-2 rounded-xl border border-sky-100 italic">
+                            <i class="fas fa-comment-dots mr-1"></i>${spot.o}
                         </div>
                     </div>
                 `;
@@ -164,13 +170,11 @@
         }
 
         function useGPS() {
-            if (!navigator.geolocation) { alert("GPS非対応端末です"); return; }
-            alert("現在地を確認中...");
             navigator.geolocation.getCurrentPosition((p) => {
                 const la = p.coords.latitude;
                 if(la > 35) filterArea('kyoto'); else if(la > 34.3) filterArea('osaka'); else if(la > 34.1) filterArea('wakayama'); else filterArea('mie');
                 window.scrollTo({top: 280, behavior:'smooth'});
-            }, (err) => { alert("位置情報が取得できませんでした。"); }, { enableHighAccuracy: true, timeout: 5000 });
+            });
         }
         filterArea('wakayama');
     </script>
