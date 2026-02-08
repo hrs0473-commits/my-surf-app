@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - NEXT LEVEL</title>
+    <title>SURF MASTER PRO - CHROME & TALK</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@400;900&family=Permanent+Marker&display=swap');
         body { margin: 0; background: #f0f9ff; color: #1e293b; font-family: 'Noto Sans JP', sans-serif; background-image: radial-gradient(#bae6fd 0.5px, transparent 0.5px); background-size: 20px 20px; overflow-x: hidden; }
         
-        /* 伝統のレイアウト：タイトルが下にあるヒーローエリア */
+        /* 伝統のレイアウト維持 */
         .hero-section { 
             height: 280px; width: 100%; display: flex; flex-direction: column; 
             justify-content: flex-end; align-items: center; 
@@ -24,11 +24,7 @@
         .nav-btn { flex: none; padding: 10px 22px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; }
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
         
-        /* スポットカードとSNS要素 */
         .spot-card { background: #ffffff; border-radius: 35px; padding: 25px; margin-bottom: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #e0f2fe; position: relative; }
-        .photo-preview-img { height: 100px; width: 100px; border-radius: 20px; object-cover: cover; flex: none; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .photo-add-btn { height: 100px; width: 100px; border-radius: 20px; background: #f8fafc; border: 2px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; flex: none; color: #94a3b8; cursor: pointer; }
-
         .info-box { border-radius: 25px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; }
         .wave-box { background: #eff6ff; border: 2px solid #dbeafe; }
         .temp-box { background: #fff7ed; border: 2px solid #ffedd5; }
@@ -42,22 +38,21 @@
         .facility-icon { color: #f59e0b; margin-right: 12px; margin-top: 4px; width: 18px; text-align: center; }
         .facility-label { font-weight: 900; color: #0369a1; margin-right: 6px; }
         
-        /* チャットUI */
-        #chat-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: none; flex-direction: column; }
-        .chat-msg { padding: 10px 15px; border-radius: 20px; margin-bottom: 10px; max-width: 80%; font-size: 14px; }
-        .msg-other { background: #f1f5f9; align-self: flex-start; }
+        /* チャットUI稼働用 */
+        #chat-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: none; flex-direction: column; transition: 0.3s; }
+        .chat-msg { padding: 10px 15px; border-radius: 20px; margin-bottom: 10px; max-width: 80%; font-size: 14px; line-height: 1.4; }
+        .msg-other { background: #f1f5f9; align-self: flex-start; color: #1e293b; }
         .msg-me { background: #3b82f6; color: white; align-self: flex-end; }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); padding: 15px 10px; display: flex; overflow-x: auto; border-top: 3px solid #3b82f6; z-index: 1000; gap: 20px; }
-        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; min-width: 65px; border: none; background: none; position: relative; }
-        .badge-new { background: #ef4444; color: white; font-size: 8px; padding: 2px 6px; border-radius: 10px; position: absolute; top: -5px; right: -5px; }
+        .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; min-width: 65px; border: none; background: none; position: relative; cursor: pointer; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-40">
     <div class="hero-section">
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">SNS & WEATHER PRO</div>
+        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2 shadow-sm">FINAL CHROME & CHAT</div>
     </div>
 
     <div class="nav-section">
@@ -72,38 +67,34 @@
     <main id="spot-container" class="px-5 py-8 max-w-md mx-auto"></main>
 
     <div id="chat-overlay">
-        <div class="p-5 border-bottom flex justify-between items-center bg-blue-600 text-white">
-            <h2 class="font-black italic">SURFERS TALK</h2>
-            <button onclick="toggleChat()" class="text-2xl font-black">&times;</button>
+        <div class="p-5 flex justify-between items-center bg-blue-600 text-white shadow-lg">
+            <h2 class="font-black italic text-xl tracking-tighter">SURFERS CHAT</h2>
+            <button onclick="toggleChat()" class="text-2xl font-black px-2">×</button>
         </div>
-        <div id="chat-content" class="flex-1 overflow-y-auto p-5 flex flex-direction-column">
-            <div class="chat-msg msg-other">磯ノ浦、今ヒザ〜腰くらいです！</div>
-            <div class="chat-msg msg-me">ありがとうございます！今から向かいます！</div>
-            <div class="chat-msg msg-other">人多いので気をつけてくださいね。</div>
+        <div id="chat-content" class="flex-1 overflow-y-auto p-5 flex flex-col space-y-2">
+            <div class="chat-msg msg-other">現在の波状況を共有しましょう！</div>
+            <div class="chat-msg msg-other">磯ノ浦は少しサイズダウンしました。</div>
         </div>
-        <div class="p-4 border-t flex gap-2">
-            <input type="text" placeholder="メッセージを入力..." class="flex-1 border rounded-full px-4 py-2 text-sm outline-none">
-            <button class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center"><i class="fas fa-paper-plane"></i></button>
+        <div class="p-4 border-t bg-slate-50 flex gap-2 pb-10">
+            <input type="text" id="chat-input" placeholder="メッセージを入力..." class="flex-1 border rounded-full px-5 py-3 text-sm outline-none focus:border-blue-500 shadow-sm">
+            <button onclick="sendMessage()" class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg active:scale-95"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
     <nav class="bottom-nav no-scrollbar">
         <button onclick="useGPS()" class="nav-item"><i class="fas fa-crosshairs mb-1 text-xl text-blue-500"></i><span>近くを探す</span></button>
-        <button onclick="alert('各スポットカードの＋ボタンから写真を投稿できます！')" class="nav-item text-rose-500"><i class="fas fa-camera-retro mb-1 text-xl"></i><span>波レポ</span></button>
-        <button onclick="toggleChat()" class="nav-item text-indigo-500">
-            <span class="badge-new">1</span>
-            <i class="fas fa-comments mb-1 text-xl"></i><span>トーク</span>
-        </button>
+        <a href="https://www.google.com" target="_blank" class="nav-item text-blue-600"><i class="fab fa-chrome mb-1 text-xl"></i><span>Chrome</span></a>
+        <button onclick="toggleChat()" class="nav-item text-indigo-500"><i class="fas fa-comments mb-1 text-xl"></i><span>トーク</span></button>
         <a href="https://www.google.co.jp/maps/search/サーフポイント" target="_blank" class="nav-item text-green-600"><i class="fas fa-map-marked-alt mb-1 text-xl"></i><span>マップ</span></a>
-        <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind mb-1 text-xl"></i><span>風</span></a>
+        <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind mb-1 text-xl"></i><span>風情報</span></a>
     </nav>
 
     <script>
-        // データの維持
         const surfSpots = [
-            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: '関西のメッカ。通年サーファーで賑わう。' },
+            // 全23スポットの詳細データを維持
+            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: '関西のメッカ。通年賑わうメインスポット。' },
             { area: 'wakayama', name: '西磯', q: '和歌山市 天気', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '岩場(リーフ)が多い。中級者以上推奨。' },
-            { area: 'wakayama', name: '奥磯', q: '和歌山市 天気', lat: 34.2605, lon: 135.1120, p: '東側駐車場が近い', s: '近隣施設に有', t: '有', o: 'メイン混雑時の回避用。' },
+            { area: 'wakayama', name: '奥磯', q: '和歌山市 天気', lat: 34.2605, lon: 135.1120, p: '東側駐車場が近い', s: '近隣施設に有', t: '有', o: 'メイン混雑時の回避用。ロングも多い。' },
             { area: 'wakayama', name: '浜の宮', q: '和歌山市 天気', lat: 34.1738, lon: 135.1882, p: '海水浴場駐車場有', s: '夏季のみシャワー有', t: '公衆トイレ完備', o: 'マリーナシティ目前。初心者向き。' },
             { area: 'wakayama', name: '淡島神社', q: '和歌山 加太 天気', lat: 34.2750, lon: 135.0645, p: '神社付近駐車場', s: 'なし', t: '神社公園に有', o: 'リーフ。うねりの向きに左右される。' },
             { area: 'wakayama', name: 'ゴロゴロ', q: '和歌山 広川町 天気', lat: 33.7225, lon: 135.3441, p: '周辺有料駐車場', s: '簡易シャワー有', t: '付近に有', o: '玉石。冬場の北西風で上がる。' },
@@ -112,18 +103,18 @@
             { area: 'wakayama', name: '那智', q: '那智勝浦町 天気', lat: 33.6385, lon: 135.9392, p: '駅前・ビーチ横P', s: '駅・ビーチに完備', t: '有', o: '道の駅が隣接して便利。' },
             { area: 'wakayama', name: 'フカ', q: '串本町 天気', lat: 33.5512, lon: 135.5015, p: '駐車スペース注意', s: 'なし', t: 'なし', o: 'パワフル。ローカルリスペクト。' },
             { area: 'wakayama', name: '印南漁港', q: '印南町 天気', lat: 33.8210, lon: 135.2015, p: '漁港ルール遵守', s: 'なし', t: '漁港付近', o: '漁船優先。駐車場所に厳格。' },
-            { area: 'mie', name: '国府の浜', q: '志摩市 天気', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数有', s: '各所に完備(温水有)', t: '各所に有', o: '三重メイン。広大な遠浅のビーチ。' },
-            { area: 'mie', name: '市後浜', q: '志摩市 天気', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '完備', t: '有', o: 'キャンプ場併設。人気。' },
-            { area: 'mie', name: '阿児の松原', q: '志摩市 天気', lat: 34.3380, lon: 136.9050, p: '民間駐車場', s: '有', t: '有', o: '国府の北側。静かな環境。' },
-            { area: 'mie', name: '南張', q: '南張 天気', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。上級者向け。' },
-            { area: 'mie', name: 'ジャン', q: '志摩市 天気', lat: 34.3100, lon: 136.8800, p: '極少量', s: '無', t: '無', o: 'リーフ。中上級者限定。' },
+            { area: 'mie', name: '国府の浜', q: '志摩市 天気', lat: 34.3325, lon: 136.9125, p: '民間駐車場多数有', s: '各所に完備', t: '各所に有', o: '三重メイン。広大な遠浅のビーチ。' },
+            { area: 'mie', name: '市後浜', q: '志摩市 天気', lat: 34.3215, lon: 136.9080, p: '専用有料駐車場有', s: '完備', t: '有', o: 'キャンプ場併設。お洒落な雰囲気。' },
+            { area: 'mie', name: '阿児の松原', q: '志摩市 天気', lat: 34.3380, lon: 136.9050, p: '民間駐車場', s: '有', t: '有', o: '比較的静かにサーフ可能。' },
+            { area: 'mie', name: '南張', q: '南張 天気', lat: 34.2885, lon: 136.7562, p: 'ビーチ前有料P', s: '有', t: '有', o: '波質ハード。中上級者向け。' },
+            { area: 'mie', name: 'ジャン', q: '志摩市 天気', lat: 34.3100, lon: 136.8800, p: '極少量', s: '無', t: '無', o: 'リーフ。上級者限定。' },
             { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', lat: 35.6965, lon: 135.0515, p: 'シーサイドパークP', s: '更衣室・シャワー完備', t: '有', o: '丹後のメッカ。公園併設。' },
-            { area: 'kyoto', name: '夕日ヶ浦', q: '京丹後市 天気', lat: 35.6690, lon: 134.9250, p: '園地駐車場', s: '有', t: '有', o: '冬の日本海代表。景色が最高。' },
+            { area: 'kyoto', name: '夕日ヶ浦', q: '京丹後市 天気', lat: 35.6690, lon: 134.9250, p: '園地駐車場', s: '有', t: '有', o: '冬の日本海代表。ロングライド可。' },
             { area: 'kyoto', name: '葛野浜', q: '京丹後市 天気', lat: 35.6420, lon: 134.9080, p: '夏季有料P', s: '有', t: '有', o: '広大なロングビーチ。' },
-            { area: 'kyoto', name: '小天橋', q: '京丹後市 天気', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備', t: '有', o: '安定した波質。' },
-            { area: 'kyoto', name: '神崎', q: '舞鶴市 天気', lat: 35.5350, lon: 135.2420, p: '広大な駐車場', s: '有', t: '有', o: '由良川の河口付近。' },
-            { area: 'kyoto', name: '平', q: '伊根町 天気', lat: 35.7530, lon: 135.1580, p: 'キャンプ場P', s: '有', t: '有', o: '穴場。' },
-            { area: 'osaka', name: 'せんなん里海', q: '岬町 天気', lat: 34.3435, lon: 135.1855, p: '巨大公立駐車場有', s: '完備', t: '各所に有', o: '台風スウェル時のみ。' }
+            { area: 'kyoto', name: '小天橋', q: '京丹後市 天気', lat: 35.6312, lon: 134.8950, p: '海水浴場P有', s: '完備', t: '有', o: '安定した波質。冬のメイン。' },
+            { area: 'kyoto', name: '神崎', q: '舞鶴市 天気', lat: 35.5350, lon: 135.2420, p: '広大な駐車場', s: '有', t: '有', o: '由良川河口。地形が決まりやすい。' },
+            { area: 'kyoto', name: '平', q: '伊根町 天気', lat: 35.7530, lon: 135.1580, p: 'キャンプ場P', s: '有', t: '有', o: '穴場的スポット。' },
+            { area: 'osaka', name: 'せんなん里海', q: '岬町 天気', lat: 34.3435, lon: 135.1855, p: '巨大公立駐車場有', s: '完備', t: '有', o: '強力な台風スウェル時のみ。' }
         ];
 
         async function fetchSurf(lat, lon, id) {
@@ -131,37 +122,40 @@
                 const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&marine=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
                 const wave = data.current.wave_height || 0.4;
-                const code = data.current.weather_code;
                 document.getElementById(`w-val-${id}`).innerText = wave.toFixed(1);
                 document.getElementById(`t-val-${id}`).innerText = Math.round(data.current.temperature_2m) + '°C';
                 document.getElementById(`wind-${id}`).innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
                 let wIcon = wave > 1.2 ? 'fa-water text-blue-500' : (wave < 0.5 ? 'fa-ellipsis-h text-blue-200' : 'fa-align-center text-blue-400');
                 document.getElementById(`w-icon-${id}`).className = `fas ${wIcon} text-3xl mb-2`;
-                let weatherIcon = code < 3 ? 'fa-sun text-orange-400' : 'fa-cloud text-gray-400';
-                document.getElementById(`t-icon-${id}`).className = `fas ${weatherIcon} text-3xl mb-2`;
             } catch (e) {}
         }
 
-        // 写真投稿（擬似機能）
-        function handlePhoto(input, id) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const container = document.getElementById(`photo-list-${id}`);
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'photo-preview-img';
-                    container.prepend(img);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // チャット表示切り替え
+        // チャット稼働ロジック
         function toggleChat() {
             const el = document.getElementById('chat-overlay');
             el.style.display = (el.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const content = document.getElementById('chat-content');
+            if (input.value.trim() !== "") {
+                const msg = document.createElement('div');
+                msg.className = 'chat-msg msg-me';
+                msg.innerText = input.value;
+                content.appendChild(msg);
+                input.value = "";
+                content.scrollTop = content.scrollHeight;
+                
+                // 擬似返信
+                setTimeout(() => {
+                    const reply = document.createElement('div');
+                    reply.className = 'chat-msg msg-other';
+                    reply.innerText = "了解です！良い波を！";
+                    content.appendChild(reply);
+                    content.scrollTop = content.scrollHeight;
+                }, 1000);
+            }
         }
 
         function filterArea(area) {
@@ -178,27 +172,14 @@
                         <h3 class="text-2xl font-black italic text-sky-900">${spot.name}</h3>
                         <div class="text-right"><p class="text-[9px] font-bold text-blue-400 uppercase">Wind</p><span id="wind-${i}" class="text-xs font-black text-sky-700">-- km/h</span></div>
                     </div>
-
-                    <div class="mb-6">
-                        <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-widest"><i class="fas fa-camera mr-1"></i> WAVE REPORTS</p>
-                        <div id="photo-list-${i}" class="flex gap-3 overflow-x-auto no-scrollbar py-1">
-                            <label class="photo-add-btn">
-                                <input type="file" accept="image/*" class="hidden" onchange="handlePhoto(this, ${i})">
-                                <i class="fas fa-plus"></i>
-                            </label>
-                        </div>
-                    </div>
-
                     <div class="flex justify-between gap-4 mb-6">
-                        <div class="info-box wave-box flex-1"><i id="w-icon-${i}" class="fas fa-spinner fa-spin text-blue-100"></i><p class="text-[11px] font-bold text-blue-500 mb-1">現在の波高</p><p class="text-3xl font-black text-sky-900"><span id="w-val-${i}">--</span><span class="text-sm ml-1">m</span></p></div>
-                        <div class="info-box temp-box flex-1"><i id="t-icon-${i}" class="fas fa-spinner fa-spin text-orange-100"></i><p id="t-val-${i}" class="text-3xl font-black text-sky-900">--</p><p class="text-[11px] font-bold text-orange-500">気温・天気</p></div>
+                        <div class="info-box wave-box flex-1"><i id="w-icon-${i}" class="fas fa-spinner fa-spin text-blue-100"></i><p class="text-[11px] font-bold text-blue-500 mb-1">波高(予測)</p><p class="text-3xl font-black text-sky-900"><span id="w-val-${i}">--</span><span class="text-sm ml-1">m</span></p></div>
+                        <div class="info-box temp-box flex-1"><i id="t-icon-${i}" class="fas fa-sun text-orange-400 text-3xl mb-2"></i><p id="t-val-${i}" class="text-3xl font-black text-sky-900">--</p><p class="text-[11px] font-bold text-orange-500">気温</p></div>
                     </div>
-
                     <div class="flex justify-between mb-6">
-                        <a href="https://www.google.com/maps/search/${encodeURIComponent(spot.name)}" target="_blank" class="forecast-btn map-f-btn"><i class="fas fa-map-marker-alt mr-1"></i> 地図</a>
+                        <a href="https://www.google.com/maps/search/${encodeURIComponent(spot.name + " サーフポイント")}" target="_blank" class="forecast-btn map-f-btn"><i class="fas fa-map-marker-alt mr-1"></i> 地図</a>
                         <a href="https://www.google.com/search?q=${encodeURIComponent(spot.q)}" target="_blank" class="forecast-btn temp-f-btn"><i class="fas fa-cloud-sun mr-1"></i> 詳細天気</a>
                     </div>
-
                     <div class="facility-group">
                         <div class="facility-item"><i class="fas fa-parking facility-icon"></i><div><span class="facility-label">駐車場:</span>${spot.p}</div></div>
                         <div class="facility-item"><i class="fas fa-shower facility-icon"></i><div><span class="facility-label">設備:</span>${spot.s} / ${spot.t}</div></div>
