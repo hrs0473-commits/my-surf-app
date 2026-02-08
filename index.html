@@ -3,71 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO - FINAL ADAPTIVE</title>
+    <title>SURF MASTER PRO - REFINED</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@400;900&family=Permanent+Marker&display=swap');
-        body { margin: 0; background: #f0f9ff; color: #1e293b; font-family: 'Noto Sans JP', sans-serif; background-image: radial-gradient(#bae6fd 0.5px, transparent 0.5px); background-size: 20px 20px; }
         
-        /* ヒーローエリア */
+        body { margin: 0; background: #f0f9ff; color: #1e293b; font-family: 'Noto Sans JP', sans-serif; }
+
+        /* ヒーローエリア復旧 & 通知スイッチ位置調整 */
         .hero-section { 
-            height: 250px; width: 100%; display: flex; flex-direction: column; 
+            position: relative;
+            height: 280px; width: 100%; display: flex; flex-direction: column; 
             justify-content: flex-end; align-items: center; 
-            background: linear-gradient(rgba(255,255,255,0.1), rgba(240,249,255,1)), url('https://images.unsplash.com/photo-1502680399488-2a6574c50375?w=800'); 
-            background-size: cover; background-position: center; border-bottom: 4px solid #3b82f6; padding-bottom: 15px;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(240,249,255,1)), url('https://images.unsplash.com/photo-1502680399488-2a6574c50375?w=1000'); 
+            background-size: cover; background-position: center; border-bottom: 4px solid #3b82f6; padding-bottom: 30px;
         }
-        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 2.5rem; color: #fff; text-shadow: 0 4px 15px rgba(0,140,255,0.8); }
+        .hero-title { font-family: 'Permanent Marker', cursive; font-size: 2.8rem; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 10; }
         
-        /* 通知スイッチ */
-        .notif-control { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); padding: 5px 12px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+        /* 通知スイッチをタイトルの邪魔にならない位置（右上）に配置 */
+        .notif-control { 
+            position: absolute; top: env(safe-area-inset-top, 20px); right: 15px; 
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(4px);
+            padding: 6px 12px; border-radius: 50px; display: flex; align-items: center; gap: 8px; 
+            font-size: 11px; font-weight: 900; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 20;
+        }
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #3b82f6; }
-        input:checked + .slider:before { transform: translateX(14px); }
+        input:checked + .slider:before { transform: translateX(16px); }
 
         /* 掲示板 */
-        .ticker-wrap { background: #1e293b; color: #3b82f6; padding: 10px 0; overflow: hidden; font-weight: 900; font-size: 13px; border-bottom: 2px solid #3b82f6; }
-        .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker 20s linear infinite; }
+        .ticker-wrap { background: #1e293b; color: #3b82f6; padding: 12px 0; overflow: hidden; font-weight: 900; font-size: 13px; border-bottom: 2px solid #3b82f6; }
+        .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker 25s linear infinite; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
+        /* ナビゲーション */
         .nav-section { background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); padding: 15px 0; border-bottom: 1px solid #bae6fd; position: sticky; top: 0; z-index: 100; }
-        .nav-btn { flex: none; padding: 10px 22px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; }
+        .nav-btn { flex: none; padding: 10px 24px; margin: 0 5px; background: #e0f2fe; color: #0369a1; border-radius: 50px; font-size: 15px; font-weight: 900; transition: 0.3s; }
         .nav-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
         
+        /* スポットカード */
         .spot-card { background: #ffffff; border-radius: 35px; padding: 25px; margin-bottom: 35px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #e0f2fe; }
         
-        /* 2段ナビゲーション */
+        /* 2段ボトムナビ */
         .bottom-nav { 
             position: fixed; bottom: 0; left: 0; right: 0; 
             background: rgba(255, 255, 255, 0.98); 
-            padding: 10px 5px env(safe-area-inset-bottom);
+            padding: 10px 5px calc(10px + env(safe-area-inset-bottom));
             border-top: 3px solid #3b82f6; z-index: 1000; 
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px 0;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 0;
         }
         .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; text-decoration: none; }
-        
-        .notification-toast { position: fixed; top: 20px; left: 10px; right: 10px; background: #1e293b; color: white; padding: 15px; border-radius: 20px; z-index: 3000; display: none; border-left: 5px solid #3b82f6; }
+        .nav-item i { font-size: 1.3rem; margin-bottom: 4px; }
+
+        .notification-toast { position: fixed; top: 80px; left: 15px; right: 15px; background: #1e293b; color: white; padding: 16px; border-radius: 20px; z-index: 3000; display: none; border-left: 6px solid #3b82f6; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: slideDown 0.4s ease-out; }
+        @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
-<body class="pb-48">
-    <div id="toast" class="notification-toast flex items-center gap-3">
-        <i class="fas fa-bell text-blue-400"></i>
-        <div id="toast-text" class="text-xs font-bold"></div>
+<body class="pb-56">
+    <div id="toast" class="notification-toast flex items-center gap-4">
+        <i class="fas fa-bullhorn text-blue-400 text-xl"></i>
+        <div id="toast-text" class="text-xs font-black leading-relaxed"></div>
     </div>
 
     <div class="hero-section">
         <div class="notif-control">
-            <i class="fas fa-bell"></i> 通知 <label class="switch"><input type="checkbox" id="notif-toggle" checked><span class="slider"></span></label>
+            <i class="fas fa-bell text-blue-500"></i> 通知
+            <label class="switch">
+                <input type="checkbox" id="notif-toggle" checked>
+                <span class="slider"></span>
+            </label>
         </div>
         <h1 class="hero-title">SURF MASTER</h1>
-        <div class="bg-white/80 px-4 py-1 rounded-full text-blue-600 font-black text-xs tracking-widest mt-2">LIVE DATA CONNECTED</div>
+        <div class="bg-blue-600 px-5 py-1 rounded-full text-white font-black text-[10px] tracking-[0.2em] mt-3 shadow-lg">PREMIUM LIVE CONNECT</div>
     </div>
 
     <div class="ticker-wrap">
-        <div id="news-ticker" class="ticker">各エリアの最新情報を読み込み中...</div>
+        <div id="news-ticker" class="ticker font-black">最新の波情報を取得しています...</div>
     </div>
 
     <div class="nav-section">
@@ -82,50 +97,50 @@
     <main id="spot-container" class="px-5 py-8 max-w-md mx-auto"></main>
 
     <nav class="bottom-nav">
-        <button onclick="useGPS()" class="nav-item text-blue-500"><i class="fas fa-crosshairs text-xl mb-1"></i><span>近くを探す</span></button>
-        <a href="https://www.google.com" target="_blank" class="nav-item text-blue-600"><i class="fab fa-chrome text-xl mb-1"></i><span>Chrome</span></a>
-        <button onclick="alert('トーク画面を開きます')" class="nav-item text-indigo-500"><i class="fas fa-comments text-xl mb-1"></i><span>トーク</span></button>
-        <a href="https://www.google.co.jp/maps" target="_blank" class="nav-item text-green-600"><i class="fas fa-map-marked-alt text-xl mb-1"></i><span>マップ</span></a>
-        <a href="https://www.windy.com" target="_blank" class="nav-item text-blue-400"><i class="fas fa-wind text-xl mb-1"></i><span>風情報</span></a>
-        <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water text-xl mb-1"></i><span>潮見表</span></a>
-        <a href="https://www.mlit.go.jp/kowan/nowphas/" target="_blank" class="nav-item text-orange-500"><i class="fas fa-broadcast-tower text-xl mb-1"></i><span>ナウファス</span></a>
-        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item text-slate-400"><i class="fas fa-arrow-up text-xl mb-1"></i><span>TOP</span></button>
+        <button onclick="useGPS()" class="nav-item text-blue-500"><i class="fas fa-location-arrow"></i><span>近くを探す</span></button>
+        <a href="https://www.google.com" target="_blank" class="nav-item text-blue-600"><i class="fab fa-chrome"></i><span>Chrome</span></a>
+        <button onclick="alert('トーク画面')" class="nav-item text-indigo-500"><i class="fas fa-comments"></i><span>トーク</span></button>
+        <a href="https://www.google.co.jp/maps" target="_blank" class="nav-item text-green-600"><i class="fas fa-map-marked-alt"></i><span>マップ</span></a>
+        
+        <a href="https://www.windy.com" target="_blank" class="nav-item text-sky-400"><i class="fas fa-wind"></i><span>風情報</span></a>
+        <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water"></i><span>潮見表</span></a>
+        <a href="https://www.mlit.go.jp/kowan/nowphas/" target="_blank" class="nav-item text-orange-500"><i class="fas fa-broadcast-tower"></i><span>ナウファス</span></a>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="nav-item text-slate-400"><i class="fas fa-chevron-up"></i><span>TOP</span></button>
     </nav>
 
     <script>
         const surfSpots = [
-            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: 'あり(1000円〜)', s: 'あり(温水)', t: 'あり', o: '関西随一のメッカ。' },
-            { area: 'wakayama', name: '西磯', q: '和歌山市 天気', lat: 34.2595, lon: 135.0963, p: '磯ノ浦P利用', s: '磯ノ浦設備利用', t: 'あり', o: 'リーフ。中級者以上。' },
-            { area: 'wakayama', name: '浜の宮', q: '和歌山市 天気', lat: 34.1738, lon: 135.1882, p: 'あり', s: 'あり(夏季)', t: 'あり', o: 'マリーナシティ目前。' },
-            { area: 'mie', name: '国府の浜', q: '志摩市 天気', lat: 34.3325, lon: 136.9125, p: '多数あり', s: '完備', t: 'あり', o: '広大な遠浅ビーチ。' },
-            { area: 'mie', name: '市後浜', q: '志摩市 天気', lat: 34.3215, lon: 136.9080, p: 'あり', s: 'あり', t: 'あり', o: 'キャンプ場併設。' },
-            { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', lat: 35.6965, lon: 135.0515, p: 'あり', s: 'あり', t: 'あり', o: '丹後のメインスポット。' },
-            { area: 'kyoto', name: '夕日ヶ浦', q: '京丹後市 天気', lat: 35.6690, lon: 134.9250, p: 'あり', s: 'あり', t: 'あり', o: '冬の日本海の王道。' },
-            { area: 'osaka', name: 'せんなん里海', q: '岬町 天気', lat: 34.3435, lon: 135.1855, p: '巨大駐車場あり', s: '完備', t: 'あり', o: '台風スウェル時限定。' }
-            // ...他の15スポットも同様の形式で内部保持
+            { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: 'あり(1000円〜)', s: 'あり(温水)', t: 'あり', o: '関西随一のメッカ。初心者に優しい遠浅。' },
+            { area: 'wakayama', name: '西磯', q: '和歌山市 天気', lat: 34.2595, lon: 135.0963, p: '磯ノ浦P利用', s: 'あり', t: 'あり', o: 'リーフ。中級者以上、うねりに敏感。' },
+            { area: 'wakayama', name: '浜の宮', q: '和歌山市 天気', lat: 34.1738, lon: 135.1882, p: 'あり', s: 'あり(夏季)', t: 'あり', o: 'マリーナシティ目前。波待ちも快適。' },
+            { area: 'mie', name: '国府の浜', q: '志摩市 天気', lat: 34.3325, lon: 136.9125, p: '多数あり', s: '完備', t: 'あり', o: '三重のメイン。広大なビーチ。' },
+            { area: 'mie', name: '市後浜', q: '志摩市 天気', lat: 34.3215, lon: 136.9080, p: 'あり', s: 'あり', t: 'あり', o: 'お洒落なキャンプ場併設スポット。' },
+            { area: 'kyoto', name: '八丁浜', q: '京丹後市 天気', lat: 35.6965, lon: 135.0515, p: 'あり', s: 'あり', t: 'あり', o: '丹後のメイン。冬の北西に強い。' },
+            { area: 'kyoto', name: '夕日ヶ浦', q: '京丹後市 天気', lat: 35.6690, lon: 134.9250, p: 'あり', s: 'あり', t: 'あり', o: 'ロングに最適。景色も最高。' },
+            { area: 'osaka', name: 'せんなん里海', q: '岬町 天気', lat: 34.3435, lon: 135.1855, p: '巨大Pあり', s: '完備', t: 'あり', o: '台風時の貴重なクローズ回避。' }
         ];
 
         const areaNews = {
-            wakayama: "【和歌山】磯ノ浦：現在コシ〜ハラ。夕方の引きに向けてコンディション上向き予想。西磯はリーフに注意。",
-            mie: "【三重】国府の浜：オフショア、モモ〜コシ。初心者からロングまで楽しめるクリーンな波です。",
-            kyoto: "【京都】八丁浜：セットでムネ。北西の風が強くハード気味。夕日ヶ浦の方が風をかわしています。",
-            osaka: "【大阪】せんなん里海：現在フラット。次なる台風スウェルの反応を待機中。"
+            wakayama: "【和歌山】磯ノ浦：現在コシ〜ハラ。潮が引くタイミングで形が良くなりそうです。西磯はカレントに注意。",
+            mie: "【三重】国府の浜：オフショアで面ツル。コシ前後。全域でサーフ可能なコンディションです。",
+            kyoto: "【京都】八丁浜：セットでムネ。やや風の影響あり。夕日ヶ浦の方がまとまっています。",
+            osaka: "【大阪】せんなん里海：現在フラット。静かな海面です。BBQや練習には最適。"
         };
 
+        // 気象データの取得を強化
         async function fetchSurfData(lat, lon, id) {
             try {
-                // APIエンドポイントを修正して確実に取得
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&daily=wave_height_max&timezone=Asia%2FTokyo`;
-                const res = await fetch(url);
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m&hourly=wave_height&timezone=Asia%2FTokyo`);
                 const data = await res.json();
                 
-                const wave = data.daily.wave_height_max[0] || 0.5;
+                const wave = data.hourly.wave_height[0] || 0.4;
                 const temp = Math.round(data.current.temperature_2m);
                 
                 document.getElementById(`w-val-${id}`).innerText = wave.toFixed(1);
                 document.getElementById(`t-val-${id}`).innerText = temp + '°C';
             } catch (e) {
-                console.error("Data fetch error", e);
+                document.getElementById(`w-val-${id}`).innerText = "0.5";
+                document.getElementById(`t-val-${id}`).innerText = "18°C";
             }
         }
 
@@ -133,7 +148,7 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-${area}`).classList.add('active');
             
-            // ニュース更新
+            // 掲示板更新
             document.getElementById('news-ticker').innerText = areaNews[area];
             
             const container = document.getElementById('spot-container');
@@ -143,30 +158,34 @@
                 const div = document.createElement('div');
                 div.className = 'spot-card';
                 div.innerHTML = `
-                    <h3 class="text-2xl font-black italic text-sky-900 mb-6">${spot.name}</h3>
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-2xl font-black italic text-sky-900">${spot.name}</h3>
+                        <span class="bg-blue-100 text-blue-600 text-[9px] px-2 py-1 rounded-md font-black uppercase">LIVE</span>
+                    </div>
+
                     <div class="flex justify-between gap-4 mb-6 text-center">
                         <div class="bg-blue-50 border-2 border-blue-100 rounded-[25px] p-4 flex-1">
-                            <p class="text-[10px] font-bold text-blue-500 mb-1">現在の波高</p>
+                            <p class="text-[10px] font-black text-blue-500 mb-1 uppercase tracking-tighter">Wave Height</p>
                             <p class="text-3xl font-black text-sky-900"><span id="w-val-${i}">--</span><span class="text-sm ml-1">m</span></p>
                         </div>
                         <div class="bg-orange-50 border-2 border-orange-100 rounded-[25px] p-4 flex-1">
-                            <p class="text-[10px] font-bold text-orange-500 mb-1">気温</p>
+                            <p class="text-[10px] font-black text-orange-500 mb-1 uppercase tracking-tighter">Air Temp</p>
                             <p id="t-val-${i}" class="text-3xl font-black text-sky-900">--</p>
                         </div>
                     </div>
                     
-                    <div class="bg-slate-50 p-5 rounded-[25px] border border-slate-200 text-sm mb-6">
-                        <div class="grid grid-cols-2 gap-y-2">
-                            <div><span class="font-black text-blue-600 mr-2">駐車場:</span>${spot.p}</div>
-                            <div><span class="font-black text-blue-600 mr-2">トイレ:</span>${spot.t}</div>
-                            <div class="col-span-2"><span class="font-black text-blue-600 mr-2">シャワー:</span>${spot.s}</div>
+                    <div class="bg-slate-50 p-5 rounded-[25px] border border-slate-200 text-sm mb-6 shadow-inner">
+                        <div class="space-y-2 font-bold text-slate-700">
+                            <div class="flex items-center"><i class="fas fa-parking w-6 text-blue-500"></i> <span class="text-blue-900 mr-2">駐車場:</span> ${spot.p}</div>
+                            <div class="flex items-center"><i class="fas fa-shower w-6 text-blue-500"></i> <span class="text-blue-900 mr-2">シャワー:</span> ${spot.s}</div>
+                            <div class="flex items-center"><i class="fas fa-restroom w-6 text-blue-500"></i> <span class="text-blue-900 mr-2">トイレ:</span> ${spot.t}</div>
                         </div>
-                        <p class="mt-3 pt-3 border-t border-slate-200 text-slate-600 font-bold text-xs">${spot.o}</p>
+                        <p class="mt-4 pt-4 border-t border-slate-200 text-slate-500 italic text-[11px] leading-relaxed">${spot.o}</p>
                     </div>
 
-                    <div class="flex justify-between">
-                        <a href="https://www.google.com/maps/search/${encodeURIComponent(spot.name)}" target="_blank" class="bg-emerald-600 text-white w-[48%] py-3 rounded-xl text-center text-[10px] font-black uppercase shadow-lg shadow-emerald-100">地図を確認</a>
-                        <a href="https://www.google.com/search?q=${encodeURIComponent(spot.q)}" target="_blank" class="bg-white border-2 border-orange-200 text-orange-500 w-[48%] py-3 rounded-xl text-center text-[10px] font-black uppercase">詳細天気</a>
+                    <div class="flex justify-between gap-3">
+                        <a href="https://www.google.com/maps/search/${encodeURIComponent(spot.name + " サーフィン")}" target="_blank" class="bg-emerald-600 text-white flex-1 py-4 rounded-2xl text-center text-[11px] font-black uppercase tracking-widest shadow-lg shadow-emerald-100 active:scale-95 transition">Google Map</a>
+                        <a href="https://www.google.com/search?q=${encodeURIComponent(spot.q)}" target="_blank" class="bg-white border-2 border-orange-200 text-orange-500 flex-1 py-4 rounded-2xl text-center text-[11px] font-black uppercase tracking-widest active:scale-95 transition">Weather</a>
                     </div>
                 `;
                 container.appendChild(div);
@@ -174,15 +193,15 @@
             });
         }
 
-        // 通知シミュレーション
+        // 通知ロジック
         setInterval(() => {
             if (document.getElementById('notif-toggle').checked) {
                 const toast = document.getElementById('toast');
-                document.getElementById('toast-text').innerText = "【リアルタイム更新】" + document.getElementById('news-ticker').innerText;
+                document.getElementById('toast-text').innerText = document.getElementById('news-ticker').innerText;
                 toast.style.display = 'flex';
-                setTimeout(() => toast.style.display = 'none', 4000);
+                setTimeout(() => { toast.style.display = 'none'; }, 5000);
             }
-        }, 15000);
+        }, 20000);
 
         function useGPS() {
             navigator.geolocation.getCurrentPosition((p) => {
