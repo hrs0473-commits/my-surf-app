@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -40,39 +39,6 @@
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); padding: 15px 10px; display: flex; overflow-x: auto; border-top: 3px solid #3b82f6; z-index: 1000; gap: 20px; }
         .nav-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #64748b; font-weight: 900; min-width: 65px; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-<style>
-/* ===== CHAT追加CSS（既存CSS非変更） ===== */
-#chat-section {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 90px;
-  z-index: 900;
-}
-.chat-box {
-  background: #ffffff;
-  border-radius: 24px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-.chat-bubble {
-  background: #f0f9ff;
-  border-radius: 18px;
-  padding: 10px 14px;
-  font-size: 13px;
-  position: relative;
-}
-.chat-delete {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #ef4444;
-  color: #fff;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  font-size: 10px;
-}
-</style>
     </style>
 </head>
 <body class="pb-40">
@@ -101,93 +67,8 @@
         <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water mb-1 text-xl"></i><span>潮見表</span></a>
         <a href="https://www.google.com/search?q=現在地の天気" target="_blank" class="nav-item text-orange-500"><i class="fas fa-cloud-sun mb-1 text-xl"></i><span>天気予報</span></a>
     </nav>
-<section id="chat-section" class="max-w-md mx-auto px-4">
-  <div class="chat-box p-4">
-    <h2 class="text-center font-black text-sky-800 text-sm mb-3">
-      SURF CHAT
-    </h2>
-
-    <div id="chat-list" class="space-y-3 mb-3 max-h-60 overflow-y-auto"></div>
-
-    <div class="flex gap-2">
-      <input id="chat-text"
-        class="flex-1 rounded-full px-4 py-2 border text-sm"
-        placeholder="メッセージ">
-
-      <input id="chat-image" type="file" accept="image/*" class="hidden">
-
-      <button onclick="selectChatImage()" class="text-xl text-sky-500">
-        <i class="fas fa-image"></i>
-      </button>
-
-      <button onclick="sendChat()"
-        class="bg-sky-500 text-white rounded-full px-4 font-black">
-        送信
-      </button>
-    </div>
-  </div>
-</section>
 
     <script>
-<script>
-/* ===== CHAT機能（既存JS非変更） ===== */
-
-let surfChats = JSON.parse(localStorage.getItem('surfChats')) || [];
-
-function saveChats() {
-  localStorage.setItem('surfChats', JSON.stringify(surfChats));
-}
-
-function renderChats() {
-  const list = document.getElementById('chat-list');
-  list.innerHTML = '';
-  surfChats.forEach((c, i) => {
-    const d = document.createElement('div');
-    d.className = 'chat-bubble';
-    d.innerHTML = `
-      ${c.text ? `<p>${c.text}</p>` : ''}
-      ${c.image ? `<img src="${c.image}" class="mt-2 rounded-xl max-h-40">` : ''}
-      <button class="chat-delete" onclick="deleteChat(${i})">×</button>
-    `;
-    list.appendChild(d);
-  });
-}
-
-function sendChat() {
-  const text = document.getElementById('chat-text').value.trim();
-  const file = document.getElementById('chat-image').files[0];
-  if (!text && !file) return;
-
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      surfChats.push({ text, image: reader.result });
-      saveChats();
-      renderChats();
-    };
-    reader.readAsDataURL(file);
-  } else {
-    surfChats.push({ text });
-    saveChats();
-    renderChats();
-  }
-
-  document.getElementById('chat-text').value = '';
-  document.getElementById('chat-image').value = '';
-}
-
-function deleteChat(i) {
-  surfChats.splice(i, 1);
-  saveChats();
-  renderChats();
-}
-
-function selectChatImage() {
-  document.getElementById('chat-image').click();
-}
-
-renderChats();
-</script>
         const surfSpots = [
             { area: 'wakayama', name: '磯ノ浦', q: '和歌山市 天気', lat: 34.2589, lon: 135.1054, p: '巨大駐車場有(1000円〜)', s: '温水シャワー・更衣室完備', t: '公衆トイレ有', o: 'カフェ・ショップ隣接。通年人気。' },
             { area: 'wakayama', name: '西磯', q: '和歌山市 天気', lat: 34.2595, lon: 135.0963, p: '磯ノ浦駐車場を利用', s: '磯ノ浦の設備を利用', t: '公衆トイレ有', o: '岩場に注意。' },
@@ -287,6 +168,3 @@ renderChats();
     </script>
 </body>
 </html>
-
-
-
