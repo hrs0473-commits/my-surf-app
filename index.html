@@ -159,7 +159,7 @@
         }
         function useGPS() {
             navigator.geolocation.getCurrentPosition((p) => {
-                const la = p.coords.latitude;
+                const la = p.coords.latitude
                 if(la > 35) filterArea('kyoto'); else if(la > 34.3) filterArea('osaka'); else if(la > 34.1) filterArea('wakayama'); else filterArea('mie');
                 window.scrollTo({top: 280, behavior:'smooth'});
             });
