@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SURF MASTER PRO</title>
+    <title>SURF MASTER PRO - RECOVERY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+JP:wght@400;900&family=Permanent+Marker&display=swap');
         body { margin:0; background:#f0f9ff; font-family:'Noto Sans JP',sans-serif; }
         
-        /* タイトル背景画像の復旧：高画質な実写URLに固定 */
+        /* 1. 背景画像を確実に固定（Unsplashの恒久リンク） */
         .hero-section { 
             height:280px; display:flex; flex-direction:column; justify-content:center; align-items:center;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
                         url('https://images.unsplash.com/photo-1502680399488-2a6574c50375?auto=format&fit=crop&w=1200&q=80'); 
             background-size:cover; background-position:center; position:relative; 
         }
@@ -22,20 +22,16 @@
 
         .nav-section { background:white; padding:15px 0; border-bottom:1px solid #bae6fd; position:sticky; top:0; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
         .nav-btn { flex:none; padding:10px 25px; margin:0 5px; background:#e0f2fe; color:#0369a1; border-radius:50px; font-size:14px; font-weight:900; }
-        .nav-btn.active { background:#3b82f6; color:white; }
+        .nav-btn.active { background:#3b82f6 !important; color:white !important; }
 
-        /* スポットカードと詳細情報の復旧 */
+        /* 2. 消えていたスポット詳細情報のデザイン復旧 */
         .spot-card { background:#fff; border-radius:30px; padding:25px; margin:20px; box-shadow:0 10px 25px rgba(0,0,0,0.05); border:1px solid #e0f2fe; }
-        .info-box { border-radius:20px; padding:15px; text-align:center; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:120px; }
-        .wave-box { background:#f0f7ff; border:2px solid #dbeafe; }
-        .temp-box { background:#fff7ed; border:2px solid #ffedd5; }
-
         .facility-group { margin-top:20px; background:#fffcf0; border-radius:20px; padding:20px; border:1px solid #fef3c7; }
         .facility-item { display:flex; margin-bottom:12px; align-items:flex-start; font-size:14px; line-height:1.5; }
         .facility-icon { color:#f59e0b; width:25px; text-align:center; margin-right:10px; margin-top:4px; }
         .facility-label { font-weight:900; color:#0369a1; margin-right:5px; min-width:55px; }
 
-        /* 予報・地図ボタンの復旧 */
+        /* 3. ボタンの復活 */
         .btn-row { display:flex; gap:10px; margin-top:20px; }
         .action-btn { flex:1; padding:14px; border-radius:15px; font-size:12px; font-weight:900; text-align:center; text-decoration:none; border:2px solid; }
         .btn-forecast { background:#f0f9ff; color:#0369a1; border-color:#3b82f6; }
@@ -43,7 +39,6 @@
 
         .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:3px solid #3b82f6; padding:12px; display:flex; overflow-x:auto; z-index:1000; gap:20px; }
         .nav-item { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; font-size:10px; color:#64748b; font-weight:900; text-decoration:none; min-width:60px; }
-        .no-scrollbar::-webkit-scrollbar { display:none; }
     </style>
 </head>
 <body class="pb-32">
@@ -54,7 +49,7 @@
 </div>
 
 <div class="nav-section">
-    <div class="flex overflow-x-auto px-5 no-scrollbar">
+    <div class="flex overflow-x-auto px-5">
         <button onclick="setArea('wakayama')" id="btn-wakayama" class="nav-btn active">和歌山</button>
         <button onclick="setArea('mie')" id="btn-mie" class="nav-btn">三重</button>
         <button onclick="setArea('kyoto')" id="btn-kyoto" class="nav-btn">京都</button>
@@ -64,49 +59,48 @@
 
 <main id="spot-list"></main>
 
-<nav class="bottom-nav no-scrollbar">
-    <a href="#" class="nav-item text-blue-500"><i class="fas fa-home text-xl mb-1"></i><span>HOME</span></a>
-    <a href="https://nowphas.mlit.go.jp/" target="_blank" class="nav-item text-orange-600"><i class="fas fa-broadcast-tower text-xl mb-1"></i><span>ナウファス</span></a>
-    <a href="https://www.windy.com" target="_blank" class="nav-item text-sky-400"><i class="fas fa-wind text-xl mb-1"></i><span>風予報</span></a>
-    <a href="https://tide736.net" target="_blank" class="nav-item text-cyan-500"><i class="fas fa-water text-xl mb-1"></i><span>潮見表</span></a>
-    <a href="https://www.google.co.jp/maps" target="_blank" class="nav-item text-green-600"><i class="fas fa-map-marked-alt text-xl mb-1"></i><span>MAP</span></a>
+<nav class="bottom-nav">
+    <a href="https://nowphas.mlit.go.jp/" target="_blank" class="nav-item"><i class="fas fa-broadcast-tower text-xl mb-1"></i><span>ナウファス</span></a>
+    <a href="https://www.windy.com" target="_blank" class="nav-item"><i class="fas fa-wind text-xl mb-1"></i><span>予報</span></a>
+    <a href="https://tide736.net" target="_blank" class="nav-item"><i class="fas fa-water text-xl mb-1"></i><span>潮見</span></a>
+    <a href="https://www.google.co.jp/maps" target="_blank" class="nav-item"><i class="fas fa-map-marked-alt text-xl mb-1"></i><span>MAP</span></a>
 </nav>
 
 <script>
-// 【完全復旧】全23スポットの詳細データ
+// 【全データ復旧】23スポット
 const spots = [
-    { a:'wakayama', n:'磯ノ浦', lat:34.2589, lon:135.1054, p:'巨大駐車場(1000円〜)', s:'温水シャワー・更衣室完備', t:'公衆トイレ有', o:'関西随一のメッカ。通年人気。' },
-    { a:'wakayama', n:'西磯', lat:34.2595, lon:135.0963, p:'磯ノ浦駐車場を利用', s:'磯ノ浦の設備を利用', t:'有', o:'中上級リーフ。岩場注意。' },
-    { a:'wakayama', n:'奥磯', lat:34.2605, lon:135.1120, p:'東側の駐車場が近い', s:'近隣施設に有', t:'有', o:'混雑時ルール厳守。' },
-    { a:'wakayama', n:'浜の宮', lat:34.1738, lon:135.1882, p:'海水浴場駐車場', s:'夏季シャワー有', t:'完備', o:'遠浅ビーチ。初心者向き。' },
-    { a:'wakayama', n:'淡島神社前', lat:34.2750, lon:135.0645, p:'周辺駐車場', s:'なし', t:'有', o:'リーフ波。中級以上。' },
-    { a:'wakayama', n:'ゴロゴロ', lat:33.7225, lon:135.3441, p:'付近有料P', s:'簡易シャワー', t:'有', o:'玉石。ブーツ推奨。' },
+    { a:'wakayama', n:'磯ノ浦', lat:34.2589, lon:135.1054, p:'巨大P有(1000円〜)', s:'温水・更衣室完備', t:'有', o:'関西随一のメッカ。通年人気。' },
+    { a:'wakayama', n:'西磯', lat:34.2595, lon:135.0963, p:'磯ノ浦P利用', s:'磯ノ浦設備', t:'有', o:'中上級リーフ。干潮注意。' },
+    { a:'wakayama', n:'奥磯', lat:34.2605, lon:135.1120, p:'東側Pが近', s:'近隣に有', t:'有', o:'ルール厳守必須。' },
+    { a:'wakayama', n:'浜の宮', lat:34.1738, lon:135.1882, p:'海水浴場P', s:'夏季有', t:'完備', o:'遠浅で初心者向き。' },
+    { a:'wakayama', n:'淡島神社前', lat:34.2750, lon:135.0645, p:'周辺P', s:'なし', t:'有', o:'パワフルなリーフ。' },
+    { a:'wakayama', n:'ゴロゴロ', lat:33.7225, lon:135.3441, p:'付近有料P', s:'簡易有', t:'有', o:'玉石。ブーツ推奨。' },
     { a:'wakayama', n:'モーテル下', lat:33.7188, lon:135.3522, p:'有料P', s:'なし', t:'有', o:'カレント注意。' },
-    { a:'wakayama', n:'下里', lat:33.5855, lon:135.9185, p:'ビーチ前駐車場', s:'夏季有', t:'有', o:'綺麗な水質。' },
+    { a:'wakayama', n:'下里', lat:33.5855, lon:135.9185, p:'ビーチ前P', s:'夏季有', t:'有', o:'綺麗な水質。' },
     { a:'wakayama', n:'那智', lat:33.6385, lon:135.9392, p:'駅前・ビーチ横', s:'完備', t:'有', o:'道の駅隣接。' },
-    { a:'wakayama', n:'フカ', lat:33.5512, lon:135.5015, p:'駐車注意', s:'なし', t:'なし', o:'パワフル。リスペクト必須。' },
-    { a:'wakayama', n:'印南(漁港)', lat:33.8210, lon:135.2015, p:'漁港内指示遵守', s:'なし', t:'有', o:'作業優先。駐車厳禁。' },
-    { a:'mie', n:'国府の浜', lat:34.3325, lon:136.9125, p:'民間P多数', s:'温水・更衣室完備', t:'有', o:'三重のメッカ。' },
+    { a:'wakayama', n:'フカ', lat:33.5512, lon:135.5015, p:'駐車注意', s:'なし', t:'なし', o:'パワフル。リスペクト。' },
+    { a:'wakayama', n:'印南', lat:33.8210, lon:135.2015, p:'漁港内指示遵守', s:'なし', t:'有', o:'作業優先。迷惑駐車禁止。' },
+    { a:'mie', n:'国府の浜', lat:34.3325, lon:136.9125, p:'民間P多数', s:'温水・更衣室', t:'有', o:'三重のメインスポット。' },
     { a:'mie', n:'市後浜', lat:34.3215, lon:136.9080, p:'専用有料P', s:'完備', t:'有', o:'キャンプ場併設。' },
-    { a:'mie', n:'阿児の松原', lat:34.3380, lon:136.9050, p:'民間P', s:'有', t:'有', o:'国府の北側。' },
-    { a:'mie', n:'南張', lat:34.2885, lon:136.7562, p:'ビーチ前有料P', s:'有', t:'有', o:'重厚な波質。' },
+    { a:'mie', n:'阿児の松原', lat:34.3380, lon:136.9050, p:'民間P', s:'有', t:'有', o:'比較的落ち着いている。' },
+    { a:'mie', n:'南張', lat:34.2885, lon:136.7562, p:'ビーチ前P', s:'有', t:'有', o:'波質重くパワフル。' },
     { a:'mie', n:'ジャン', lat:34.3100, lon:136.8800, p:'極小', s:'なし', t:'なし', o:'エキスパート専用。' },
-    { a:'kyoto', n:'八丁浜', lat:35.6965, lon:135.0515, p:'公園駐車場有', s:'更衣室完備', t:'有', o:'丹後メイン。初心者可。' },
+    { a:'kyoto', n:'八丁浜', lat:35.6965, lon:135.0515, p:'公園P有', s:'更衣室完備', t:'有', o:'丹後メイン。設備充実。' },
     { a:'kyoto', n:'夕日ヶ浦', lat:35.6690, lon:134.9250, p:'園地P', s:'有', t:'有', o:'北東風に強い。' },
-    { a:'kyoto', n:'葛野浜', lat:35.6420, lon:134.9080, p:'夏季有料', s:'有', t:'有', o:'広大なビーチ。' },
+    { a:'kyoto', n:'葛野浜', lat:35.6420, lon:134.9080, p:'夏季有料', s:'有', t:'有', o:'練習に最適な広さ。' },
     { a:'kyoto', n:'小天橋', lat:35.6312, lon:134.8950, p:'海水浴場P', s:'完備', t:'有', o:'冬の代表格。' },
-    { a:'kyoto', n:'神崎', lat:35.5350, lon:135.2420, p:'広大P', s:'有', t:'有', o:'舞鶴エリア。' },
-    { a:'kyoto', n:'平', lat:35.7530, lon:135.1580, p:'キャンプ場P', s:'有', t:'有', o:'穴場スポット。' },
-    { a:'osaka', n:'せんなん里海', lat:34.3435, lon:135.1855, p:'巨大P', s:'完備', t:'有', o:'台風時限定。' }
+    { a:'kyoto', n:'神崎', lat:35.5350, lon:135.2420, p:'広大P', s:'有', t:'有', o:'舞鶴エリア。開放感有。' },
+    { a:'kyoto', n:'平', lat:35.7530, lon:135.1580, p:'キャンプ場P', s:'有', t:'有', o:'穴場。静かな環境。' },
+    { a:'osaka', n:'せんなん里海', lat:34.3435, lon:135.1855, p:'巨大P', s:'完備', t:'有', o:'台風・強風時限定。' }
 ];
 
 async function updateData(lat, lon, id) {
     try {
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&marine=wave_height&timezone=Asia%2FTokyo`);
+        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&marine=wave_height&timezone=Asia%2FTokyo`);
         const data = await res.json();
         document.getElementById(`w-val-${id}`).innerText = (data.current.wave_height || 0.4).toFixed(1);
         document.getElementById(`t-val-${id}`).innerText = Math.round(data.current.temperature_2m);
-    } catch(e) { console.error(e); }
+    } catch(e) {}
 }
 
 function setArea(area) {
@@ -120,16 +114,14 @@ function setArea(area) {
         card.className = 'spot-card';
         card.innerHTML = `
             <h2 class="text-2xl font-black mb-4 text-slate-800">${s.n}</h2>
-            <div class="flex gap-4 mb-4">
-                <div class="info-box wave-box">
-                    <i class="fas fa-water text-3xl mb-1 text-blue-500"></i>
+            <div class="flex gap-4">
+                <div class="bg-blue-50 p-4 rounded-xl flex-1 text-center">
                     <p class="text-[10px] font-black text-blue-400">WAVE (m)</p>
-                    <p class="text-2xl font-black text-blue-700"><span id="w-val-${i}">--</span></p>
+                    <p class="text-2xl font-black text-blue-700" id="w-val-${i}">--</p>
                 </div>
-                <div class="info-box temp-box">
-                    <i class="fas fa-sun text-3xl mb-1 text-orange-400"></i>
+                <div class="bg-orange-50 p-4 rounded-xl flex-1 text-center">
                     <p class="text-[10px] font-black text-orange-400">TEMP (℃)</p>
-                    <p class="text-2xl font-black text-orange-700"><span id="t-val-${i}">--</span></p>
+                    <p class="text-2xl font-black text-orange-700" id="t-val-${i}">--</p>
                 </div>
             </div>
             <div class="facility-group">
@@ -146,7 +138,6 @@ function setArea(area) {
         updateData(s.lat, s.lon, i);
     });
 }
-
 setArea('wakayama');
 </script>
 </body>
